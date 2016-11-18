@@ -24,7 +24,7 @@ mute=0;
 if(LCD!=LCDo) // Se l'impostazione della retroilluminazione è cambiata
   {LCDo=LCD; if(LCD==1) digitalWrite(A0,LOW);} // Retroilluminazione sempre accesa.
   
-if(E!=0 && LCD==2) // Se è stato ruotato l'encoder e LCD sta in Auto
+if(E!=0 && LCD==2) // Se è stato ruotato l'encoder e LCD sta in On/Off.
   {
   if(E==1 && digitalRead(A0)==1) digitalWrite(A0,LOW); // Encoder orario: Accende.
   if(E==-1&& digitalRead(A0)==0) digitalWrite(A0,HIGH); // Encoder antior.: Spegne.
@@ -50,7 +50,7 @@ if(millis()-t3>999) // Una volta al secondo:
       ownbcpm=EEPROM.read(9); // cpm di fondo proprio del tubo B.      
       } // END else
       
-    if(sonda==10) {sens=var;}
+    if(sonda==ntipi) {sens=var;}
     else{sens=cost[sonda]; ownbcpm=ownb[sonda];}
     } // END se digitalRead(4) è cambiato
     

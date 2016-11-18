@@ -53,10 +53,10 @@ var=EEPROM.read(2)+EEPROM.read(3)*256; // Carica Lo-byte e Hi-byte di var del tu
 ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.
 TS=EEPROM.read(5); // TIC software Sì/No.
 LED=EEPROM.read(10); // Tipo di meter.
-LCD=EEPROM.read(11); // LCD: 1:On; 2:Auto.
+LCD=EEPROM.read(11); // LCD: 1:On; 2:On/Off.
 
 if(digitalRead(5)==0) {Bip(); lcd.clear(); TipoDiSonda(); TICSwSiNo();} // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna.
-if(sonda==10) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];}
+if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
   
 lcd.clear();
 lcd.setCursor(0,0); lcd.print("Contatore Geiger");

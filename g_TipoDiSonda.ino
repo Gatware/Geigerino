@@ -10,7 +10,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0){sonda+=E; E=0; t1=millis(); delay(20);}
-  if(sonda>10) sonda=10;
+  if(sonda>ntipi) sonda=ntipi;
   if(sonda<0) sonda=0;
   
   lcd.setCursor(5,1);
@@ -21,7 +21,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
 if(sonda!=EEPROM.read(1)) {EEPROM.update(1,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!  "); delay(500);}
 else Bip();
 
-if(sonda==10)
+if(sonda==ntipi)
   {                           // variabile
   lcd.setCursor(0,0); lcd.print("  Sensibilit"); lcd.write(byte(1)); lcd.print("?  ");
   lcd.setCursor(5,1); lcd.print("         "); printVar();
@@ -132,7 +132,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
 if(sonda!=EEPROM.read(6)) {EEPROM.update(6,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!  "); delay(500);}
 else Bip();
 
-if(sonda==10)
+if(sonda==ntipi)
   {                           // variabile
   lcd.setCursor(0,0); lcd.print("  Sensibilit"); lcd.write(byte(1)); lcd.print("?  ");
   lcd.setCursor(5,1); lcd.print("         "); printVar();

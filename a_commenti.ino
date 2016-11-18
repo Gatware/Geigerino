@@ -37,9 +37,10 @@
 1.1   6/11/16 Ho aggiunto il menu del modo dei LED: Off/Dot/Bar
               Ho aggiunto il menu del pilotaggio della retroilluminazione dell'LCD: On o On/Off. In On/Off è comandata dall'encoder.
               Ho spostato la lettura della tensione della batteria da A0 (ora destinato alla retroillum.) ad A1, condiviso con un LED V.
+1.2  18/11/16 Aggiungo tra le sonde la doppia SBM-20.             
 */  
 
-String ver=" v1.1";
+String ver=" v1.2";
 
 /*
  * ----------- LCD -----------
