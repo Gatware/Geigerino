@@ -3,7 +3,7 @@
 0.2  16/10/16 Torno ai salti da un menu all'altro come in Limiti.
 0.2a 17/10/16 Rinomino menu1, menu2 e menu3 con il nome della funzione contenuta.
               Sposto TipoDiSonda (era menu3) nel setup, tenendo premuto il pulsante all'accensione.
-              Agiungo la lettura della tensione di alimentazione e le icone della batteria.
+              Aggiungo la lettura della tensione di alimentazione e le icone della batteria.
 0.2c 18/10/16 Vado avanti. Cambio "flag" con "Azz".
 0.2d 19/10/16 Aggiungo la "à", il "micro" e la memorizzazione su EEPROM della sensibilità.
 0.2e 20/10/16 Aggiungo il conteggio dei cpm.
@@ -47,9 +47,16 @@
               Abbasso il Bkg della SBT-11/11A da 60cpm a 15cpm, come da datasheet (0,25cps).
               Il menu saltava massimi() e meter() (LED dot/bar) perché mancava t1=millis() all'inizio delle due funzioni. Corretto.
               Ho rinominato meter() in dotBar() e l'ho spostato nel setup.
+1.2c 23/11/16 Ho modificato l'algoritmo dell'uscita analogica: adesso lo 0 è 0,0001uSv/h e il f.s. è 1Sv/h (10x a ogni decimo della scala)
+              Anticipo la cancellazione di uno spazio in Tempo di integrazione >SET!
+              Aggiungo delay(300) all'inizio di Azzerare?
+1.3  24/11/16 Ho messo la doppia scala analogica: 0,0001...10uSv/h e 0,01...1mSv/h.
+              Adesso la scala analogica legge solo i uSv/h, anche visualizzando mR/h sul display.
+              Dopo una visualizzazione di 100000cpm o più sul display rimaneva l'ultima cifra: risolto.
+              Qualche altro aggiustamento.
 */            
 
-String ver=" v1.2b";
+String ver=" v1.3";
 
 /*
  * ----------- LCD -----------

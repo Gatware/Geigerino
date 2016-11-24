@@ -54,8 +54,8 @@ ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.
 TS=EEPROM.read(5); // TIC software Sì/No.
 LED=EEPROM.read(10); // Tipo di meter.
 LCD=EEPROM.read(11); // LCD: 1:On; 2:On/Off.
-
-if(digitalRead(5)==0) {Bip(); lcd.clear(); TipoDiSonda(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo();} // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna.
+                       // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna.
+if(digitalRead(5)==0) {Bip(); lcd.clear(); TipoDiSonda(); lcd.clear(); dotBar(); lcd.clear(); retroillum(); lcd.clear(); TICSwSiNo();} 
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
   
 lcd.clear();
@@ -101,8 +101,8 @@ void dotBar()
 {
 lcd.print("       LED      "); 
 t1=millis();
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
-{if(millis()-t1>1000) {Bip(); lcd.clear(); retroillum(); return;}}  // Premuto per almeno 1 secondo (3,2 totali) salta a massimi(), poi ritorna ed esce.
+while(digitalRead(5)==LOW); // Attende che venga lasciato il pulsante.
+delay(300);
 lcd.setCursor(0,1); lcd.print(" Off   Dot   Bar");
 t1=millis();
 while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
@@ -121,4 +121,6 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
 if(LED!=EEPROM.read(10)) {EEPROM.update(10,LED); Biip(); lcd.setCursor(12,1); lcd.print(" SET!"); delay(500);}
 else Bip();  
 } // END dotBar
+
+
 
