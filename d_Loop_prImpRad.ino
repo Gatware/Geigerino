@@ -98,8 +98,8 @@ if(millis()-t3>999) // Una volta al secondo:
   if(LED==0)               PORTC&=B11000000;
   else if(LED==1)
     {
-    if     (uSvph>soglia5) {PORTC&=B11100001; PORTC|=B00100000; tone(5, 1000, 2000);}
-    else if(uSvph>soglia4) {PORTC&=B11010001; PORTC|=B00010000; tone(5, 1000, 1000);}
+    if     (uSvph>soglia5) {PORTC&=B11100001; PORTC|=B00100000; tone(SPK, 1000, 2000);}
+    else if(uSvph>soglia4) {PORTC&=B11010001; PORTC|=B00010000; tone(SPK, 1000, 1000);}
     else if(uSvph>soglia3) {PORTC&=B11001001; PORTC|=B00001000;}
     else if(uSvph>soglia2) {PORTC&=B11000101; PORTC|=B00000100;}
     else if(uSvph>soglia1) {PORTC&=B11000011; PORTC|=B00000010;}
@@ -107,8 +107,8 @@ if(millis()-t3>999) // Una volta al secondo:
     }
   else if(LED==2)
     {
-    if     (uSvph>soglia5) {                  PORTC|=B00111110; tone(5, 1000, 2000);}
-    else if(uSvph>soglia4) {PORTC&=B11011110; PORTC|=B00011110; tone(5, 1000, 1000);}
+    if     (uSvph>soglia5) {                  PORTC|=B00111110; tone(SPK, 1000, 2000);}
+    else if(uSvph>soglia4) {PORTC&=B11011110; PORTC|=B00011110; tone(SPK, 1000, 1000);}
     else if(uSvph>soglia3) {PORTC&=B11001110; PORTC|=B00001110;}
     else if(uSvph>soglia2) {PORTC&=B11000110; PORTC|=B00000110;}
     else if(uSvph>soglia1) {PORTC&=B11000010; PORTC|=B00000010;}

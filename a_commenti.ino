@@ -55,6 +55,7 @@
               Dopo una visualizzazione di 100000cpm o più sul display rimaneva l'ultima cifra: risolto.
               Qualche altro aggiustamento.
 1.4   1/12/16 Aggiungo il menu di selezione Bip e Tic-tic (il Tic-tic SW è però anche disattivabile definitivamente dal setup, se presente HW).
+              Un #define permette di selezionare Altoparlante indipendente oppure la stessa piezo che fa Bip.
 */            
 
 String ver=" v1.4";
