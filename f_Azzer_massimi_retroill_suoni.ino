@@ -2,8 +2,8 @@ void Azzeramento()
 {
 //    -------- Menu 2 - Azzeramento --------
 lcd.print("   AZZERARE?    ");
-delay(300);
 t1=millis();
+delay(300);
 while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
 {if(millis()-t1>1000) {Bip(); lcd.clear(); massimi(); return;}}  // Premuto per almeno 1 secondo (3,2 totali) salta a massimi(), poi ritorna ed esce.
 t1=millis();
