@@ -33,6 +33,9 @@
 #define soglia4 60  // R
 #define soglia5 300 // R
 #define analogOut 1 // 1:Sì; 0:No.
+// SPK=5: Altoparlante separato
+// SPK=7: Usa la stessa piezo che fa Bip
+#define SPK 7 // per Tic-tic e allarmi
 
 #include <LiquidCrystal.h>
 #include <EEPROM.h>
