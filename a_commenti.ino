@@ -54,9 +54,10 @@
               Adesso la scala analogica legge solo i uSv/h, anche visualizzando mR/h sul display.
               Dopo una visualizzazione di 100000cpm o più sul display rimaneva l'ultima cifra: risolto.
               Qualche altro aggiustamento.
+1.4   1/12/16 Aggiungo il menu di selezione Bip e Tic-tic (il Tic-tic SW è però anche disattivabile definitivamente dal setup, se presente HW).
 */            
 
-String ver=" v1.3";
+String ver=" v1.4";
 
 /*
  * ----------- LCD -----------
@@ -105,4 +106,5 @@ String ver=" v1.3";
  * 9 owbcpm: cpm di background proprio del tubo B
  *10 LED: 0:meter off; 1:meter dot; 2:meter bar.
  *11 LCD: retroilluminazione dell'LCD: 1:On; 2:Auto.
+ *12 biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
  */

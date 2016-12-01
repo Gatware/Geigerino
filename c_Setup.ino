@@ -44,6 +44,7 @@ if(EEPROM.read(0)==255)
   EEPROM.update(9,45); // in variabile B: cpm di fondo proprio del tubo.
   EEPROM.update(10,1); // meter in modalità dot.
   EEPROM.update(11,1); // retroilluminazione dell'LCD: On
+  EEPROM.update(12,3); // suoni: Bip + Tic-tic.
   delay(4000);
   lcd.clear();
   }  
@@ -54,6 +55,8 @@ ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.
 TS=EEPROM.read(5); // TIC software Sì/No.
 LED=EEPROM.read(10); // Tipo di meter.
 LCD=EEPROM.read(11); // LCD: 1:On; 2:On/Off.
+biptic=EEPROM.read(12); // biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
+
                        // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna.
 if(digitalRead(5)==0) {Bip(); lcd.clear(); TipoDiSonda(); lcd.clear(); dotBar(); lcd.clear(); retroillum(); lcd.clear(); TICSwSiNo();} 
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
