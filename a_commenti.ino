@@ -3,7 +3,7 @@
 0.2  16/10/16 Torno ai salti da un menu all'altro come in Limiti.
 0.2a 17/10/16 Rinomino menu1, menu2 e menu3 con il nome della funzione contenuta.
               Sposto TipoDiSonda (era menu3) nel setup, tenendo premuto il pulsante all'accensione.
-              Agiungo la lettura della tensione di alimentazione e le icone della batteria.
+              Aggiungo la lettura della tensione di alimentazione e le icone della batteria.
 0.2c 18/10/16 Vado avanti. Cambio "flag" con "Azz".
 0.2d 19/10/16 Aggiungo la "à", il "micro" e la memorizzazione su EEPROM della sensibilità.
 0.2e 20/10/16 Aggiungo il conteggio dei cpm.
@@ -22,12 +22,46 @@
               millisZero, ottenendo un azzeramento iniziale del tempo letto dalla funzione dei due punti.
               Riduco l'antirimbalzo di Centinaia-Decine-Unità della sensibilità variabile da 500mS a 300mS.
 0.3f  3/11/16 Come la 0.3e, ma con le connessioni come nella seguente 0.4: Encoder A e B da PD3 e PD4 a PD0 e PD1 per liberare l'interrupt 1.
-0.3g  4/11/16 Nella 0.3f non avevo messo gli I/O 0 e 1 nel setup per INPUT e PULLUP. Corretti.              
-              Dovrebbe essere la 0.3 definitiva, che diventerà 1.0.
-              
-*/
+0.3g  4/11/16 Nella 0.3f non avevo messo gli I/O 0 e 1 nel setup per INPUT e PULLUP. Corretti. 
+              Dovrebbe essere la 0.3 definitiva.
+0.4 temp3     Riparte dalla v0.3e. 
+0.4 temp4     Sposto l'encoder sugli I/O 0 e 1 per lasciare libero l'altro interrupt in per la sonda B.
+              Introduco TIC software Si/No, con impostazione tramite encoder nel setup.
+0.4 temp5     Riparto dalla 0.3g, perché nella temp4 i valori aumentano in continuazione, anche con Ti=10 secondi!
+              Dovevo solo azzerare DA e DB dopo ogni lettura. Azzerare D è inutile, perché è la copia di uno dei due!
+              Aggiungo qui sotto i valori 1M/270k del partitore per la lettura della tensione della batteria.
+1.0   5/11/16 Commpleto la sondaB, con le impostazioni in TipoDiSonda e tutto il resto.
+              Forse c'è tutto (a parte la lettura della tensione della batteria in Volt).
+              Ho messo long(tempo) nel calcolo dei CPM.
+1.0   6/11/16 Ho modificato il pilotaggio dei LED da modo punto a barra.
+1.1   6/11/16 Ho aggiunto il menu del modo dei LED: Off/Dot/Bar
+              Ho aggiunto il menu del pilotaggio della retroilluminazione dell'LCD: On o On/Off. In On/Off è comandata dall'encoder.
+              Ho spostato la lettura della tensione della batteria da A0 (ora destinato alla retroillum.) ad A1, condiviso con un LED V.
+1.2  18/11/16 Aggiungo tra le sonde la doppia SBM-20.
+              Aggiungo l'avvisatore acustico al 4° e 5° livello (4° e 5° LED).
+1.2a 22/11/16 Integrazione: metto l'azzeramento anche se il tempo aumenta, perché l'improvvisa aggiunta di elementi nulli abbassava il valore.
+              Corretto un errore in TipoDiSonda - Sonda B: if(sonda>ntipi) sonda=ntipi; (non elencava Variabile).
+              Ho aggiunto uno spazio dopo akcuni "SET!" che lasciavano un carattere della scritta precedente.
+              Ho aggiunto un lcd.clear() nel Setup fra TipoDiSonda() e TICSwSiNo().
+1.2b 22/11/16 Azzera: sposto il Biiip() fuori dalla funzione, perché se no quando commuto la sonda è troppo lungo.
+              Abbasso il Bkg della SBT-11/11A da 60cpm a 15cpm, come da datasheet (0,25cps).
+              Il menu saltava massimi() e meter() (LED dot/bar) perché mancava t1=millis() all'inizio delle due funzioni. Corretto.
+              Ho rinominato meter() in dotBar() e l'ho spostato nel setup.
+1.2c 23/11/16 Ho modificato l'algoritmo dell'uscita analogica: adesso lo 0 è 0,0001uSv/h e il f.s. è 1Sv/h (10x a ogni decimo della scala)
+              Anticipo la cancellazione di uno spazio in Tempo di integrazione >SET!
+              Aggiungo delay(300) all'inizio di Azzerare?
+1.3  24/11/16 Ho messo la doppia scala analogica: 0,0001...10uSv/h e 0,01...1mSv/h.
+              Adesso la scala analogica legge solo i uSv/h, anche visualizzando mR/h sul display.
+              Dopo una visualizzazione di 100000cpm o più sul display rimaneva l'ultima cifra: risolto.
+              Qualche altro aggiustamento.
+1.4   1/12/16 Aggiungo il menu di selezione Bip e Tic-tic (il Tic-tic SW è però anche disattivabile definitivamente dal setup, se presente HW).
+              Un #define permette di selezionare Altoparlante indipendente oppure la stessa piezo che fa Bip.
+1.4U  1/12/16 Versione con ingresso unico.
+1.5U  8/12/16 Ho introdotto la variabile temposecondi, che conta i secondi insieme a tempo ma ogni volta che supera Ti viene posta a 1 per
+              visualizzare ciclicamente i secondi quando non è in modalità "Continuo".
+*/            
 
-String ver="v0.3g";
+String ver=" v1.5U";
 
 /*
  * ----------- LCD -----------
@@ -42,35 +76,45 @@ String ver="v0.3g";
  * LCD V0 pin  > trimmer
  * LCD VCC pin > +5V
  * 
- * -------- All connections --------
- * I/O 0 (pin 2) Encoder-A (to GND)
- * I/O 1 (pin 3) Encoder-B (to GND)
- * I/O 2 (pin 4) Probe in    -INT 0
- * I/O 3~(pin 5)             -INT 1
- * I/O 4 (pin 6)
- * I/O 5~(pin 11) Encoder-Switch (to GND)
+ * I/O 0 (pin 2) Encoder - A
+ * I/O 1 (pin 3) Encoder - B
+ * I/O 2 (pin 4) Ingresso unico sonde A e B- INT 0
+ * I/O 3~(pin 5) Usc. Altoparlante Tic-tic  (INT 1)
+ * I/O 4 (pin 6) Sel. sonda B (a GND): 1=sonda A.
+ * I/O 5~(pin 11) Encoder - Pulsante
  * I/O 6~(pin 12) Analog out
  * I/O 7 (pin 13) Capsula piezo
  * I/O 8  LCD RS (pin 14)
  * I/O 9~ LCD En (pin 15)
  * I/O 10~LCD D4 (pin 16)
- * I/O 11~LCD D5 (pin 17)     -MOSI
- * I/O 12 LCD D6 (pin 18)     -MISO
- * I/O 13 LCD D7 (pin 19)     -SCK
- * A0 (pin 23) Battery voltage input, via 1M/270k voltage divider.
- * A1 (pin 24) LED 1
+ * I/O 11~LCD D5 (pin 17) -MOSI
+ * I/O 12 LCD D6 (pin 18) -MISO
+ * I/O 13 LCD D7 (pin 19) -SCK
+ * A0 (pin 23) Negativo della retroilluminazione dell'LCD.
+ * A1 (pin 24) LED 1 + Tensione della batteria via partitore 1M/270k.
  * A2 (pin 25) LED 2
  * A3 (pin 26) LED 3
  * A4 (pin 27) LED 4
  * A5 (pin 28) LED 5
  * 
+ * ***** CARATTERI *****
+ * 0 Simboli Batt_0...7
+ * 1 Lettera "à"
+ * 2 Lettera "μ"
+ * 3 10 simboli della percentuale del tempo
+ * 
  * ***** EEPROM *****
  * 0 Ti: Tempo di integrazione
- * 1 sonda: Tipo di sonda
- * 2 var lo-byte: Sensibilità variabile (lo-byte)
- * 3 var hi-byte: Sensibilità variabile (hi-byte)
- * 4 owbcpm: cpm di background proprio del tubo
- * 
-
-
+ * 1 sonda: Tipo di sonda A
+ * 2 var lo-byte: Sensibilità variabile A (lo-byte)
+ * 3 var hi-byte: Sensibilità variabile A (hi-byte)
+ * 4 owbcpm: cpm di background proprio del tubo A
+ * 5 TS: TIC software Sì/No
+ * 6 sonda: Tipo di sonda B 
+ * 7 var lo-byte: Sensibilità variabile B (lo-byte)
+ * 8 var hi-byte: Sensibilità variabile B (hi-byte)
+ * 9 owbcpm: cpm di background proprio del tubo B
+ *10 LED: 0:meter off; 1:meter dot; 2:meter bar.
+ *11 LCD: retroilluminazione dell'LCD: 1:On; 2:Auto.
+ *12 biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
  */

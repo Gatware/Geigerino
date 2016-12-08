@@ -1,6 +1,9 @@
 void BattIco()
 {
-Vb=int(analogRead(A0)*XVref/1000L);
+pinMode(A1,INPUT);
+delayMicroseconds(100);
+Vb=int(analogRead(A1)*XVref/1000L);
+pinMode(A1,OUTPUT);
 
 // (Il display può caricare in memoria un massimo di 8 simboli: carico solo quello che mi serve se lo stato è diverso da precedente)
      if(Vb>838) {bat=7;} // 4,1V  Batt_7 100%
