@@ -4,7 +4,7 @@ void Biip() {if(biptic==1||biptic==3)tone(7,1000,250);}
 
 void Biiip(){if(biptic==1||biptic==3)tone(7,1000,800);}
 
-void Tic()  {if(biptic==2||biptic==3)tone(SPK,1000,2);}
+void Tic()  {if(biptic==2||biptic==3)tone(SPK,1000,10);}
 
 void encoder()
 {
