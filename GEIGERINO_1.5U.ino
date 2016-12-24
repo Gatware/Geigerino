@@ -27,11 +27,11 @@
 *                                                                     *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 */
-#define soglia1 0.5 // V
-#define soglia2 2.5 // V
-#define soglia3 12  // G
-#define soglia4 60  // R
-#define soglia5 300 // R
+#define soglia1 0.1 // V
+#define soglia2 1 // V
+#define soglia3 10  // G
+#define soglia4 100  // R
+#define soglia5 1000 // R
 #define analogOut 1 // 1:Sì; 0:No.
 // SPK 3: Altoparlante separato
 // SPK 7: Usa la stessa piezo che fa Bip

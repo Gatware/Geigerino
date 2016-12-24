@@ -60,6 +60,7 @@
 1.5U  8/12/16 Ho introdotto la variabile temposecondi, che conta i secondi insieme a tempo ma ogni volta che supera Ti viene posta a 1 per
               visualizzare ciclicamente i secondi quando non è in modalità "Continuo".
      10/12/16 Ho prolungato il "Tic-tic" da 2 a 10mS.
+     24/12/16 Ho cambiato i valori di soglia ei LED.
 */            
 
 String ver=" v1.5U";
