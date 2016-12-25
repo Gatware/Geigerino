@@ -24,8 +24,9 @@ if(Po==0 && P==1) // se lo lascio prima, cambia unità di misura e portata analo
   Mask();
   attachInterrupt(0,ContaAB,FALLING); return;
   }
-  
-if(millis()-t4>9999) {t4=millis(); BattIco();} // Disegna l'icona che indica lo stato della batteria.
+
+// Ogni 10s legge la tensione e disegna l'icona che indica lo stato della batteria, poi ricontrolla il LED 1 (l'I/O è stato messo in input).
+if(millis()-t4>9999) {t4=millis(); BattIco(); piloLED();}
 
 if(LCD==1) mute=1;
 encoder();
@@ -95,31 +96,34 @@ if(millis()-t3>999) // Una volta al secondo:
   temposecondi+=1;
   if(Ti<70 && temposecondi>Ti) temposecondi-=Ti;
   lcd.setCursor(14,1); if(int(((millis()-millisZero)/1000))%2) lcd.print(":"); else lcd.print(" ");
-  
-// PILOTAGGIO DEI LED:
-  //                            LED 54321
-  if(LED==0)               PORTC&=B11000000;
-  else if(LED==1)
-    {
-    if     (uSvph>soglia5) {PORTC&=B11100001; PORTC|=B00100000; tone(SPK, 1000, 2000);}
-    else if(uSvph>soglia4) {PORTC&=B11010001; PORTC|=B00010000; tone(SPK, 1000, 1000);}
-    else if(uSvph>soglia3) {PORTC&=B11001001; PORTC|=B00001000;}
-    else if(uSvph>soglia2) {PORTC&=B11000101; PORTC|=B00000100;}
-    else if(uSvph>soglia1) {PORTC&=B11000011; PORTC|=B00000010;}
-    else                    PORTC&=B11000001;
-    }
-  else if(LED==2)
-    {
-    if     (uSvph>soglia5) {                  PORTC|=B00111110; tone(SPK, 1000, 2000);}
-    else if(uSvph>soglia4) {PORTC&=B11011110; PORTC|=B00011110; tone(SPK, 1000, 1000);}
-    else if(uSvph>soglia3) {PORTC&=B11001110; PORTC|=B00001110;}
-    else if(uSvph>soglia2) {PORTC&=B11000110; PORTC|=B00000110;}
-    else if(uSvph>soglia1) {PORTC&=B11000010; PORTC|=B00000010;}
-    else                    PORTC&=B11000000;
-    }
-
+  piloLED();
   } // END una volta al secondo
 } // END loop
+
+void piloLED()
+{
+// PILOTAGGIO DEI LED:
+//                             LED 54321-
+if(LED==0)               PORTC&=B11000000;
+else if(LED==1)
+  {
+  if     (uSvph>soglia5) {PORTC&=B11100001; PORTC|=B00100000; tone(SPK, 1000, 2000);}
+  else if(uSvph>soglia4) {PORTC&=B11010001; PORTC|=B00010000; tone(SPK, 1000, 1000);}
+  else if(uSvph>soglia3) {PORTC&=B11001001; PORTC|=B00001000;}
+  else if(uSvph>soglia2) {PORTC&=B11000101; PORTC|=B00000100;}
+  else if(uSvph>soglia1) {PORTC&=B11000011; PORTC|=B00000010;}
+  else                    PORTC&=B11000001;
+  }
+else if(LED==2)
+  {
+  if     (uSvph>soglia5) {                  PORTC|=B00111110; tone(SPK, 1000, 2000);}
+  else if(uSvph>soglia4) {PORTC&=B11011110; PORTC|=B00011110; tone(SPK, 1000, 1000);}
+  else if(uSvph>soglia3) {PORTC&=B11001110; PORTC|=B00001110;}
+  else if(uSvph>soglia2) {PORTC&=B11000110; PORTC|=B00000110;}
+  else if(uSvph>soglia1) {PORTC&=B11000010; PORTC|=B00000010;}
+  else                    PORTC&=B11000000;
+  }
+}
 
 void printImp() // =cpm
 {
@@ -130,7 +134,6 @@ else if(Imp<1000) cpmf="  "+String(Imp)+" ";
 else if(Imp<10000) cpmf=" "+String(Imp)+" ";
 else if(Imp<100000)    cpmf=String(Imp)+" ";
 else                   cpmf=String(Imp);
-
 lcd.print(cpmf);
 } // END printImp()
 
@@ -144,7 +147,7 @@ else if(Rad<100) {lcd.print(" ");   lcd.print(Rad,1);} // Es.:  99,5
 else if(Rad<1000) {lcd.print("  "); lcd.print(Rad,0);} // Es.:   512
 else if(Rad<10000) {lcd.print(" "); lcd.print(Rad,0);} // Es.:  1450
 else                                lcd.print(Rad,0);  // Es.:  21450
-
+// analogOut è abilitato?
 if(analogOut)
   {
   if(por==0) anOut=int(((log10(uSvph)+4)*51)); // log10(0,0001)=-4; log10(10)=1
@@ -193,6 +196,5 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   else {lcd.print("  0,01"); lcd.write(2); lcd.print("...1mSv/h");}
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
-
 Bip();
-}
+} // END portate()

@@ -61,6 +61,8 @@
               visualizzare ciclicamente i secondi quando non è in modalità "Continuo".
      10/12/16 Ho prolungato il "Tic-tic" da 2 a 10mS.
      24/12/16 Ho cambiato i valori di soglia ei LED.
+     25/12/16 Metto il pilotaggio dei LED nella funzione piloLED(), che richiamo anche dopo aver letto la tensione della batteria ogni 10s,
+              poiché per leggere la tensione devo porre l'I/O del LED 1 in modo input e poi rimane basso.
 */            
 
 String ver=" v1.5U";

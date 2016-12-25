@@ -5,7 +5,7 @@ delayMicroseconds(100);
 Vb=int(analogRead(A1)*XVref/1000L);
 pinMode(A1,OUTPUT);
 
-// (Il display può caricare in memoria un massimo di 8 simboli: carico solo quello che mi serve se lo stato è diverso da precedente)
+// (Il display può caricare in memoria un massimo di 8 simboli: carico solo quello che mi serve se lo stato è diverso dal precedente)
      if(Vb>838) {bat=7;} // 4,1V  Batt_7 100%
 else if(Vb>808) {bat=6;} // 3,95V Batt_6  83% 
 else if(Vb>777) {bat=5;} // 3,8V  Batt_5  67% 
