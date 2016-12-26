@@ -63,6 +63,9 @@
      24/12/16 Ho cambiato i valori di soglia ei LED.
      25/12/16 Metto il pilotaggio dei LED nella funzione piloLED(), che richiamo anche dopo aver letto la tensione della batteria ogni 10s,
               poiché per leggere la tensione devo porre l'I/O del LED 1 in modo input e poi rimane basso.
+     26/12/16 Ho fatto una correzione nell'impostazione della conda B nel setup e nel caricamento all'avviamento.
+              Al posto dei ":" lampeggianti ho messo l'indicazione di sonda A o B.
+              Ho cambiato l'ordine dei tipi di sonde, mettendo le Sxx in ordine alfabetico.
 */            
 
 String ver=" v1.5U";

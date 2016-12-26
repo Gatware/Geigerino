@@ -32,6 +32,7 @@ void Mask()
 lcd.clear();                   // byte(2): simbolo "micro"
 lcd.setCursor(6,0); if(U==0) lcd.print("CPM"); else lcd.print("CPS");
 lcd.setCursor(6,1); if(U==0) {lcd.write(byte(2)); lcd.print("Sv/h");} else lcd.print("mR/h");  
+lcd.setCursor(14,1); if(digitalRead(4)==1) {lcd.print("A");} else {lcd.print("B");}
 BattIco();
 }
 

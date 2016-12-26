@@ -2,6 +2,9 @@ void TipoDiSonda()
 {
 //    -------- Menu 3 - Tipo di sonda --------
 lcd.print("Tipo di sonda A? "); // ---------- sonda A ----------
+sonda=EEPROM.read(1); // Carica il tipo di sonda A.
+var=EEPROM.read(2)+EEPROM.read(3)*256; // Carica Lo-byte e Hi-byte di var del tubo A.
+ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.
 t1=millis();
 while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
 delay(100); // Antirimbalzo 
@@ -15,7 +18,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   
   lcd.setCursor(5,1);
   lcd.print(tipo[sonda]); lcd.print("   ");
-  if(millis()-t1>9999) return; // Dopo 5 secondi di inattività esce.
+  if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
   }
   
 if(sonda!=EEPROM.read(1)) {EEPROM.update(1,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!  "); delay(500);}
@@ -99,20 +102,23 @@ if(sonda==ntipi)
     lcd.setCursor(10,1); lcd.print("  SET!  "); Biip(); delay(500);
     }
     else Bip();
-  } // END if(sonda==10)
+  } // END if(sonda==ntipi)
   
-  else // IF Sonda==1...9
-    {
-    lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
-    lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
-    while(digitalRead(5)==LOW);
-    delay(500);
-    while(digitalRead(5)==HIGH);
-    } // END Sonda==1...9
+else // IF Sonda==0...ntipi-1
+  {
+  lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
+  lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
+  while(digitalRead(5)==LOW);
+  delay(500);
+  while(digitalRead(5)==HIGH);
+  } // END Sonda==0...ntipi-1
   
 lcd.clear();
 
 lcd.print("Tipo di sonda B? "); // ---------- sonda B ----------
+sonda=EEPROM.read(6); // Carica il tipo di sonda B.
+var=EEPROM.read(7)+EEPROM.read(8)*256; // Carica Lo-byte e Hi-byte di var del tubo B.
+ownbcpm=EEPROM.read(9); // cpm di fondo proprio del tubo B.
 t1=millis();
 while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
 delay(100); // Antirimbalzo 
@@ -121,12 +127,12 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0){sonda+=E; E=0; t1=millis(); delay(20);}
-  
+  if(sonda>ntipi) sonda=ntipi;
   if(sonda<0) sonda=0;
   
   lcd.setCursor(5,1);
   lcd.print(tipo[sonda]); lcd.print("   ");
-  if(millis()-t1>9999) return; // Dopo 5 secondi di inattività esce.
+  if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
   }
   
 if(sonda!=EEPROM.read(6)) {EEPROM.update(6,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!   "); delay(500);}
@@ -210,16 +216,16 @@ if(sonda==ntipi)
     lcd.setCursor(10,1); lcd.print("  SET!  "); Biip(); delay(500);
     }
     else Bip();
-  } // END if(sonda==10)
+  } // END if(sonda==ntipi)
   
-  else // IF Sonda==1...9
-    {
-    lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
-    lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
-    while(digitalRead(5)==LOW);
-    delay(500);
-    while(digitalRead(5)==HIGH);
-    } // END Sonda==1...9
+else // IF Sonda==0...ntipi-1
+  {
+  lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
+  lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
+  while(digitalRead(5)==LOW);
+  delay(500);
+  while(digitalRead(5)==HIGH);
+  } // END Sonda==1...9
   
 lcd.clear();
 }

@@ -111,10 +111,10 @@ int biptic=1; // 0:Nessun suono; 1:Bip; 2:Tic; 3:Bip+Tic.
  * 10= LND-712
  * 11= Variabile
 */
-// Tipo di sonda   0         1         2           3          4         5          6          7         8         9         10         11
-String tipo[]={"SBM-19", "SBM-20", "2xSBM-20", "SBM-21", " SI-1G", " SI-3BG", " SI-22G", " SI-29BG", "SBT-9", "SBT-11", "LND-712", "Variabile"};
-int    cost[]={   21,      166,       332,        667,      167,        2,        583,       100,      92,       318,      168};
-byte   ownb[]={  110,       32,        64,         12,       25,       12,         70,        15,      10,        15,       20}; // Own Background in cpm.
+// Tipo di sonda   0         1          2          3         4        5         6         7           8          9           10         11
+String tipo[]={"SBM-19", "SBM-20", "2xSBM-20", "SBM-21", "SBT-9", "SBT-11", " SI-1G", " SI-3BG", " SI-22G", " SI-29BG",  "LND-712", "Variabile"};
+int    cost[]={   21,      166,       332,        667,       92,     318,      167,        2,        583,       100,        168};
+byte   ownb[]={  110,       32,        64,         12,       10,      15,       25,       12,         70,        15,         20}; // Own Background in cpm.
 byte ntipi=11; // Scrivere qui il numero dell'ultima voce nella lista dei tipi di sonde (la prima ha numero zero).
 
 int sens=0; // Sensibilità della sonda in uso (cost[] o var) in cpm/(uSv/h).

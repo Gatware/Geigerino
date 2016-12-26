@@ -32,15 +32,15 @@ if(EEPROM.read(0)==255)
   lcd.setCursor(0,0); lcd.print(" EEPROM VERGINE!");
   lcd.setCursor(0,1); lcd.print("Carico i default");
   EEPROM.update(0,10);    // Ti (Tempo di integrazione): 10 secondi
-  EEPROM.update(1,1);  // sonda A: SBM-20  
-  EEPROM.update(2,166);// var lo-byte come per SBM-20:   166+
-  EEPROM.update(3,0);  // var hi-byte come per SBM-20: 0x256=166
-  EEPROM.update(4,45); // in variabile: cpm di fondo proprio del tubo.
-  EEPROM.update(5,0);     // TIC software: No.
-  EEPROM.update(6,8);  // sonda B: SBT-11  
-  EEPROM.update(7,62); // var lo-byte B come per SBM-20:     62+
-  EEPROM.update(8,1);  // var hi-byte B come per SBM-20: 1x256=318
-  EEPROM.update(9,45); // in variabile B: cpm di fondo proprio del tubo.
+  EEPROM.update(1,2);  // sonda A: 2xSBM-20  
+  EEPROM.update(2,76); // var lo-byte come per 2xSBM-20:    76+
+  EEPROM.update(3,1);  // var hi-byte come per 2xSBM-20: 1x256=332
+  EEPROM.update(4,64); // in variabile: cpm di fondo proprio del tubo come per 2xSBM-20.
+  EEPROM.update(5,0);   // TIC software: No.
+  EEPROM.update(6,5);  // sonda B: SBT-11  
+  EEPROM.update(7,62); // var lo-byte B come per SBT-11:    62+
+  EEPROM.update(8,1);  // var hi-byte B come per SBT-11: 1x256=318
+  EEPROM.update(9,15); // in variabile B: cpm di fondo proprio del tubo come per SBT-11.
   EEPROM.update(10,1); // meter in modalità dot.
   EEPROM.update(11,1); // retroilluminazione dell'LCD: On
   EEPROM.update(12,3); // suoni: Bip + Tic-tic.
@@ -48,9 +48,19 @@ if(EEPROM.read(0)==255)
   lcd.clear();
   }  
 Ti=EEPROM.read(0); Tio=Ti; // Carica il tempo di integrazione in Ti e in Tio (valore precedente).
-sonda=EEPROM.read(1); // Carica il tipo di sonda A.
-var=EEPROM.read(2)+EEPROM.read(3)*256; // Carica Lo-byte e Hi-byte di var del tubo A.
-ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.
+if(digitalRead(4)==1)
+  {
+  sonda=EEPROM.read(1); // Carica il tipo di sonda A.
+  var=EEPROM.read(2)+EEPROM.read(3)*256; // Carica Lo-byte e Hi-byte di var del tubo A.
+  ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.
+  }
+else
+  {
+  sonda=EEPROM.read(6); // Carica il tipo di sonda B.
+  var=EEPROM.read(7)+EEPROM.read(8)*256; // Carica Lo-byte e Hi-byte di var del tubo B.
+  ownbcpm=EEPROM.read(9); // cpm di fondo proprio del tubo B.
+  }
+  
 TS=EEPROM.read(5); // TIC software Sì/No.
 LED=EEPROM.read(10); // Tipo di meter.
 LCD=EEPROM.read(11); // LCD: 1:On; 2:On/Off.
