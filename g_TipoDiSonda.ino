@@ -111,6 +111,7 @@ else // IF Sonda==0...ntipi-1
   while(digitalRead(5)==LOW);
   delay(500);
   while(digitalRead(5)==HIGH);
+  Bip();
   } // END Sonda==0...ntipi-1
   
 lcd.clear();
@@ -225,6 +226,7 @@ else // IF Sonda==0...ntipi-1
   while(digitalRead(5)==LOW);
   delay(500);
   while(digitalRead(5)==HIGH);
+  Bip();
   } // END Sonda==1...9
   
 lcd.clear();

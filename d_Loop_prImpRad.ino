@@ -46,6 +46,7 @@ if(millis()-t3>999) // Una volta al secondo:
   {
   if(digitalRead(4)!=sinto) // Se digitalRead(4) è cambiato
     {
+    detachInterrupt(0);
     lcd.setCursor(14,1);
     Azzera(); Bip();
     sinto=digitalRead(4);
@@ -66,29 +67,32 @@ if(millis()-t3>999) // Una volta al secondo:
       
     if(sonda==ntipi) {sens=var;}
     else{sens=cost[sonda]; ownbcpm=ownb[sonda];}
+    attachInterrupt(0,ContaAB,FALLING);
     } // END se digitalRead(4) è cambiato
     
-  D=DAB;    
+  D=DAB;  
   t3=millis();
   if(Ti<70)
     {
     C[m]=D; if(D>DMAX){DMAX=D;} DAB=0; // DMAX: cps massimi (1 secondo).
+    cp=0; 
+    for(m1=1; m1<=tempo; m1++) {cp+=C[m1];} // Somma gli impulsi memorizzati nel tempo Ti.
     if(m<Ti) {m+=1;}
-    else {m=1;}
-    cp=0;
-    for(m1=1; m1<tempo+1; m1++) {cp+=C[m1];} // Somma gli impulsi memorizzati nel tempo Ti.
+    else {m=1;} 
     }
-  else {cp+=D; if(D>DMAX){DMAX=D;} DAB=0;} // Ti=70, quindi tempo di integrazione infinito)
-    
-  if(long(cp*60/long(tempo))>ownbcpm) cpm=long(cp*60/long(tempo))-ownbcpm; else cpm=0; // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
-  
+  else
+    {
+    cp+=D; if(D>DMAX){DMAX=D;} DAB=0; // Ti=70, quindi tempo di integrazione infinito)
+    }
+  if(tempo<Ti) {if(long(cp*60/long(tempo-1))>ownbcpm) cpm=long(cp*60/long(tempo-1))-ownbcpm; else cpm=0;} // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
+  else         {if(long(cp*60/long(tempo))>ownbcpm) cpm=long(cp*60/long(tempo))-ownbcpm; else cpm=0;} 
   Imp=cpm; lcd.setCursor(0,0); printImp(); // Passa i cpm a printImp.
   uSvph=float(cpm)/sens; // in virgola mobile.
   Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); // Passa i uSv/h a printRad.
 
   lcd.setCursor(10,0);
-  ore=int(tempo/3600); if(ore>9) oref=String(ore); else oref=" "+String(ore);
-  minuti=int((tempo%3600)/60); if(minuti>9) minutif=String(minuti); else minutif=" "+String(minuti);
+  ore=int(temposecondi/3600); if(ore>9) oref=String(ore); else oref=" "+String(ore);
+  minuti=int((temposecondi%3600)/60); if(minuti>9) minutif=String(minuti); else minutif=" "+String(minuti);
   secondi=(temposecondi%3600)%60; 
   if(secondi>9) secondif=String(secondi); else secondif=" "+String(secondi);
   

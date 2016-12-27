@@ -66,6 +66,8 @@
      26/12/16 Ho fatto una correzione nell'impostazione della conda B nel setup e nel caricamento all'avviamento.
               Al posto dei ":" lampeggianti ho messo l'indicazione di sonda A o B.
               Ho cambiato l'ordine dei tipi di sonde, mettendo le Sxx in ordine alfabetico.
+              La media cresceva lentamente, poiché la divisione viene effettuata per un numero di secondi pari a tempo+1: adesso un 
+              if(tempo<Ti) fa dividere per tempo-1 e sembra risolto. Non ho trovato una soluzione migliore :-(
 */            
 
 String ver=" v1.5U";

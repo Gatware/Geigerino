@@ -23,8 +23,8 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
 if(Ti!=Tio) lcd.setCursor(4,1); lcd.print(" ZERO   "); // Se il tempo impostato è diverso dal precedente, segnala che azzera.
 if(Ti!=EEPROM.read(0)) {EEPROM.update(0,Ti); Biip(); lcd.setCursor(10,1); lcd.print("  SET!"); delay(500);}
 else Bip();
-if(Ti!=Tio) {Biiip(); Azzera();} // Se il tempo impostato è minore del precedente, azzera e fa Biiip. Mettendolo 3 righe più su,
-Tio=Ti;              // il Biiip viene troncato dal successivo Biip più breve!
+Biiip(); Azzera(); // Azzera e fa Biiip. Mettendolo 3 righe più su, il Biiip viene troncato dal successivo Biip più breve!
+Tio=Ti;
 }
 
 void Mask()

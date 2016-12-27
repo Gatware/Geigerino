@@ -20,12 +20,12 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
   
-if (Azz==1) {Azz=0; Biiip(); Azzera();} // Azzera
+if (Azz==1) {Azz=0; Biiip(); detachInterrupt(0); Azzera(); attachInterrupt(0,ContaAB,FALLING);} // Azzera
 else Bip();
 } // END Azzeramento()
 
 void Azzera()
-{cp=0; tempo=0; temposecondi=0; m=1; m1=1; t3=0; DAB=0; D=0; DMAX=0; for(m1=1; m1<61; m1++){C[m1]=0;}}
+{for(m1=1; m1<61; m1++){C[m1]=0;} m=1; m1=1; cp=0; tempo=0; temposecondi=0; t3=0; DAB=0; D=0; DMAX=0;}
  // END Azzera()
 
 void massimi()
