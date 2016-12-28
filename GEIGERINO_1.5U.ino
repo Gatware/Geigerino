@@ -53,8 +53,9 @@ unsigned long millisZero=0; // Lettura del tempo iniziale per far lampeggiare se
                             // a volte, dopo aver impostato il tipo di sonda, lampeggiavano al contrario.
 unsigned long t1=0; // Lettura del tempo per la durata della pressione del pulsante
 unsigned long t2=0; // Lettura del tempo per il Bip
-unsigned long t3=0; // Lettura del tempo per C[m].
+unsigned long t3=0; // Lettura del tempo per C[m] (1 volta al secondo).
 unsigned long t4=0; // Lettura del tempo per la misura e l'icona dello stato della batteria.
+unsigned long t5=0; // Lettura del tempo per la lettura del commutatore della sonda (2 volte al secondo).
 int E; // Risultato della routine encoder(): 1, -1, 0.
 byte S; // Lettura dei due valori dell'encoder.
 byte So;// Lettura precedente dell'encoder.

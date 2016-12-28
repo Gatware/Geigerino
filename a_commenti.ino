@@ -68,7 +68,7 @@
               Ho cambiato l'ordine dei tipi di sonde, mettendo le Sxx in ordine alfabetico.
               La media cresceva lentamente, poiché la divisione viene effettuata per un numero di secondi pari a tempo+1: adesso un 
               if(tempo<Ti) fa dividere per tempo-1 e sembra risolto. Non ho trovato una soluzione migliore :-(
-*/            
+     28/12/16 Velocizzo la lettura del commutatore di sonda da 1 a 2 volte a secondo (il commutatore è comodo anche per azzerare).
 
 String ver=" v1.5U";
 

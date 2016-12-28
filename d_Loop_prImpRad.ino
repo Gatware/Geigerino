@@ -42,6 +42,37 @@ if(E!=0 && LCD==2) // Se è stato ruotato l'encoder e LCD sta in On/Off.
   E=0;
   }
 
+
+if(millis()-t5>499) // Due volte al secondo:
+  {
+  t5=millis();
+  if(digitalRead(4)!=sinto) // Se digitalRead(4) è cambiato
+    {
+    detachInterrupt(0);
+    lcd.setCursor(14,1);
+    Azzera(); Bip();
+    sinto=digitalRead(4);
+    if(sinto==1) // Se l'I/O 4 sta alto è selezionata la sonda A; se sta a massa, la sonda B.
+      {
+      sonda=EEPROM.read(1); // Carica il tipo di sonda A.
+      var=EEPROM.read(2)+EEPROM.read(3)*256; // Carica Lo-byte e Hi-byte di var del tubo A.
+      ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.   
+      lcd.print("A");  
+      } // END if(sinto==1)
+    else
+      {
+      sonda=EEPROM.read(6); // Carica il tipo di sonda B.
+      var=EEPROM.read(7)+EEPROM.read(8)*256; // Carica Lo-byte e Hi-byte di var del tubo B.
+      ownbcpm=EEPROM.read(9); // cpm di fondo proprio del tubo B.
+      lcd.print("B");
+      } // END else
+      
+    if(sonda==ntipi) {sens=var;}
+    else{sens=cost[sonda]; ownbcpm=ownb[sonda];}
+    attachInterrupt(0,ContaAB,FALLING);
+    } // END se digitalRead(4) è cambiato
+  } // END 2 volte al secondo.
+  
 if(millis()-t3>999) // Una volta al secondo:
   {
   if(digitalRead(4)!=sinto) // Se digitalRead(4) è cambiato
