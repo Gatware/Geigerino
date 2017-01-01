@@ -1,3 +1,4 @@
+
 /*
 0.1  15/10/16 Cerco di fare tutta la selezione dei menu nel loop.
 0.2  16/10/16 Torno ai salti da un menu all'altro come in Limiti.
@@ -69,7 +70,15 @@
               La media cresceva lentamente, poiché la divisione viene effettuata per un numero di secondi pari a tempo+1: adesso un 
               if(tempo<Ti) fa dividere per tempo-1 e sembra risolto. Non ho trovato una soluzione migliore :-(
      28/12/16 Velocizzo la lettura del commutatore di sonda da 1 a 2 volte a secondo (il commutatore è comodo anche per azzerare).
-
+     31/12/16 Adesso per accendere e spegnere la retroilluminazione (se in modalità On/Off) bisogna ruotare l'encoder di 3 scatti in 200mS
+              e i suoni per On e Off sono diversi dal Bip().
+              Adesso la numerazione delle opzioni delle sonde parte da 1 anziché da 0 e non è più necessario che Variabile (o variabile) sia
+              l'ultima opzione, poiché non viene più letto l'indice (che era l'ultimo) ma il nome (Variabile o variabile).
+              Ho aggiunto Riavvia() per usarla al posto di return nel menu di setup: riavvia tutto anziché passare al menu seguente.
+              Adesso gli azzeramenti fanno Biip().
+              Ho aggiunto music().
+*/
+ 
 String ver=" v1.5U";
 
 /*

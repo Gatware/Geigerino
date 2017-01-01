@@ -21,6 +21,7 @@ pinMode(A2,OUTPUT); // LED 2
 pinMode(A3,OUTPUT); // LED 3
 pinMode(A4,OUTPUT); // LED 4
 pinMode(A5,OUTPUT); // LED 5 + Tensione della batteria via partitore 1M/270k.
+digitalWrite(A0,HIGH); // Spegne la retroilluminazione.
 
 for(n=0; n<62; n++) {C[n]=0;}
 lcd.createChar(1,aaccentata);
@@ -28,16 +29,16 @@ lcd.createChar(2,micro);
 
 if(EEPROM.read(0)==255)
   {
-  Bip(); delay(100); Bip(); delay(100); Bip(); delay(100); Bip();
+  Bip(); delay(100); Bip(); delay(100); Bip(); delay(100); Biip();
   lcd.setCursor(0,0); lcd.print(" EEPROM VERGINE!");
   lcd.setCursor(0,1); lcd.print("Carico i default");
-  EEPROM.update(0,10);    // Ti (Tempo di integrazione): 10 secondi
-  EEPROM.update(1,2);  // sonda A: 2xSBM-20  
+  EEPROM.update(0,10); // Ti (Tempo di integrazione): 10 secondi
+  EEPROM.update(1,3);  // sonda A: 2xSBM-20  
   EEPROM.update(2,76); // var lo-byte come per 2xSBM-20:    76+
   EEPROM.update(3,1);  // var hi-byte come per 2xSBM-20: 1x256=332
   EEPROM.update(4,64); // in variabile: cpm di fondo proprio del tubo come per 2xSBM-20.
-  EEPROM.update(5,0);   // TIC software: No.
-  EEPROM.update(6,5);  // sonda B: SBT-11  
+  EEPROM.update(5,0);  // TIC software: No.
+  EEPROM.update(6,10); // sonda B: SBT-11  
   EEPROM.update(7,62); // var lo-byte B come per SBT-11:    62+
   EEPROM.update(8,1);  // var hi-byte B come per SBT-11: 1x256=318
   EEPROM.update(9,15); // in variabile B: cpm di fondo proprio del tubo come per SBT-11.
@@ -67,9 +68,9 @@ LCD=EEPROM.read(11); // LCD: 1:On; 2:On/Off.
 biptic=EEPROM.read(12); // biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
 
                        // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna.
-if(digitalRead(5)==0) {Bip(); lcd.clear(); TipoDiSonda(); lcd.clear(); dotBar(); lcd.clear(); retroillum(); lcd.clear(); TICSwSiNo();} 
+if(digitalRead(5)==0) {Bip(); lcd.clear(); TipoDiSonda(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo();} 
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
-  
+
 lcd.clear();
 lcd.setCursor(0,0); lcd.print("Contatore Geiger");
 lcd.setCursor(5,1); lcd.print(ver);
@@ -97,7 +98,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   lcd.setCursor(7,1);
   if(TS==1){lcd.print("Si");}
   else {lcd.print("No");}
-  if(millis()-t1>4999) {lcd.clear(); return;} // Dopo 5 secondi di inattività esce.
+  if(millis()-t1>4999) {lcd.clear(); Riavvia();} // Dopo 5 secondi di inattività esce.
   }
  
 if(TS!=EEPROM.read(5)) // Se lo stato di TS è cambiato rispetto a quello memorizzato...
@@ -127,7 +128,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   else if(LED==1) {lcd.setCursor(0,1); lcd.print(" "); lcd.setCursor(6,1); lcd.print("x"); lcd.setCursor(12,1); lcd.print(" ");}
   else if(LED==2) {lcd.setCursor(0,1); lcd.print(" "); lcd.setCursor(6,1); lcd.print(" "); lcd.setCursor(12,1); lcd.print("x");}
   
-  if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
+  if(millis()-t1>4999) Riavvia(); // Dopo 5 secondi di inattività esce.
   }
 if(LED!=EEPROM.read(10)) {EEPROM.update(10,LED); Biip(); lcd.setCursor(12,1); lcd.print(" SET!"); delay(500);}
 else Bip();  

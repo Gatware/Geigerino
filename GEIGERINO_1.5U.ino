@@ -33,6 +33,12 @@
 #define soglia4 100  // R
 #define soglia5 1000 // R
 #define analogOut 1 // 1:Sì; 0:No.
+#define MI  659
+#define SOL 784
+#define LA  880
+#define SI  988
+#define DO 1046
+
 // SPK 3: Altoparlante separato
 // SPK 7: Usa la stessa piezo che fa Bip
 #define SPK 7 // per Tic-tic e allarmi
@@ -40,6 +46,8 @@
 #include <LiquidCrystal.h>
 #include <EEPROM.h>
 LiquidCrystal lcd(8,9,10,11,12,13); // RS,EN,D4,D5,D6,D7
+void(* Riavvia)(void) = 0; // Riavvia() riavvia il Contatore Geiger (usato per uscire dalle impostazioni di setup dopo ...secondi).
+
 unsigned long XVref=0.940*1080; // 0,94 * Vref in mV. Inserire qui il valore letto con il multimetro sul pin 21 dell'ATmega328P
                                 // o il valore del riferimento di tensione esterno montato.
 unsigned long Vb; // Tensione della batteria, letta su A3. Deve essere long per permettere i calcoli per la lettura della tensione.
@@ -51,7 +59,7 @@ int Azz=0; // Contatore sì/no per l'encoder in Azzerare.
 int TS=0; // 1: fa TIC-TIC software
 unsigned long millisZero=0; // Lettura del tempo iniziale per far lampeggiare sempre i due punti sui secondi dispari:
                             // a volte, dopo aver impostato il tipo di sonda, lampeggiavano al contrario.
-unsigned long t1=0; // Lettura del tempo per la durata della pressione del pulsante
+unsigned long t1=0; // Lettura del tempo per la durata della pressione del pulsante e per la rotazione dell'encoder per On/Off.
 unsigned long t2=0; // Lettura del tempo per il Bip
 unsigned long t3=0; // Lettura del tempo per C[m] (1 volta al secondo).
 unsigned long t4=0; // Lettura del tempo per la misura e l'icona dello stato della batteria.
@@ -94,29 +102,32 @@ byte Tio=0; // Tempo di integrazione precedente.
 int sonda=0; // Tipo di sonda
 byte sinto=1; // Valore precedente dello stato sonda interna (sonda A) = digitalRead(4) (1: interna).
 int LED=1; // 0:meter off; 1:meter dot; 2:meter bar (può scendere a -1).
-byte LCD=1; // Retroilluminazione dell'LCD: 1:On 2:On/Off
-byte LCDo=1; // Stato precedente di LCD.
+byte LCD=2; // Retroilluminazione dell'LCD: 1:On 2:On/Off
+byte LCDo=2; // Stato precedente di LCD.
+int L=0; // Conteggio dell'encoder per la retroilluminazione On/Off.
+int Lo=0; // Valore precedente di L.
 byte mute=0; // 1:non fa fare Bip quando si ruota l'encoder (quando LCD=1 (On)).
 int biptic=1; // 0:Nessun suono; 1:Bip; 2:Tic; 3:Bip+Tic.
          
-/*  0= SBM-19
- *  1= SBM-20
- *  2= 2xSBM-20
- *  3= SBM-21
- *  4= SI-1G
- *  5= SI-3BG
- *  6= SI-22G
- *  7= SI-29BG
- *  8= SBT-9
- *  9= SBT-11
- * 10= LND-712
- * 11= Variabile
+/*  1= SBM-19
+ *  2= SBM-20
+ *  3= 2xSBM-20
+ *  4= SBM-21
+ *  5= SI-1G
+ *  6= SI-3BG
+ *  7= SI-22G
+ *  8= SI-29BG
+ *  9= SBT-9
+ * 10= SBT-11
+ * 11= LND-712
+ * 12= Variabile
 */
-// Tipo di sonda   0         1          2          3         4        5         6         7           8          9           10         11
-String tipo[]={"SBM-19", "SBM-20", "2xSBM-20", "SBM-21", "SBT-9", "SBT-11", " SI-1G", " SI-3BG", " SI-22G", " SI-29BG",  "LND-712", "Variabile"};
-int    cost[]={   21,      166,       332,        667,       92,     318,      167,        2,        583,       100,        168};
-byte   ownb[]={  110,       32,        64,         12,       10,      15,       25,       12,         70,        15,         20}; // Own Background in cpm.
-byte ntipi=11; // Scrivere qui il numero dell'ultima voce nella lista dei tipi di sonde (la prima ha numero zero).
+//Tipo di sonda -      1         2           3         4        5         6         7          8          9          10          11         12
+String tipo[]={"", "SBM-19", "SBM-20", "2xSBM-20", "SBM-21", "SBT-9", "SBT-11", " SI-1G", " SI-3BG", " SI-22G", " SI-29BG",  "LND-712", "Variabile"};
+int    cost[]={0,     21,      166,       332,        667,       92,     318,      167,        2,        583,       100,        168};
+byte   ownb[]={0,    110,       32,        47,         12,       10,      15,       25,       12,         70,        15,         20}; // Own Background in cpm.
+// 2xSBM-20: con ownb=47 il fondo ambientale è simile a quello della SBT-11. 
+byte ntipi=12; // Scrivere qui il numero dell'ultima voce nella lista dei tipi di sonde (il primo elemento di ogni array è nullo).
 
 int sens=0; // Sensibilità della sonda in uso (cost[] o var) in cpm/(uSv/h).
 int var=0; // Fattore tra 1 e 999 per la sensibilità variabile della sonda.

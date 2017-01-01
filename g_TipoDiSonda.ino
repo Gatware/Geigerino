@@ -14,17 +14,17 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   encoder();
   if(E!=0){sonda+=E; E=0; t1=millis(); delay(20);}
   if(sonda>ntipi) sonda=ntipi;
-  if(sonda<0) sonda=0;
+  if(sonda<1) sonda=1;
   
   lcd.setCursor(5,1);
   lcd.print(tipo[sonda]); lcd.print("   ");
-  if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+  if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
   }
   
 if(sonda!=EEPROM.read(1)) {EEPROM.update(1,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!  "); delay(500);}
 else Bip();
 
-if(sonda==ntipi)
+if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   {                           // variabile
   lcd.setCursor(0,0); lcd.print("  Sensibilit"); lcd.write(1); lcd.print("?  ");
   lcd.setCursor(5,1); lcd.print("         "); printVar();
@@ -39,7 +39,7 @@ if(sonda==ntipi)
     if(var>999) var-=100;
     if(var<0) var+=100;
     printVar();
-    if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+    if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle centinaia.
     
   while(digitalRead(5)==LOW);
@@ -53,7 +53,7 @@ if(sonda==ntipi)
     if(var>999) var-=10;
     if(var<0) var+=10;
     printVar();
-    if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+    if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle decine.
     
   while(digitalRead(5)==LOW);
@@ -67,7 +67,7 @@ if(sonda==ntipi)
     if(var>999) {var=999;}
     else if(var<1) {var=1;}
     printVar();
-    if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+    if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle unità. 
 
   if(var!=EEPROM.read(2)+EEPROM.read(3)*256)
@@ -93,7 +93,7 @@ if(sonda==ntipi)
     else if(ownbcpm<100) lcd.print(" "+String(ownbcpm));
     else lcd.print(ownbcpm);
     
-    if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+    if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento del Background proprio del tubo.
                                                       
   if(ownbcpm!=EEPROM.read(4))
@@ -102,9 +102,9 @@ if(sonda==ntipi)
     lcd.setCursor(10,1); lcd.print("  SET!  "); Biip(); delay(500);
     }
     else Bip();
-  } // END if(sonda==ntipi)
+  } // END if(tipo[sonda]==Variabile)
   
-else // IF Sonda==0...ntipi-1
+  else // IF Sonda==1...ntipi-1
   {
   lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
   lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
@@ -112,7 +112,7 @@ else // IF Sonda==0...ntipi-1
   delay(500);
   while(digitalRead(5)==HIGH);
   Bip();
-  } // END Sonda==0...ntipi-1
+  } // END Sonda==1...ntipi-1
   
 lcd.clear();
 
@@ -129,17 +129,17 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   encoder();
   if(E!=0){sonda+=E; E=0; t1=millis(); delay(20);}
   if(sonda>ntipi) sonda=ntipi;
-  if(sonda<0) sonda=0;
+  if(sonda<1) sonda=1;
   
   lcd.setCursor(5,1);
   lcd.print(tipo[sonda]); lcd.print("   ");
-  if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+  if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
   }
   
 if(sonda!=EEPROM.read(6)) {EEPROM.update(6,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!   "); delay(500);}
 else Bip();
 
-if(sonda==ntipi)
+if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   {                           // variabile
   lcd.setCursor(0,0); lcd.print("  Sensibilit"); lcd.write(1); lcd.print("?  ");
   lcd.setCursor(5,1); lcd.print("         "); printVar();
@@ -154,7 +154,7 @@ if(sonda==ntipi)
     if(var>999) var-=100;
     if(var<0) var+=100;
     printVar();
-    if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+    if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle centinaia.
     
   while(digitalRead(5)==LOW);
@@ -168,7 +168,7 @@ if(sonda==ntipi)
     if(var>999) var-=10;
     if(var<0) var+=10;
     printVar();
-    if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+    if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle decine.
     
   while(digitalRead(5)==LOW);
@@ -182,7 +182,7 @@ if(sonda==ntipi)
     if(var>999) {var=999;}
     else if(var<1) {var=1;}
     printVar();
-    if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+    if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle unità. 
 
   if(var!=EEPROM.read(7)+EEPROM.read(8)*256)
@@ -208,7 +208,7 @@ if(sonda==ntipi)
     else if(ownbcpm<100) lcd.print(" "+String(ownbcpm));
     else lcd.print(ownbcpm);
     
-    if(millis()-t1>9999) return; // Dopo 10 secondi di inattività esce.
+    if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento del Background proprio del tubo.
                                                       
   if(ownbcpm!=EEPROM.read(9))
@@ -217,9 +217,9 @@ if(sonda==ntipi)
     lcd.setCursor(10,1); lcd.print("  SET!  "); Biip(); delay(500);
     }
     else Bip();
-  } // END if(sonda==ntipi)
+  } // END if(tipo[sonda]==Variabile)
   
-else // IF Sonda==0...ntipi-1
+else // IF Sonda==1...ntipi-1
   {
   lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
   lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");

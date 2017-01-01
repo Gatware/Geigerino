@@ -20,7 +20,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
   
-if (Azz==1) {Azz=0; Biiip(); detachInterrupt(0); Azzera(); attachInterrupt(0,ContaAB,FALLING);} // Azzera
+if (Azz==1) {Azz=0; Biip(); detachInterrupt(0); Azzera(); attachInterrupt(0,ContaAB,FALLING);} // Azzera
 else Bip();
 } // END Azzeramento()
 
@@ -57,7 +57,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   if(LCD>2) LCD=2;
   if(LCD<1) LCD=1;
 
-  lcd.setCursor(5,1); if(LCD==1) lcd.print("On    "); else lcd.print("On/Off");
+  lcd.setCursor(5,1); if(LCD==1) lcd.print("  On  "); else lcd.print("On/Off");
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
 if(LCD!=EEPROM.read(11)) {EEPROM.update(11,LCD); Biip(); lcd.setCursor(12,1); lcd.print(" SET!"); delay(500);}

@@ -1,10 +1,10 @@
-void Bip()  {if(mute==0 && (biptic==1||biptic==3)) tone(7,1000,30);}
+void Bip()   {if(mute==0 && (biptic==1||biptic==3)) tone(7,1000,30);}
 
-void Biip() {if(biptic==1||biptic==3)tone(7,1000,250);}
+void Biip()  {if(biptic==1||biptic==3)tone(7,1000,250);}
 
-void Biiip(){if(biptic==1||biptic==3)tone(7,1000,800);}
+void Biiip() {if(biptic==1||biptic==3)tone(7,1000,800);}
 
-void Tic()  {if(biptic==2||biptic==3)tone(SPK,1000,10);}
+void Tic()   {if(biptic==2||biptic==3)tone(SPK,1000,10);}
 
 void encoder()
 {
@@ -27,3 +27,42 @@ if (X==0)
   So=S;  
   }
 }
+
+void music()
+{
+lcd.clear();
+detachInterrupt(0);
+byte D1=150;
+byte D2=150;
+lcd.print("RADIO");
+tone(7,MI,D1);
+delay(250);
+tone(7,LA,D2);
+delay(500);
+lcd.print(" ACTIVITY");
+tone(7,LA,D1);
+delay(250);
+tone(7,SOL,D1);
+delay(250);
+tone(7,LA,D1);
+delay(250);
+tone(7,MI,D1);
+delay(250);
+delay(250); // Pausa
+lcd.setCursor(0,0);
+lcd.print("Is in the air   ");
+tone(7,LA,D1);
+delay(250);
+tone(7,DO,D2);
+delay(500);
+lcd.setCursor(0,1);
+lcd.print("for you and me! ");
+tone(7,SI,D1);
+delay(250);
+tone(7,LA,D2);
+delay(1000);
+attachInterrupt(0,ContaAB,FALLING);
+lcd.clear();
+Mask();
+}
+
