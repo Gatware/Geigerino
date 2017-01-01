@@ -73,8 +73,8 @@ if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var
 
 lcd.clear();
 lcd.setCursor(0,0); lcd.print("Contatore Geiger");
-lcd.setCursor(5,1); lcd.print(ver);
-delay(2000);
+lcd.setCursor(4,1); lcd.print(ver);
+delay(1500);
 lcd.setCursor(0,0); lcd.print("G.Giangreco 2016");
 lcd.setCursor(0,1); lcd.print("                ");
 delay(1500);

@@ -10,6 +10,7 @@ if(Po==0 && P==0) // Se era ed è premuto per almeno 1,2 secondi
     detachInterrupt(0);         // Blocca gli interrupt per evitare che si accumulino conteggi
     Integrazione();             // che poi verrebbero divisi per un tempo brevissimo, non essendo
     while(digitalRead(5)==LOW); // stata, nel frattempo, incrementata la variabile tempo.
+    delay(200);
     Mask();
     attachInterrupt(0,ContaAB,FALLING); return;
     }
@@ -21,6 +22,7 @@ if(Po==0 && P==1) // se lo lascio prima, cambia unità di misura e portata analo
   detachInterrupt(0);
   lcd.clear(); portate();
   while(digitalRead(5)==LOW); 
+  delay(200);
   Mask();
   attachInterrupt(0,ContaAB,FALLING); return;
   }

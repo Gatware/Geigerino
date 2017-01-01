@@ -20,10 +20,11 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   else lcd.print("Continuo"); // Se Ti=70, integra continuamente a tempo infinito.
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
-if(Ti!=Tio) lcd.setCursor(4,1); lcd.print(" ZERO   "); // Se il tempo impostato è diverso dal precedente, segnala che azzera.
+delay(200);
+if(Ti!=Tio) {lcd.setCursor(4,1); lcd.print(" ZERO   ");} // Se il tempo impostato è diverso dal precedente, segnala che azzera.
 if(Ti!=EEPROM.read(0)) {EEPROM.update(0,Ti); Biip(); lcd.setCursor(10,1); lcd.print("  SET!"); delay(500);}
-else Bip();
-if(Ti!=Tio) {Biip(); Azzera();} // Se è cambiato, azzera e fa Bipbip. Mettendolo 3 righe più su, il Bipbip viene troncato dal successivo Biip più breve!
+  else Bip();
+if(Ti!=Tio) {Biip(); Azzera();} // Se è cambiato, azzera e fa Biip.
 Tio=Ti;
 }
 
