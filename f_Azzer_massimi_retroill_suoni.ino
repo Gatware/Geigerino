@@ -78,8 +78,8 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) biptic+=E;
-  if(biptic>1+2*TS) {tone(7,1000,1); E=0; biptic=1+2*TS;} // Se TS (Tic-Tic Software) è disattivato, elenca solo Nessun suono e Bip (dei menu)
-  if(biptic<0) {tone(7,1000,1); E=0; biptic=0;}
+  if(biptic>1+2*TS) {tone(7,1000,1); noTone(7); E=0; biptic=1+2*TS;} // Se TS (Tic-Tic Software) è disattivato, elenca solo Nessun suono e Bip (dei menu)
+  if(biptic<0) {tone(7,1000,1); noTone(7); E=0; biptic=0;}
   if(E!=0){tone(7,1000,15); E=0; t1=millis(); delay(20);}
   lcd.setCursor(2,1);
   
