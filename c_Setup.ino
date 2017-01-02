@@ -45,6 +45,7 @@ if(EEPROM.read(0)==255)
   EEPROM.update(10,1); // meter in modalità dot.
   EEPROM.update(11,1); // retroilluminazione dell'LCD: On
   EEPROM.update(12,3); // suoni: Bip + Tic-tic.
+  EEPROM.update(13,0); // Alimentazione: Litio dir.
   delay(4000);
   lcd.clear();
   }  
@@ -66,6 +67,7 @@ TS=EEPROM.read(5); // TIC software Sì/No.
 LED=EEPROM.read(10); // Tipo di meter.
 LCD=EEPROM.read(11); // LCD: 1:On; 2:On/Off.
 biptic=EEPROM.read(12); // biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
+pwr=EEPROM.read(13); // Alimentazione: 0:Litio dir.; 1:5V.
 
                        // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna.
 if(digitalRead(5)==0) {Bip(); lcd.clear(); TipoDiSonda(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo();} 

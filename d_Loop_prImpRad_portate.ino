@@ -51,7 +51,6 @@ if(E!=0 && LCD==2) // Se è stato ruotato l'encoder e LCD sta in On/Off.
   Lo=L; E=0;
   }
 
-
 if(millis()-t5>499) // Due volte al secondo:
   {
   t5=millis();
@@ -76,7 +75,7 @@ if(millis()-t5>499) // Due volte al secondo:
       lcd.print("B");
       } // END else
       
-    if(sonda==ntipi) {sens=var;}
+    if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile") sens=var;
       else{sens=cost[sonda]; ownbcpm=ownb[sonda];}
     attachInterrupt(0,ContaAB,FALLING);
     } // END se digitalRead(4) è cambiato
@@ -84,32 +83,6 @@ if(millis()-t5>499) // Due volte al secondo:
   
 if(millis()-t3>999) // Una volta al secondo:
   {
-  if(digitalRead(4)!=sinto) // Se digitalRead(4) è cambiato
-    {
-    detachInterrupt(0);
-    lcd.setCursor(14,1);
-    Azzera(); Biip();
-    sinto=digitalRead(4);
-    if(sinto==1) // Se l'I/O 4 sta alto è selezionata la sonda A; se sta a massa, la sonda B.
-      {
-      sonda=EEPROM.read(1); // Carica il tipo di sonda A.
-      var=EEPROM.read(2)+EEPROM.read(3)*256; // Carica Lo-byte e Hi-byte di var del tubo A.
-      ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.   
-      lcd.print("A");  
-      } // END if(sinto==1)
-      else
-      {
-      sonda=EEPROM.read(6); // Carica il tipo di sonda B.
-      var=EEPROM.read(7)+EEPROM.read(8)*256; // Carica Lo-byte e Hi-byte di var del tubo B.
-      ownbcpm=EEPROM.read(9); // cpm di fondo proprio del tubo B.
-      lcd.print("B");
-      } // END else
-      
-    if(sonda==ntipi) {sens=var;}
-      else{sens=cost[sonda]; ownbcpm=ownb[sonda];}
-    attachInterrupt(0,ContaAB,FALLING);
-    } // END se digitalRead(4) è cambiato
-    
   D=DAB;  
   t3=millis();
   if(Ti<70)
@@ -125,7 +98,7 @@ if(millis()-t3>999) // Una volta al secondo:
     cp+=D; if(D>DMAX){DMAX=D;} DAB=0; // Ti=70, quindi tempo di integrazione infinito)
     }
   if(tempo<Ti) {if(long(cp*60/long(tempo-1))>ownbcpm) cpm=long(cp*60/long(tempo-1))-ownbcpm; else cpm=0;} // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
-    else       {if(long(cp*60/long(tempo))>ownbcpm) cpm=long(cp*60/long(tempo))-ownbcpm; else cpm=0;} 
+  else         {if(long(cp*60/long(tempo))>ownbcpm) cpm=long(cp*60/long(tempo))-ownbcpm; else cpm=0;} 
   Imp=cpm; lcd.setCursor(0,0); printImp(); // Passa i cpm a printImp.
   uSvph=float(cpm)/sens; // in virgola mobile.
   Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); // Passa i uSv/h a printRad.
@@ -136,9 +109,9 @@ if(millis()-t3>999) // Una volta al secondo:
   secondi=(temposecondi%3600)%60; 
   if(secondi>9) secondif=String(secondi); else secondif=" "+String(secondi);
   
-  if     (tempo<60)   {lcd.print("   "+secondif+"s");}
-  else if(tempo<3600)  lcd.print(minutif+"m"+secondif+"s");
-  else                 lcd.print(oref+"h"+minutif+"m");
+  if       (tempo<60)   {lcd.print("   "+secondif+"s");}
+  else if (tempo<3600)  lcd.print(minutif+"m"+secondif+"s");
+  else                  lcd.print(oref+"h"+minutif+"m");
   tempo+=1; if(Ti<70 && tempo>Ti){tempo=Ti;}
   temposecondi+=1;
   if(Ti<70 && temposecondi>Ti) temposecondi-=Ti;
@@ -148,13 +121,15 @@ if(millis()-t3>999) // Una volta al secondo:
   } // END una volta al secondo
 } // END loop
 
+// --------------------------------------------------------------------------------------------------------------
+
 void piloLED()
 {
 // PILOTAGGIO DEI LED:
-//                             LED 54321-
-if(LED==0)               PORTC&=B11000000;
+//                              LED 54321-
+if(LED==0)                PORTC&=B11000000;
 else if(LED==1)
-  {
+  { //                          LED 54321-        LED 54321-
   if     (uSvph>soglia5) {PORTC&=B11100001; PORTC|=B00100000; tone(SPK, 1000, 2000);}
   else if(uSvph>soglia4) {PORTC&=B11010001; PORTC|=B00010000; tone(SPK, 1000, 1000);}
   else if(uSvph>soglia3) {PORTC&=B11001001; PORTC|=B00001000;}
@@ -163,7 +138,7 @@ else if(LED==1)
   else                    PORTC&=B11000001;
   }
 else if(LED==2)
-  {
+  { //                          LED 54321-        LED 54321-
   if     (uSvph>soglia5) {                  PORTC|=B00111110; tone(SPK, 1000, 2000);}
   else if(uSvph>soglia4) {PORTC&=B11011110; PORTC|=B00011110; tone(SPK, 1000, 1000);}
   else if(uSvph>soglia3) {PORTC&=B11001110; PORTC|=B00001110;}
@@ -198,10 +173,13 @@ else                                lcd.print(Rad,0);  // Es.:  21450
 // analogOut è abilitato?
 if(analogOut)
   {
-  if(por==0) anOut=int(((log10(uSvph)+4)*51)); // log10(0,0001)=-4; log10(10)=1
-  else       anOut=int(((log10(uSvph)+2)*51)); // log10(0,01)=-2; log10(1.000)=3
+  if(por==0) anOut=((log10(uSvph)+4)*51); // log10(0,0001)=-4; log10(10)=1
+    else     anOut=((log10(uSvph)+2)*51); // log10(0,01)=-2; log10(1.000)=3
+    
+  if(pwr==0) anOut=int(anOut*605/Vb); // Se è alimemtato direttamente da Litio (605=3V)
+    else     anOut=int(anOut*605/1024); // Se è alimentato a 5V.
   if(anOut<0) anOut=0; if(anOut>255) anOut=255;
-  analogWrite(6,anOut);
+  analogWrite(6,anOut); 
   }
 } // END printRad()
 

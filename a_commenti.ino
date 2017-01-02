@@ -77,6 +77,8 @@
               Ho aggiunto Riavvia() per usarla al posto di return nel menu di setup: riavvia tutto anziché passare al menu seguente.
               Adesso gli azzeramenti fanno Biip().
               Ho aggiunto music().
+       1/1/17 Aggiungo nel menu Setup la selezione Alimentazione Litio dir./5V: con l'alimentazione diretta da Litio la tensione di alimentazione
+              è più bassa e varia, quindi bisogna compensare il PWM dello strumento analogico.
 */
  
 String ver=" v1.5U";
@@ -100,7 +102,7 @@ String ver=" v1.5U";
  * I/O 3~(pin 5) Usc. Altoparlante Tic-tic  (INT 1)
  * I/O 4 (pin 6) Sel. sonda B (a GND): 1=sonda A.
  * I/O 5~(pin 11) Encoder - Pulsante
- * I/O 6~(pin 12) Analog out
+ * I/O 6~(pin 12) Analog out (3V fs)
  * I/O 7 (pin 13) Capsula piezo
  * I/O 8  LCD RS (pin 14)
  * I/O 9~ LCD En (pin 15)
@@ -135,4 +137,5 @@ String ver=" v1.5U";
  *10 LED: 0:meter off; 1:meter dot; 2:meter bar.
  *11 LCD: retroilluminazione dell'LCD: 1:On; 2:Auto.
  *12 biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
+ *13 pwr: Alimentazione: 0:Litio diretta; 1:5V.
  */

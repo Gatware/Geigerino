@@ -56,6 +56,7 @@ byte bat=7;  // Stato corrente della batteria (indice dell'icona).
 byte P=1; // Stato del pulsante
 byte Po=1; // Stato precedente del pulsante
 int Azz=0; // Contatore sì/no per l'encoder in Azzerare.
+int pwr=0; // Contatore per alimentazione Litio diretta/5V (1:5V).
 int TS=0; // 1: fa TIC-TIC software
 unsigned long millisZero=0; // Lettura del tempo iniziale per far lampeggiare sempre i due punti sui secondi dispari:
                             // a volte, dopo aver impostato il tipo di sonda, lampeggiavano al contrario.
@@ -80,7 +81,7 @@ float uSvph=0; // microSievert/h in virgola mobile.
 float Rad=0; // Valore che viene passato a prRad() per la visualizzazione.
 unsigned long uSvphInt=0; // Parte intera dei microSievert/h.
 String uSvphf; // uSvh formattato.
-int anOut=0; // Valore per il pwm dell'uscita analogica.
+float anOut=0; // Valore per il pwm dell'uscita analogica (deve contenere anche i decimeli nel calcolo intermedio).
 byte m=1; // Contatore per C[m] (da 1 a Ti).
 byte m1=1;// Contatore per i cpm (da 1 a Ti).
 byte n=0; // Contatore per l'azzeramento iniziale di N[] e per l'elenco delle sonde.

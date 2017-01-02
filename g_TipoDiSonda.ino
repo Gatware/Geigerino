@@ -6,7 +6,8 @@ sonda=EEPROM.read(1); // Carica il tipo di sonda A.
 var=EEPROM.read(2)+EEPROM.read(3)*256; // Carica Lo-byte e Hi-byte di var del tubo A.
 ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.
 t1=millis();
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+while(digitalRead(5)==LOW)// Attende che venga lasciato il pulsante.
+{if(millis()-t1>3000) {lcd.clear(); powerSetup();}}
 delay(100); // Antirimbalzo 
 t1=millis();
 while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
