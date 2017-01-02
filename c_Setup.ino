@@ -100,7 +100,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) LED+=E;
-  if(LED>2) {noTone(7); LED=2;}
+  if(LED>2) {noTone(7); LED=2;} // Al di fuori dai limiti non fa più Bip (ma rimane un brevissimo tic).
   if(LED<0) {noTone(7); LED=0;}
   if(E!=0) {E=0; t1=millis(); delay(20);}
   

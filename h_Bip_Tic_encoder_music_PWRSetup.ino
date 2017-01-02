@@ -1,4 +1,4 @@
-void Bip()   {if(mute==0 && (biptic==1||biptic==3)) tone(7,1000,30);}
+void Bip()   {if(biptic==1||biptic==3)tone(7,1000,15);}
 
 void Biip()  {if(biptic==1||biptic==3)tone(7,1000,250);}
 
@@ -19,9 +19,9 @@ if (S!=So && S==0) X=0;
 if (X==0)
   {
   if (So==1&&S==2)
-    {E=1; X=1; Bip();}
+    {E=1; X=1; if(!mute)Bip();}
   if (So==3&&S==2)
-    {E=-1; X=1; Bip();}
+    {E=-1; X=1;if(!mute)Bip();}
   if (S==0)
     {E=0; X=0;}
   So=S;  

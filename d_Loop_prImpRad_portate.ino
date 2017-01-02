@@ -2,9 +2,9 @@ void loop()
 {
 P=digitalRead(5); // Legge il pulsante dell'encoder (0=Premuto)
 if(Po==1 && P==0) {t1=millis(); Po=0;} // Quando viene premuto il pulsante legge il tempo
-if(Po==0 && P==0) // Se era ed è premuto per almeno 1,2 secondi
-  {               // salta a Integrazione, poi ritorna ed esce.
-  if(millis()-t1>1200)
+if(Po==0 && P==0)     // Se era ed è premuto per almeno 1 secondo
+  {                   // salta a Integrazione, poi ritorna ed esce.
+  if(millis()-t1>999) // 
     {
     Po=1; Bip();
     detachInterrupt(0);         // Blocca gli interrupt per evitare che si accumulino conteggi
@@ -14,7 +14,7 @@ if(Po==0 && P==0) // Se era ed è premuto per almeno 1,2 secondi
     Mask();
     attachInterrupt(0,ContaAB,FALLING); return;
     }
-  } // END premuto per almeno 1,2 secondi
+  } // END premuto per almeno 1 secondo
   
 if(Po==0 && P==1) // se lo lascio prima, cambia unità di misura e portata analogica.
   {
@@ -195,10 +195,11 @@ t1=millis();
 while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0) {U+=E; E=0; t1=millis(); delay(20);}
-  if(U>1) U=1;
-  if(U<0) U=0;
-
+  if(E!=0) U+=E;
+  if(U>1) {noTone(7); U=1;}
+  if(U<0) {noTone(7); U=0;}
+  if(E!=0){E=0; t1=millis(); delay(20);}
+  
   lcd.setCursor(2,1);
   if(U==0) {lcd.print("CPM - "); lcd.write(2); lcd.print("Sv/h");}
   else lcd.print("CPS -  mR/h ");
@@ -213,10 +214,11 @@ t1=millis();
 while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0) {por+=E; E=0; t1=millis(); delay(20);}
-  if(por>1) por=1;
-  if(por<0) por=0;
-
+  if(E!=0)  por+=E;
+  if(por>1) {noTone(7); por=1;}
+  if(por<0) {noTone(7); por=0;}
+  if(E!=0)  {E=0; t1=millis(); delay(20);}
+  
   lcd.setCursor(0,1);
   if(por==0) {lcd.print("0,0001...10"); lcd.write(2); lcd.print("Sv/h");}
   else {lcd.print("  0,01"); lcd.write(2); lcd.print("...1mSv/h");}

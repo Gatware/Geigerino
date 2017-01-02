@@ -13,8 +13,8 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0){sonda+=E; E=0; t1=millis(); delay(20);}
-  if(sonda>ntipi) sonda=ntipi;
-  if(sonda<1) sonda=1;
+  if(sonda>ntipi) {sonda=ntipi; noTone(7);}
+  if(sonda<1) {sonda=1; noTone(7);}
   
   lcd.setCursor(5,1);
   lcd.print(tipo[sonda]); lcd.print("   ");

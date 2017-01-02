@@ -5,15 +5,16 @@ lcd.clear();
 lcd.print("Tempo d'integr.?");
 t1=millis();
 while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
-{if(millis()-t1>1000) {Bip(); lcd.clear(); Azzeramento(); return;}}
-// Premuto per almeno 1 secondo (2,2 totali) salta a Azzeramento, poi ritorna ed esce.
+{if(millis()-t1>999) {Bip(); lcd.clear(); Azzeramento(); return;}}
+// Premuto per almeno 1 secondo (2 totali) salta a Azzeramento, poi ritorna ed esce.
 t1=millis();
 while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0){Ti+=10*E; E=0; t1=millis(); delay(20);}
-  if(Ti>70) Ti=70;
-  if(Ti<10) Ti=10;
+  if(E!=0)  Ti+=10*E;
+  if(Ti>70) {noTone(7); Ti=70;}
+  if(Ti<10) {noTone(7); Ti=10;}
+  if(E!=0){E=0; t1=millis(); delay(20);}
   
   lcd.setCursor(4,1);
   if(Ti<70) lcd.print(" "+String(Ti)+" sec.");
