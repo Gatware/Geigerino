@@ -70,7 +70,7 @@ biptic=EEPROM.read(12); // biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
 pwr=EEPROM.read(13); // Alimentazione: 0:Litio dir.; 1:5V.
 
                        // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna.
-if(digitalRead(5)==0) {Bip(); lcd.clear(); TipoDiSonda(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo();} 
+if(digitalRead(5)==0) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} 
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
 
 lcd.clear();
@@ -85,47 +85,25 @@ Mask(); tempo=0; temposecondi=0; lcd.setCursor(14,0); lcd.print(temposecondi);
 millisZero=millis();
 } // END setup
 
-void TICSwSiNo()
-{
-while(digitalRead(5)==0); // Attende che venga lasciato il pulsante
-lcd.print(" TIC software?  ");
-t1=millis();
-while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
-  {
-  encoder();
-  if(E!=0){TS+=E; E=0; t1=millis(); delay(20);}
-  if(TS>1) TS=1;
-  if(TS<0) TS=0;
-  
-  lcd.setCursor(7,1);
-  if(TS==1){lcd.print("Si");}
-  else {lcd.print("No");}
-  if(millis()-t1>4999) {lcd.clear(); Riavvia();} // Dopo 5 secondi di inattività esce.
-  }
- 
-if(TS!=EEPROM.read(5)) // Se lo stato di TS è cambiato rispetto a quello memorizzato...
-  {
-  EEPROM.update(5,TS); // ...aggiorna
-  lcd.setCursor(10,1); lcd.print("  SET!  "); Biip(); delay(500);
-  }
-else Bip();
-} // END TicSwSiNo
+// -----------------------------------------------------------------------------
 
 void dotBar()
 {
 lcd.print("       LED      "); 
 t1=millis();
-while(digitalRead(5)==LOW); // Attende che venga lasciato il pulsante.
-delay(300);
 lcd.setCursor(0,1); lcd.print(" Off   Dot   Bar");
+while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+{if(millis()-t1>3000) {lcd.clear(); powerSetup();}}
+delay(300);
 t1=millis();
 while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0){LED+=E; E=0; t1=millis(); delay(20);}
-  if(LED>2) LED=2;
-  if(LED<0) LED=0;
-
+  if(E!=0) LED+=E;
+  if(LED>2) {noTone(7); LED=2;}
+  if(LED<0) {noTone(7); LED=0;}
+  if(E!=0) {E=0; t1=millis(); delay(20);}
+  
   if(LED==0)      {lcd.setCursor(0,1); lcd.print("x"); lcd.setCursor(6,1); lcd.print(" "); lcd.setCursor(12,1); lcd.print(" ");}
   else if(LED==1) {lcd.setCursor(0,1); lcd.print(" "); lcd.setCursor(6,1); lcd.print("x"); lcd.setCursor(12,1); lcd.print(" ");}
   else if(LED==2) {lcd.setCursor(0,1); lcd.print(" "); lcd.setCursor(6,1); lcd.print(" "); lcd.setCursor(12,1); lcd.print("x");}
@@ -135,6 +113,30 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
 if(LED!=EEPROM.read(10)) {EEPROM.update(10,LED); Biip(); lcd.setCursor(12,1); lcd.print(" SET!"); delay(500);}
 else Bip();  
 } // END dotBar
+
+void TICSwSiNo()
+{
+while(digitalRead(5)==0); // Attende che venga lasciato il pulsante
+lcd.print(" TIC software?  ");
+t1=millis();
+while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+  {
+  encoder();
+  if(E!=0) TS+=E;
+  if(TS>1) {noTone(7); TS=1;}
+  if(TS<0) {noTone(7); TS=0;}
+  if(E!=0) {E=0; t1=millis(); delay(20);}
+  lcd.setCursor(7,1);
+  if(TS==1){lcd.print("Si");}
+  else {lcd.print("No");}
+  if(millis()-t1>4999) {lcd.clear(); Riavvia();} // Dopo 5 secondi di inattività esce.
+  }
+if(TS!=EEPROM.read(5)) // Se lo stato di TS è cambiato rispetto a quello memorizzato...
+  {EEPROM.update(5,TS); Biip(); lcd.setCursor(10,1); lcd.print("  SET!  "); delay(500);}
+else Bip();
+} // END TicSwSiNo
+
+
 
 
 
