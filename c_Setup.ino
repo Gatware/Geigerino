@@ -1,7 +1,7 @@
 void setup()
 {
 lcd.begin(16,2);
-
+analogReference (INTERNAL); // Imposta per l'ADC il riferimento interno a 1,1V nominali (+/-10%)
 pinMode(0,INPUT); // Encoder - A
 pinMode(0,INPUT_PULLUP);
 pinMode(1,INPUT); // Encoder - B

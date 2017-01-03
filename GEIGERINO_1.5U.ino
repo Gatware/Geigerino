@@ -48,7 +48,7 @@
 LiquidCrystal lcd(8,9,10,11,12,13); // RS,EN,D4,D5,D6,D7
 void(* Riavvia)(void) = 0; // Riavvia() riavvia il Contatore Geiger (usato per uscire dalle impostazioni di setup dopo ...secondi).
 
-unsigned long XVref=0.940*1080; // 0,94 * Vref in mV. Inserire qui il valore letto con il multimetro sul pin 21 dell'ATmega328P
+unsigned long XVref=0.940*1072; // 0,94 * Vref in mV. Inserire qui il valore letto con il multimetro sul pin 21 dell'ATmega328P
                                 // o il valore del riferimento di tensione esterno montato.
 unsigned long Vb; // Tensione della batteria, letta su A3. Deve essere long per permettere i calcoli per la lettura della tensione.
 byte bat=7;  // Stato corrente della batteria (indice dell'icona).

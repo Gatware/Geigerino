@@ -176,8 +176,8 @@ if(analogOut)
   if(por==0) anOut=((log10(uSvph)+4)*51); // log10(0,0001)=-4; log10(10)=1
     else     anOut=((log10(uSvph)+2)*51); // log10(0,01)=-2; log10(1.000)=3
     
-  if(pwr==0) anOut=int(anOut*605/Vb); // Se è alimemtato direttamente da Litio (605=3V)
-    else     anOut=int(anOut*605/1024); // Se è alimentato a 5V.
+  if(pwr==0) anOut=int(anOut*635/Vb); // Se è alimemtato direttamente da Litio (605=3V)
+    else     anOut=int(anOut*635/1024); // Se è alimentato a 5V.
   if(anOut<0) anOut=0; if(anOut>255) anOut=255;
   analogWrite(6,anOut); 
   }
