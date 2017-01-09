@@ -62,7 +62,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   lcd.setCursor(5,1); if(LCD==1) lcd.print("  On  "); else lcd.print("On/Off");
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
-if(LCD!=EEPROM.read(11)) {EEPROM.update(11,LCD); Biip(); lcd.setCursor(12,1); lcd.print(" SET!"); delay(500);}
+if(LCD!=EEPROM.read(11)) {EEPROM.update(11,LCD); Biip(); lcd.setCursor(12,1); lcd.print("SET!"); delay(500);}
 else Bip();  
 } // END retroillum()
 
@@ -90,7 +90,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.  
   }
 mute=0;
-if(biptic!=EEPROM.read(12)) {EEPROM.update(12,biptic); Biip(); lcd.setCursor(12,1); lcd.print(" SET!"); delay(500);}
+if(biptic!=EEPROM.read(12)) {EEPROM.update(12,biptic); Biip(); lcd.setCursor(10,1); lcd.print(". SET!"); delay(500);}
 else Bip();  
 } // END suoni()
 

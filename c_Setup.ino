@@ -21,7 +21,7 @@ pinMode(A2,OUTPUT); // LED 2
 pinMode(A3,OUTPUT); // LED 3
 pinMode(A4,OUTPUT); // LED 4
 pinMode(A5,OUTPUT); // LED 5 + Tensione della batteria via partitore 1M/270k.
-digitalWrite(A0,HIGH); // Spegne la retroilluminazione.
+if(EEPROM.read(11)==2) digitalWrite(A0,HIGH); // Se LCD è in On/Off, spegne la retroilluminazione.
 
 for(n=0; n<62; n++) {C[n]=0;}
 lcd.createChar(1,aaccentata);
