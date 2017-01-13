@@ -3,7 +3,7 @@
 *   ******************** G E I G E R I N O ************************   *
 *         ******* Un Contatore Geiger con Arduino ********            *
 *   ***********  Copyright Gianluca Giangreco 2016   **************   *
-******* https://github.com/Gatware/Geigerino/tree/GEIGERINO-1.1 *******                              
+****** https://github.com/Gatware/Geigerino/tree/GEIGERINO_1.5U *******                              
 *                                                                     *
 * Questo software è a puro scopo didattico, pertanto  non assumo res- *
 * ponsabilità sulla precisione e veridicità  dei valori riportati. Mi *
