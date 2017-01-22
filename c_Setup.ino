@@ -55,12 +55,14 @@ if(digitalRead(4)==1)
   sonda=EEPROM.read(1); // Carica il tipo di sonda A.
   var=EEPROM.read(2)+EEPROM.read(3)*256; // Carica Lo-byte e Hi-byte di var del tubo A.
   ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.
+  sinto=1;
   }
 else
   {
   sonda=EEPROM.read(6); // Carica il tipo di sonda B.
   var=EEPROM.read(7)+EEPROM.read(8)*256; // Carica Lo-byte e Hi-byte di var del tubo B.
   ownbcpm=EEPROM.read(9); // cpm di fondo proprio del tubo B.
+  sinto=0;
   }
   
 TS=EEPROM.read(5); // TIC software Sì/No.
@@ -74,11 +76,10 @@ if(digitalRead(5)==0) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); l
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
 
 lcd.clear();
-lcd.setCursor(0,0); lcd.print("Contatore Geiger");
-lcd.setCursor(4,1); lcd.print(ver);
-delay(1500);
-lcd.setCursor(0,0); lcd.print("G.Giangreco 2016");
-lcd.setCursor(0,1); lcd.print("                ");
+lcd.setCursor(0,0); lcd.print("GEIGERINO "+ver);
+lcd.setCursor(0,1); lcd.print("G.Giangreco 2016");
+delay(1500); lcd.clear();
+if(Ti<70) lcd.print("Ti="+String(Ti)+" sec."); else lcd.print("Ti=Continuo"); Bip();
 delay(1500);
 attachInterrupt(0, ContaAB, FALLING); Bip();
 Mask(); tempo=0; temposecondi=0; lcd.setCursor(14,0); lcd.print(temposecondi);
