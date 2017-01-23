@@ -3,8 +3,7 @@ La mia versione personale di Contatore Geiger
 
 													GEIGERINO v.1.5U
                                                      
-	IMPOSTAZIONI DI BASE (SETUP)
-   
+IMPOSTAZIONI DI BASE (SETUP)
 	Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'encoder.
    Prima impostazione: LED Off, Dot, Bar. Permette di scegliere se i 5 LED segnalatori del livello di pericolosità devono rimanere sempre spenti (per ridurre il consumo) oppure si devono accendere uno per volta oppure a barra.
    Seconda impostazione: TIC software. Se l'hardware non ha un avvisatore acustico per ogni particella rilevata, è possibile far emettere un breve "Bip" al cicalino ogni volta che viene rilevata una particella.
