@@ -1,7 +1,7 @@
 # Geigerino
 La mia versione personale di Contatore Geiger
 
-                                                     GEIGERINO  v.1.5U
+													GEIGERINO v.1.5U
                                                      
    IMPOSTAZIONI DI BASE (SETUP)
    
@@ -11,10 +11,12 @@ La mia versione personale di Contatore Geiger
    La terza impostazione riguarda il modello di sonda interna e il modello di sonda esterna. Entrambe sono selezionabili fra SBM-19, SBM-20, 2xSBM-20, SBM-21, SBT-9, SBT-11,  SI-1G,  SI-3BG,  SI-22G,  SI-29BG,  LND-712, Variabile. Altri modelli possono essere aggiunti, purché il byte ntipi sia pari al numero totale di opzioni (compresa Variabile). Se è scelto un modello preimpostato, vengono visualizzati i valori richiamati. Se, invece, è scelto Variabile, bisogna impostare le sensibilità (in cpm/(uSv/h)) e il fondo proprio della sonda.
    Dove non specificato diversamente, le impostazioni modificate vengono immediatamente memorizzate nella EEPROM. Ciò viene evidenziato mediante la scritta “SET!”. Se un’impostazione non viene modificata o, comunque, viene selezionato il valore o l’opzione apparsi nel momento in cui si è entrati nell’impostazione, la memorizzazione non viene effettuata.
 
+
    IMPOSTAZIONE DELL’HARDWARE
    
 	Tenendo premuto l’encoder all’accensione per 3 secondi si entra nel menu “Alimentazione?”, che serve per correggere il duty cycle del PWM dell’uscita per lo strumento analogico secondo la tensione di alimentazione: se Geigerino è alimentato direttamente da un elemento al Litio, il PWM deve essere costantemente corretto in base alla tensione assunta dall’elemento; se, invece, viene alimentato a 5V tramite un convertitore o regolatore di tensione, il valore di Vb seguirà comunque la tensione della batteria, ma il duty cycle dovrà essere costantemente proporzionato alla tensione di alimentazione di 5V.
 	Il fondo scala dello strumento deve essere 3V, realizzabile con uno strumento da 100uA con una resistenza in serie pari a 30kohm-Ri, dove Ri è la resistenza interna dello strumento.
+
 
 	FUNZIONAMENTO
    
