@@ -12,7 +12,7 @@ La mia versione personale di Contatore Geiger
    Dove non specificato diversamente, le impostazioni modificate vengono immediatamente memorizzate nella EEPROM. Ciò viene evidenziato mediante la scritta “SET!”. Se un’impostazione non viene modificata o, comunque, viene selezionato il valore o l’opzione apparsi nel momento in cui si è entrati nell’impostazione, la memorizzazione non viene effettuata.
 
 
-   IMPOSTAZIONE DELL’HARDWARE
+	IMPOSTAZIONE DELL’HARDWARE
    
 	Tenendo premuto l’encoder all’accensione per 3 secondi si entra nel menu “Alimentazione?”, che serve per correggere il duty cycle del PWM dell’uscita per lo strumento analogico secondo la tensione di alimentazione: se Geigerino è alimentato direttamente da un elemento al Litio, il PWM deve essere costantemente corretto in base alla tensione assunta dall’elemento; se, invece, viene alimentato a 5V tramite un convertitore o regolatore di tensione, il valore di Vb seguirà comunque la tensione della batteria, ma il duty cycle dovrà essere costantemente proporzionato alla tensione di alimentazione di 5V.
 	Il fondo scala dello strumento deve essere 3V, realizzabile con uno strumento da 100uA con una resistenza in serie pari a 30kohm-Ri, dove Ri è la resistenza interna dello strumento.
@@ -31,7 +31,7 @@ La mia versione personale di Contatore Geiger
 	Tenendolo premuto per 3 secondi vengono visualizzati i valori massimi rilevati di CPM e uSv/h.
 	Tenendolo premuto per 4 secondi si arriva alla selezione della retroilluminazione: sempre accesa (On), oppure comandata dalla rotazione dell’encoder (On/Off). Nel primo caso, la retroilluminazione è sempre accesa (il consumo è minore di 2mA), anche quando Geigerino viene spento e riacceso; impostato su On/Off, invece, se durante il normale funzionamento l’encoder viene ruotato di almeno 3 scatti in un verso o nell’altro, la retroilluminazione viene accesa o spenta e, alla riaccensione, Geigerino si disporrà con retroilluminazione spenta. Solo l’impostazione On – On/Off viene memorizzata nella EEPROM.
 	Tenendolo premuto per 5 secondi si entra nel menu Suoni, dove ci sono le seguenti opzioni:
--	Nessun suono: nessun suono viene emesso tranne un leggerissimo “Tic” al posto del Bip;
+-	Nessun suono: nessun suono viene emesso tranne un leggerissimo “Tic” al posto del Bip
 -	Bip: viene emesso solo il Bip dei menu.
 Se il Tic software è attivato nel Setup, vengono visualizzate anche le opzioni:
 -	Tic-tic: viene emesso solo il Tic software; 
