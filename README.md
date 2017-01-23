@@ -31,11 +31,17 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
    
    
    Premendo per un attimo l’encoder è possibile selezionare l’unità di misura: CPM e uSv/h oppure CPS e mR/h. Alla riaccensione, Geigerino si ridispone sempre in CPM e uSv/h.
+   
 	Premendo nuovamente l’encoder è possibile scegliere la portata analogica fra 0,0001…10usV/h e 0,01…1mSv/h. Alla riaccensione, Geigerino si ridispone sempre sulla portata 0,0001…10usV/h.
+	
 	Tenendo premuto l’encoder per almeno 1 secondo, va all’impostazione del tempo di integrazione, selezionabile fra 10 e 60 secondi a passi di 10 e Continuo.
+	
 	Se, invece, viene tenuto premuto per 2 secondi, va al menu “AZZERARE?” Sì/No, per azzerare i conteggi, il tempo e il massimo. N.B.: lo stesso risultato si ottiene commutando e ricommutando la sonda.
+	
 	Tenendolo premuto per 3 secondi vengono visualizzati i valori massimi rilevati di CPM e uSv/h.
+	
 	Tenendolo premuto per 4 secondi si arriva alla selezione della retroilluminazione: sempre accesa (On), oppure comandata dalla rotazione dell’encoder (On/Off). Nel primo caso, la retroilluminazione è sempre accesa (il consumo è minore di 2mA), anche quando Geigerino viene spento e riacceso; impostato su On/Off, invece, se durante il normale funzionamento l’encoder viene ruotato di almeno 3 scatti in un verso o nell’altro, la retroilluminazione viene accesa o spenta e, alla riaccensione, Geigerino si disporrà con retroilluminazione spenta. Solo l’impostazione On – On/Off viene memorizzata nella EEPROM.
+	
 	Tenendolo premuto per 5 secondi si entra nel menu Suoni, dove ci sono le seguenti opzioni:
 -	Nessun suono: nessun suono viene emesso tranne un leggerissimo “Tic” al posto del Bip
 -	Bip: viene emesso solo il Bip dei menu.
