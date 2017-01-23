@@ -18,7 +18,7 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
    IMPOSTAZIONE DELL’HARDWARE
    
    
-   Tenendo premuto l’encoder all’accensione per 3 secondi si entra nel menu “Alimentazione?”, che serve per correggere il duty cycle del PWM dell’uscita per lo strumento analogico secondo la tensione di alimentazione: se Geigerino è alimentato direttamente da un elemento al Litio, il PWM deve essere costantemente corretto in base alla tensione assunta dall’elemento; se, invece, viene alimentato a 5V tramite un convertitore o regolatore di tensione, il valore di Vb seguirà comunque la tensione della batteria, ma il duty cycle dovrà essere costantemente proporzionato alla tensione di alimentazione di 5V.Il fondo scala dello strumento deve essere 3V, realizzabile con uno strumento da 100uA con una resistenza in serie pari a 30kohm-Ri, dove Ri è la resistenza interna dello strumento.
+   Tenendo premuto l’encoder all’accensione per 3 secondi si entra nel menu “Alimentazione?”, che serve per correggere il duty cycle del PWM dell’uscita per lo strumento analogico secondo la tensione di alimentazione: se Geigerino è alimentato direttamente da un elemento al Litio, il PWM deve essere costantemente corretto in base alla tensione assunta dall’elemento; se, invece, viene alimentato a 5V tramite un convertitore o regolatore di tensione, il valore di Vb seguirà comunque la tensione della batteria, ma il duty cycle dovrà essere costantemente proporzionato alla tensione di alimentazione di 5V. Il fondo scala dello strumento deve essere 3V, realizzabile con uno strumento da 100uA con una resistenza in serie pari a 30kohm-Ri, dove Ri è la resistenza interna dello strumento.
    
    
    FUNZIONAMENTO
