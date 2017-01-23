@@ -4,6 +4,7 @@ La mia versione personale di Contatore Geiger
                                                      GEIGERINO  v.1.5U
                                                      
    IMPOSTAZIONI DI BASE (SETUP)
+   
    Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'encoder.
    Prima impostazione: LED Off, Dot, Bar. Permette di scegliere se i 5 LED segnalatori del livello di pericolosità devono rimanere sempre spenti (per ridurre il consumo) oppure si devono accendere uno per volta oppure a barra.
    Seconda impostazione: TIC software. Se l'hardware non ha un avvisatore acustico per ogni particella rilevata, è possibile far emettere un breve "Bip" al cicalino ogni volta che viene rilevata una particella.
@@ -11,13 +12,16 @@ La mia versione personale di Contatore Geiger
    Dove non specificato diversamente, le impostazioni modificate vengono immediatamente memorizzate nella EEPROM. Ciò viene evidenziato mediante la scritta “SET!”. Se un’impostazione non viene modificata o, comunque, viene selezionato il valore o l’opzione apparsi nel momento in cui si è entrati nell’impostazione, la memorizzazione non viene effettuata.
 
    IMPOSTAZIONE DELL’HARDWARE
+   
    Tenendo premuto l’encoder all’accensione per 3 secondi si entra nel menu “Alimentazione?”, che serve per correggere il duty cycle del PWM dell’uscita per lo strumento analogico secondo la tensione di alimentazione: se Geigerino è alimentato direttamente da un elemento al Litio, il PWM deve essere costantemente corretto in base alla tensione assunta dall’elemento; se, invece, viene alimentato a 5V tramite un convertitore o regolatore di tensione, il valore di Vb seguirà comunque la tensione della batteria, ma il duty cycle dovrà essere costantemente proporzionato alla tensione di alimentazione di 5V.
    Il fondo scala dello strumento deve essere 3V, realizzabile con uno strumento da 100uA con una resistenza in serie pari a 30kohm-Ri, dove Ri è la resistenza interna dello strumento.
 
    FUNZIONAMENTO
+   
    Geigerino effettua sempre una media continua dei valori rilevati. Se il tempo di integrazione (Ti) è impostato fra 10 e 60 secondi, però, allo scadere di Ti i valori vengono sovrascritti, quindi il valore visualizzato è la media degli ultimi Ti secondi, scartando tutte le letture precedenti. Il tempo visualizzato sul display riparte ciclicamente da zero per comodità di lettura, ma la media è continua. Se, invece, il tempo è impostato su "Continuo", la media viene aggiornata continuamente tenendo conto di tutti i valori rilevati a partire dall’ultimo azzeramento e il tempo, inizialmente in secondi, viene poi visualizzato in minuti e secondi e poi in ore e minuti.
 
    MENU (durante il funzionamento)
+   
    Premendo per un attimo l’encoder è possibile selezionare l’unità di misura: CPM e uSv/h oppure CPS e mR/h. Alla riaccensione, Geigerino si ridispone sempre in CPM e uSv/h.
    Premendo nuovamente l’encoder è possibile scegliere la portata analogica fra 0,0001…10usV/h e 0,01…1mSv/h. Alla riaccensione, Geigerino si ridispone sempre sulla portata 0,0001…10usV/h.
    Tenendo premuto l’encoder per almeno 1 secondo, va all’impostazione del tempo di integrazione, selezionabile fra 10 e 60 secondi a passi di 10 e Continuo.
