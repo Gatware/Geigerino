@@ -30,7 +30,7 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
    MENU (durante il funzionamento)
    
    
-   Premendo per un attimo l’encoder è possibile selezionare l’unità di misura: CPM e uSv/h oppure CPS e mR/h. Alla riaccensione, Geigerino si ridispone sempre in CPM e uSv/h.
+   Premendo per un attimo l’encoder, è possibile selezionare l’unità di misura: CPM e uSv/h oppure CPS e mR/h. Alla riaccensione, Geigerino si ridispone sempre in CPM e uSv/h.
    
 	Premendo nuovamente l’encoder è possibile scegliere la portata analogica fra 0,0001…10usV/h e 0,01…1mSv/h. Alla riaccensione, Geigerino si ridispone sempre sulla portata 0,0001…10usV/h.
 	
