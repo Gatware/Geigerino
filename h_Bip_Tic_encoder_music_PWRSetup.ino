@@ -85,6 +85,11 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   }
 if(pwr!=EEPROM.read(13)) {EEPROM.update(13,pwr); Biip(); lcd.setCursor(9,1); lcd.print("SET!   "); delay(500);}
   else Bip();
-delay(300); Riavvia();
+delay(300); 
+lcd.clear();
+lcd.setCursor(4,0); lcd.print(ver);
+lcd.setCursor(5,1); lcd.print(data);
+while(digitalRead(5)==HIGH){delay(300);}
+Riavvia();
 }
 
