@@ -79,10 +79,12 @@
               Ho aggiunto music().
        1/1/17 Aggiungo nel menu Setup la selezione Alimentazione Litio dir./5V: con l'alimentazione diretta da Litio la tensione di alimentazione
               è più bassa e varia, quindi bisogna compensare il PWM dello strumento analogico.
+       7/2/17 Ho corretto la cancellazione finale del display in printRad.
+              Ho cambiato da int a long le variabili per i cps.
 */
  
-String ver=" v1.5U";
-String data="240117";
+String  ver=" v1.5U";
+String data="070217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

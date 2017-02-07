@@ -163,13 +163,13 @@ lcd.print(cpmf);
 void printRad()
 {
 if(U==1)Rad/=10; // Se viene cambiata unità di misura, diventano mR/h.
-if     (Rad<.1)                     lcd.print(Rad,4);  // Es.: 0,0123
-else if(Rad<1)                      lcd.print(Rad,3);  // Es.: 0,245
-else if(Rad<10)  {lcd.print(" ");   lcd.print(Rad,2);} // Es.:  3,56
-else if(Rad<100) {lcd.print(" ");   lcd.print(Rad,1);} // Es.:  99,5
-else if(Rad<1000) {lcd.print("  "); lcd.print(Rad,0);} // Es.:   512
-else if(Rad<10000) {lcd.print(" "); lcd.print(Rad,0);} // Es.:  1450
-else                                lcd.print(Rad,0);  // Es.:  21450
+     if(Rad<.1)                     lcd.print(Rad,4);                   // Es.: 0,0120
+else if(Rad<1)                     {lcd.print(Rad,3); lcd.print(" ");}  // Es.: 0,245
+else if(Rad<10)    {lcd.print(" "); lcd.print(Rad,2); lcd.print(" ");}  // Es.:  3,56
+else if(Rad<100)   {lcd.print(" "); lcd.print(Rad,1); lcd.print(" ");}  // Es.:  99,5
+else if(Rad<1000) {lcd.print("  "); lcd.print(Rad,0); lcd.print(" ");}  // Es.:   512
+else if(Rad<10000) {lcd.print(" "); lcd.print(Rad,0); lcd.print(" ");}  // Es.:  1450
+else                                lcd.print(Rad,0);                   // Es.: 21450
 // analogOut è abilitato?
 if(analogOut)
   {

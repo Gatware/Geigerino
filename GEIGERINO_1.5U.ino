@@ -74,9 +74,9 @@ int U=0; // Unità di misura. 0: CPM e uSv/h; 1: CPS e mR/h.
 int por=0; // Portata analogica: 0: range 0,0001...10uSv/h
            //                    1: range  10uSv/h...1Sv/h
 volatile unsigned int DAB=0; // Accumula gli impulsi nell'interrupt 0 (sonda A) (impulsi in 1 secondo).
-unsigned int D=0; // Copia DA o DB, secondo quale sonda è selezionata.
-unsigned int DMAX=0; // D MAX conteggiati (valore massimo dei cps [in 1 secondo]).
-unsigned int C[61]; // Impulsi (Count) per ogni secondo (60 secondi MAX; non uso C[0]).
+unsigned long D=0; // Copia DA o DB, secondo quale sonda è selezionata.
+unsigned long DMAX=0; // D MAX conteggiati (valore massimo dei cps [in 1 secondo]).
+unsigned long C[61]; // Impulsi (Count) per ogni secondo (60 secondi MAX; non uso C[0]).
 float uSvph=0; // microSievert/h in virgola mobile.
 float Rad=0; // Valore che viene passato a prRad() per la visualizzazione.
 unsigned long uSvphInt=0; // Parte intera dei microSievert/h.
