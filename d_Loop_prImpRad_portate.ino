@@ -56,7 +56,7 @@ if(ALLARME && alm)
   ALLARMEo=1;
   tone(7,f);
   if(f>550) f=300;
-  if(millis()-t6>20) {t6=millis(); f*=1.01;}
+  if(millis()-t6>10) {t6=millis(); f*=1.01;}
   }
 else if(ALLARMEo==1) {ALLARMEo=0; f=300; noTone(7);}
 
