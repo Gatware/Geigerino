@@ -34,7 +34,7 @@ void massimi()
 lcd.print("    Massimi     "); 
 t1=millis();
 while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
-{if(millis()-t1>999) {Bip(); lcd.clear(); retroillum(); return;}}  // Premuto per almeno 1 secondo (4 totali) salta a retroillum(), poi ritorna ed esce.
+{if(millis()-t1>999) {Bip(); lcd.clear(); suoni(); return;}}  // Premuto per almeno 1 secondo (4 totali) salta a retroillum(), poi ritorna ed esce.
 t1=millis();
 Mask(); lcd.setCursor(11,0); lcd.print("max"); lcd.setCursor(13,1); lcd.print("max"); 
 lcd.setCursor(0,0); if(DMAX*60>ownbcpm) Imp=DMAX*60-ownbcpm; else Imp=0; printImp(); // D è in cps; printImp vuole cpm.
@@ -43,34 +43,12 @@ delay(300);
 while(digitalRead(5)==HIGH){if(millis()-t1>9999) return;} // Attende che venga premuto il pulsante, ma dopo 10 secondi comunque esce.
 } // END massimi()
 
-void retroillum()
-{
-lcd.print(" Retroillumin.  ");
-t1=millis();
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
-{if(millis()-t1>999) {Bip(); lcd.clear(); suoni(); return;}}  // Premuto per almeno 1 secondo (5 totali) salta a suoni(), poi ritorna ed esce.
-delay(300);
-t1=millis();
-while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
-  {
-  encoder();
-  if(E!=0) LCD+=E;
-  if(LCD>2){noTone(7); LCD=2;}
-  if(LCD<1){noTone(7); LCD=1;}
-  if(E!=0) {E=0; t1=millis(); delay(20);}
-  
-  lcd.setCursor(5,1); if(LCD==1) lcd.print("  On  "); else lcd.print("On/Off");
-  if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
-  }
-if(LCD!=EEPROM.read(11)) {EEPROM.update(11,LCD); Biip(); lcd.setCursor(12,1); lcd.print("SET!"); delay(500);}
-else Bip();  
-} // END retroillum()
-
 void suoni()
 {
 lcd.print("     Suoni      ");
 t1=millis();
-while(digitalRead(5)==LOW); // Attende che venga lasciato il pulsante.
+while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+{if(millis()-t1>999) {Bip(); lcd.clear(); allarme(); return;}}  // Premuto per almeno 1 secondo (5 totali) salta ad allarme(), poi ritorna ed esce.
 delay(300);
 t1=millis();
 mute=1;
@@ -94,3 +72,49 @@ if(biptic!=EEPROM.read(12)) {EEPROM.update(12,biptic); Biip(); lcd.setCursor(10,
 else Bip();  
 } // END suoni()
 
+void allarme()
+{
+lcd.print("    Allarme      ");
+t1=millis();
+while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+{if(millis()-t1>999) {Bip(); lcd.clear(); retroillum(); return;}}  // Premuto per almeno 1 secondo (5 totali) salta a retroillum(), poi ritorna ed esce.
+delay(300);
+t1=millis();
+while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+  {
+  encoder();
+  if(E!=0)   alm+=E;
+  if(alm>1) {noTone(7); alm=1;}
+  if(alm<0) {noTone(7); alm=0;}
+  if(E!=0)  {E=0; t1=millis(); delay(20);}
+    
+  lcd.setCursor(7,1);
+  if(alm==0){lcd.print("No");}
+  else{lcd.print("Si");}
+  if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
+  }
+if(alm!=EEPROM.read(14)) {EEPROM.update(14,alm); Biip(); lcd.setCursor(12,1); lcd.print("SET!"); delay(500);}
+else Bip();  
+} // END allarme()
+
+void retroillum()
+{
+lcd.print(" Retroillumin.  ");
+t1=millis();
+while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+{delay(300);}
+t1=millis();
+while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+  {
+  encoder();
+  if(E!=0) LCD+=E;
+  if(LCD>2){noTone(7); LCD=2;}
+  if(LCD<1){noTone(7); LCD=1;}
+  if(E!=0) {E=0; t1=millis(); delay(20);}
+  
+  lcd.setCursor(5,1); if(LCD==1) lcd.print("  On  "); else lcd.print("On/Off");
+  if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
+  }
+if(LCD!=EEPROM.read(11)) {EEPROM.update(11,LCD); Biip(); lcd.setCursor(12,1); lcd.print("SET!"); delay(500);}
+else Bip();  
+} // END retroillum()

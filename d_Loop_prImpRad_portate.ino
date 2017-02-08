@@ -51,6 +51,15 @@ if(E!=0 && LCD==2) // Se è stato ruotato l'encoder e LCD sta in On/Off.
   Lo=L; E=0;
   }
 
+if(ALLARME && alm)
+  {
+  ALLARMEo=1;
+  tone(7,f);
+  if(f>550) f=300;
+  if(millis()-t6>20) {t6=millis(); f*=1.01;}
+  }
+else if(ALLARMEo==1) {ALLARMEo=0; f=300; noTone(7);}
+
 if(millis()-t5>499) // Due volte al secondo:
   {
   t5=millis();
@@ -130,21 +139,21 @@ void piloLED()
 if(LED==0)                PORTC&=B11000000;
 else if(LED==1)
   { //                          LED 54321-        LED 54321-
-  if     (uSvph>soglia5) {PORTC&=B11100001; PORTC|=B00100000; tone(SPK, 1000, 2000);}
-  else if(uSvph>soglia4) {PORTC&=B11010001; PORTC|=B00010000; tone(SPK, 1000, 1000);}
-  else if(uSvph>soglia3) {PORTC&=B11001001; PORTC|=B00001000;}
-  else if(uSvph>soglia2) {PORTC&=B11000101; PORTC|=B00000100;}
-  else if(uSvph>soglia1) {PORTC&=B11000011; PORTC|=B00000010;}
-  else                    PORTC&=B11000001;
+  if     (uSvph>soglia5) {PORTC&=B11100001; PORTC|=B00100000; ALLARME=1;}
+  else if(uSvph>soglia4) {PORTC&=B11010001; PORTC|=B00010000; ALLARME=1;}
+  else if(uSvph>soglia3) {PORTC&=B11001001; PORTC|=B00001000; ALLARME=0;}
+  else if(uSvph>soglia2) {PORTC&=B11000101; PORTC|=B00000100; ALLARME=0;}
+  else if(uSvph>soglia1) {PORTC&=B11000011; PORTC|=B00000010; ALLARME=0;}
+  else                   {PORTC&=B11000001;                   ALLARME=0;}
   }
 else if(LED==2)
   { //                          LED 54321-        LED 54321-
-  if     (uSvph>soglia5) {                  PORTC|=B00111110; tone(SPK, 1000, 2000);}
-  else if(uSvph>soglia4) {PORTC&=B11011110; PORTC|=B00011110; tone(SPK, 1000, 1000);}
-  else if(uSvph>soglia3) {PORTC&=B11001110; PORTC|=B00001110;}
-  else if(uSvph>soglia2) {PORTC&=B11000110; PORTC|=B00000110;}
-  else if(uSvph>soglia1) {PORTC&=B11000010; PORTC|=B00000010;}
-  else                    PORTC&=B11000000;
+  if     (uSvph>soglia5) {                  PORTC|=B00111110; ALLARME=1;}
+  else if(uSvph>soglia4) {PORTC&=B11011110; PORTC|=B00011110; ALLARME=1;}
+  else if(uSvph>soglia3) {PORTC&=B11001110; PORTC|=B00001110; ALLARME=0;}
+  else if(uSvph>soglia2) {PORTC&=B11000110; PORTC|=B00000110; ALLARME=0;}
+  else if(uSvph>soglia1) {PORTC&=B11000010; PORTC|=B00000010; ALLARME=0;}
+  else                   {PORTC&=B11000000;                   ALLARME=0;}
   }
 }
 

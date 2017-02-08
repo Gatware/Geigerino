@@ -46,6 +46,7 @@ if(EEPROM.read(0)==255)
   EEPROM.update(11,1); // retroilluminazione dell'LCD: On
   EEPROM.update(12,3); // suoni: Bip + Tic-tic.
   EEPROM.update(13,0); // Alimentazione: Litio dir.
+  EEPROM.update(14,1); // Allarme: Sì  
   delay(4000);
   lcd.clear();
   }  
@@ -70,6 +71,7 @@ LED=EEPROM.read(10); // Tipo di meter.
 LCD=EEPROM.read(11); // LCD: 1:On; 2:On/Off.
 biptic=EEPROM.read(12); // biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
 pwr=EEPROM.read(13); // Alimentazione: 0:Litio dir.; 1:5V.
+alm=EEPROM.read(14); // Allarme: 0:disattivato; 1:attivato.
 
                        // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna.
 if(digitalRead(5)==0) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} 
@@ -80,7 +82,7 @@ lcd.setCursor(0,0); lcd.print("GEIGERINO "+ver);
 lcd.setCursor(0,1); lcd.print("G.Giangreco 2016");
 delay(1500); lcd.clear();
 if(Ti<70) lcd.print("Ti="+String(Ti)+" sec."); else lcd.print("Ti=Continuo"); Bip();
-delay(1500);
+delay(1200);
 attachInterrupt(0, ContaAB, FALLING); Bip();
 Mask(); tempo=0; temposecondi=0; lcd.setCursor(14,0); lcd.print(temposecondi);
 millisZero=millis();

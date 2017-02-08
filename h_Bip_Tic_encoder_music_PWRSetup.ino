@@ -4,7 +4,7 @@ void Biip()  {if(biptic)tone(7,1000,250);}
 
 void Biiip() {if(biptic)tone(7,1000,800);}
 
-void Tic()   {if(biptic==2||biptic==3)tone(SPK,1000,10);}
+void Tic()   {if((biptic==2||biptic==3) && alm+ALLARME!=2) tone(SPK,1000,10);}
 
 void encoder()
 {
@@ -89,7 +89,8 @@ delay(300);
 lcd.clear();
 lcd.setCursor(4,0); lcd.print(ver);
 lcd.setCursor(5,1); lcd.print(data);
-while(digitalRead(5)==HIGH){delay(300);}
+while(digitalRead(5)==HIGH);
+while(digitalRead(5)==LOW){delay(300);1}
 Riavvia();
 }
 

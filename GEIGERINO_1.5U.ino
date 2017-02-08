@@ -65,6 +65,7 @@ unsigned long t2=0; // Lettura del tempo per il Bip
 unsigned long t3=0; // Lettura del tempo per C[m] (1 volta al secondo).
 unsigned long t4=0; // Lettura del tempo per la misura e l'icona dello stato della batteria.
 unsigned long t5=0; // Lettura del tempo per la lettura del commutatore della sonda (2 volte al secondo).
+unsigned long t6=0; // Lettura del tempo per la modulazione del suono dell'allarme.
 int E; // Risultato della routine encoder(): 1, -1, 0.
 byte S; // Lettura dei due valori dell'encoder.
 byte So;// Lettura precedente dell'encoder.
@@ -109,7 +110,11 @@ int L=0; // Conteggio dell'encoder per la retroilluminazione On/Off.
 int Lo=0; // Valore precedente di L.
 byte mute=0; // 1:non fa fare Bip quando si ruota l'encoder (quando LCD=1 (On)).
 int biptic=1; // 0:Nessun suono; 1:Bip; 2:Tic; 3:Bip+Tic.
-         
+int alm=0; // 1:Allarme attivo
+byte ALLARME=0; // 1: L'allarme sta suonando!
+byte ALLARMEo=0; // Stato precedente.
+int f=300; // Frequenza del tono d'allarme
+
 /*  1= SBM-19
  *  2= SBM-20
  *  3= 2xSBM-20

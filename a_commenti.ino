@@ -84,7 +84,7 @@
 */
  
 String  ver=" v1.5U";
-String data="070217";
+String data="080217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
