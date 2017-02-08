@@ -46,7 +46,7 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
    Se il Tic-tic software è attivato nel Setup, vengono visualizzate anche le opzioni:
 - Tic-tic: viene emesso solo il Tic-tic software; 
 - Bip + Tic-tic: vengono emessi il Bip e il Tic-tic software.
-   
+
    Tenendolo premuto per 5 secondi si entra nel menu Allarme: On/Off. Se è posto in On, al rag-giungimento della soglia del primo LED giallo viene emesso un suono di sirena d’allarme.
    
    Tenendolo premuto per 6 secondi si arriva alla selezione della retroilluminazione: sempre accesa (On), oppure comandata dalla rotazione dell’encoder (On/Off). Nel primo caso, la retroilluminazione è sempre accesa (il consumo è minore di 2mA), anche quando Geigerino viene spento e riacceso; impostato su On/Off, invece, se durante il normale funzionamento l’encoder viene ruotato di almeno 3 scatti in un verso o nell’altro, la retroilluminazione viene accesa o spenta e, alla riaccensione, Geigerino si disporrà con retroilluminazione spenta. Solo l’impostazione On – On/Off viene memorizzata nella EEPROM.
