@@ -113,7 +113,8 @@ int biptic=1; // 0:Nessun suono; 1:Bip; 2:Tic; 3:Bip+Tic.
 int alm=0; // 1:Allarme attivo
 byte ALLARME=0; // 1: L'allarme sta suonando!
 byte ALLARMEo=0; // Stato precedente.
-int f=300; // Frequenza del tono d'allarme
+int f=375; // Frequenza iniziale del tono d'allarme.
+int fc=f; // Variabile ausiliaria per la frequenza.
 
 /*  1= SBM-19
  *  2= SBM-20

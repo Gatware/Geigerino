@@ -70,7 +70,7 @@ void powerSetup()
 {
 Biip();
 lcd.print(" Alimentazione? ");
-while(digitalRead(5)==LOW)// Attende che venga lasciato il pulsante.
+while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
 delay(300);
 while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
@@ -90,7 +90,7 @@ lcd.clear();
 lcd.setCursor(4,0); lcd.print(ver);
 lcd.setCursor(5,1); lcd.print(data);
 while(digitalRead(5)==HIGH);
-while(digitalRead(5)==LOW){delay(300);1}
+while(digitalRead(5)==LOW){delay(300);}
 Riavvia();
 }
 

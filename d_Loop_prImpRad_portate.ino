@@ -54,11 +54,13 @@ if(E!=0 && LCD==2) // Se è stato ruotato l'encoder e LCD sta in On/Off.
 if(ALLARME && alm)
   {
   ALLARMEo=1;
-  tone(7,f);
-  if(f>550) f=300;
-  if(millis()-t6>10) {t6=millis(); f*=1.01;}
+  tone(7,fc);
+  if(fc<1501)      f=fc;   // Frequenza crescente fino a 1500 (=1,5kHz)
+  else if(fc<3801) f=1500; // Fino a 3800 rimane a 1,5kHz 
+  else             fc=375;  // Quando arriva a 3801 riparte da 375Hz.
+  if(millis()-t6>6) {t6=millis(); fc*=1.01;}
   }
-else if(ALLARMEo==1) {ALLARMEo=0; f=300; noTone(7);}
+else if(ALLARMEo==1) {ALLARMEo=0; fc=375; noTone(7);}
 
 if(millis()-t5>499) // Due volte al secondo:
   {
