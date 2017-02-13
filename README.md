@@ -34,7 +34,7 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
    
    Premendo nuovamente l’encoder è possibile scegliere la portata analogica fra 0,0001…10μSv/h e 0,01…1mSv/h. Alla riaccensione, Geigerino si ridispone sempre sulla portata 0,0001…10μSv/h.
    
-   Tenendo premuto l’encoder per almeno 1 secondo, va all’impostazione del tempo di integrazione, selezionabile fra 10 e 60 secondi a passi di 10 e Continuo.
+   Tenendo premuto l’encoder per almeno 1 secondo, va all’impostazione del tempo di integrazione, selezionabile fra 10 e 60 secondi a passi di 10, Continuo e 5x 60 secondi. In quest'ultimo caso, effettuerà 5 misurazioni di 60 secondi, poi calcolerà e mostrerà la media e lo scarto quadratico medio (deviazione standard).
    
    Se, invece, viene tenuto premuto per 2 secondi, va al menu “AZZERARE?” Sì/No, per azzerare i conteggi, il tempo e il massimo. N.B.: lo stesso risultato si ottiene commutando e ricommutando la sonda.
    
