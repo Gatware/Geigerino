@@ -112,7 +112,13 @@ if(millis()-t3>999) // Una volta al secondo:
   if(tempo<Ti) {if(long(cp*60/long(tempo-1))>ownbcpm) cpm=long(cp*60/long(tempo-1))-ownbcpm; else cpm=0;} // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
   else         {if(long(cp*60/long(tempo))>ownbcpm) cpm=long(cp*60/long(tempo))-ownbcpm; else cpm=0;} 
   Imp=cpm; lcd.setCursor(0,0); printImp(); // Passa i cpm a printImp.
-  uSvph=float(cpm)/sens; // in virgola mobile.
+  if(Auto)
+    {
+    if(contAuto<5) {cpmAuto[contAuto]=cpm;)
+    if(contAuto==4) cpm=(cpmAuto[0]+cpmAuto[1]+cpmAuto[2]+cpmAuto[3]+cpmAuto[4])/5;
+    contAuto+=1;
+    }
+    uSvph=float(cpm)/sens; // in virgola mobile.
   Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); // Passa i uSv/h a printRad.
 
   lcd.setCursor(10,0);
@@ -121,7 +127,7 @@ if(millis()-t3>999) // Una volta al secondo:
   secondi=(temposecondi%3600)%60; 
   if(secondi>9) secondif=String(secondi); else secondif=" "+String(secondi);
   
-  if       (tempo<60)   {lcd.print("   "+secondif+"s");}
+  if      (tempo<60 || (tempo==60 && Ti!=70))   {lcd.print("   "+secondif+"s");} // Se Ti=60, conta fino a 60 senza scrivere 0m.
   else if (tempo<3600)  lcd.print(minutif+"m"+secondif+"s");
   else                  lcd.print(oref+"h"+minutif+"m");
   tempo+=1; if(Ti<70 && tempo>Ti){tempo=Ti;}

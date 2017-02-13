@@ -12,13 +12,14 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0)  Ti+=10*E;
-  if(Ti>70) {noTone(7); Ti=70;}
+  if(Ti>80) {noTone(7); Ti=80;}
   if(Ti<10) {noTone(7); Ti=10;}
   if(E!=0){E=0; t1=millis(); delay(20);}
   
   lcd.setCursor(3,1);
-  if(Ti<70) lcd.print(" "+String(Ti)+" sec. ");
-  else lcd.print(" Continuo"); // Se Ti=70, integra continuamente a tempo infinito.
+  if(Ti<70) {Auto=0; lcd.print(" "+String(Ti)+" sec. ");
+  else if(Ti==70) {Auto=0; lcd.print(" Continuo"); // Se Ti=70, integra continuamente a tempo infinito.
+  else {lcd.print(" AUTO 5x60"); Auto=1; Ti=60; contAuto=0;}
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
 delay(200);
