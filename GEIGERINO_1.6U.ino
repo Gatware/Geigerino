@@ -38,6 +38,7 @@
 #define LA  880
 #define SI  988
 #define DO 1046
+#define TMAX 310 // 300 secondi; 310 = Continuo.
 
 // SPK 3: Altoparlante separato
 // SPK 7: Usa la stessa piezo che fa Bip
@@ -89,8 +90,6 @@ byte n=0; // Contatore per l'azzeramento iniziale di N[] e per l'elenco delle so
 unsigned long  cp=0; // Impulsi nel tempo Ti.
 unsigned long cpm=0; // Impulsi al minuto.
 unsigned long Imp=0; // Valore che viene passato a prCp() per la visualizzazione.
-unsigned long cpmAuto[4]=0; // I 5 valori finali della misura in Auto.
-byte contAuto=0; // Contatore per Auto (da 0 a 4, ma arriva a 5).
 String cpmf; // cpm formattato.
 byte ore;
 byte minuti; // ore, minuti e secondi calcolati dai secondi trascorsi.
@@ -99,11 +98,10 @@ String oref;
 String minutif; // ore, minuti e secondi formattati con zeri iniziali.
 String secondif;
 unsigned long tempo=0; // Conta il tempo della misurazione da 0 a Ti o più a lungo se è continua.
-unsigned long temposecondi=0; // Serve per contare i secondi ciclicamente quando Ti<70 (cioè non continuo).
+unsigned long temposecondi=0; // Serve per contare i secondi ciclicamente quando Ti<TMAX (cioè non continuo).
 String tempof; // tempo formattato.
-byte Ti=0; // Tempo di integrazione.
-byte Tio=0; // Tempo di integrazione precedente.
-byte Auto=0;
+unsigned int Ti=0; // Tempo di integrazione.
+unsigned int Tio=0; // Tempo di integrazione precedente.
 int sonda=0; // Tipo di sonda
 byte sinto=1; // Valore precedente dello stato sonda interna (sonda A) = digitalRead(4) (1: interna).
 int LED=1; // 0:meter off; 1:meter dot; 2:meter bar (può scendere a -1).
@@ -118,6 +116,10 @@ byte ALLARME=0; // 1: L'allarme sta suonando!
 byte ALLARMEo=0; // Stato precedente.
 int f=100; // Frequenza iniziale del tono d'allarme.
 int fc=f; // Variabile ausiliaria per la frequenza.
+byte Disp2=0; // 1:Visualizza la deviazione standard al posto dei uSv/h.
+byte Disp2o=0; // Valore precedente di Disp2.
+long dstd=0; // Deviazione standard (Poisson).
+String spazio=""; // Per la Deviazione standard se cpm>=100.000
 
 /*  1= SBM-19
  *  2= SBM-20

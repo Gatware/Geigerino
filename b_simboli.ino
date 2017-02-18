@@ -8,6 +8,7 @@ byte spina[8]=
  B00100,
  B00100};
 
+// Lo metterà in carattere 1:
 byte aaccentata[8]=
 {B00100,
  B00010,
@@ -17,6 +18,7 @@ byte aaccentata[8]=
  B10001,
  B01111};
 
+// Lo metterà in carattere 2:
 byte micro[8]=
 {B00000,
  B00000,
@@ -27,6 +29,17 @@ byte micro[8]=
  B10000,
  B10000};
 
+// Lo metterà in carattere 3:
+byte piumeno[8]=
+{B00100,
+ B00100,
+ B11111,
+ B00100,
+ B00100,
+ B00000,
+ B11111};
+
+// Batteria: metterà quello scelto in carattere 0:
 byte Batt_0[8]=
 {10,17, 0,17, 0,17, 0,21};
 byte Batt_1[8]=

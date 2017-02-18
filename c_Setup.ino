@@ -26,13 +26,16 @@ if(EEPROM.read(11)==2) digitalWrite(A0,HIGH); // Se LCD è in On/Off, spegne la 
 for(n=0; n<62; n++) {C[n]=0;}
 lcd.createChar(1,aaccentata);
 lcd.createChar(2,micro);
+lcd.createChar(3,piumeno);
 
-if(EEPROM.read(0)==255)
+if(EEPROM.read(1)==255) // 
   {
   Bip(); delay(100); Bip(); delay(100); Bip(); delay(100); Biip();
   lcd.setCursor(0,0); lcd.print(" EEPROM VERGINE!");
   lcd.setCursor(0,1); lcd.print("Carico i default");
-  EEPROM.update(0,10); // Ti (Tempo di integrazione): 10 secondi
+  delay(3000);
+  EEPROM.update(0,40); // Lo-byte di Ti (Tempo di integrazione): 40 secondi
+  EEPROM.update(15,0); // Hi-byte di Ti
   EEPROM.update(1,3);  // sonda A: 2xSBM-20  
   EEPROM.update(2,76); // var lo-byte come per 2xSBM-20:    76+
   EEPROM.update(3,1);  // var hi-byte come per 2xSBM-20: 1x256=332
@@ -47,10 +50,11 @@ if(EEPROM.read(0)==255)
   EEPROM.update(12,3); // suoni: Bip + Tic-tic.
   EEPROM.update(13,0); // Alimentazione: Litio dir.
   EEPROM.update(14,1); // Allarme: Sì  
-  delay(4000);
+//              15 è l'Hi-byte di Ti.
+  lcd.setCursor(0,1); lcd.print("     Fatto.     ");
   lcd.clear();
   }  
-Ti=EEPROM.read(0); Tio=Ti; // Carica il tempo di integrazione in Ti e in Tio (valore precedente).
+Ti=EEPROM.read(0)+EEPROM.read(15)*256; Tio=Ti; // Carica il tempo di integrazione in Ti e in Tio (valore precedente).
 if(digitalRead(4)==1)
   {
   sonda=EEPROM.read(1); // Carica il tipo di sonda A.
@@ -81,7 +85,7 @@ lcd.clear();
 lcd.setCursor(0,0); lcd.print("GEIGERINO "+ver);
 lcd.setCursor(0,1); lcd.print("G.Giangreco 2016");
 delay(1500); lcd.clear();
-if(Ti<70) lcd.print("Ti="+String(Ti)+" sec."); else lcd.print("Ti=Continuo"); Bip();
+if(Ti<TMAX) lcd.print("Ti="+String(Ti)+" sec."); else lcd.print("Ti=Continuo"); Bip();
 delay(1200);
 attachInterrupt(0, ContaAB, FALLING); Bip();
 Mask(); tempo=0; temposecondi=0; lcd.setCursor(14,0); lcd.print(temposecondi);

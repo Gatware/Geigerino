@@ -18,6 +18,9 @@ if(Po==0 && P==0)     // Se era ed è premuto per almeno 1 secondo
   
 if(Po==0 && P==1) // se lo lascio prima, cambia unità di misura e portata analogica.
   {
+  Po=1; Disp2o=Disp2; Disp2=!Disp2;
+  delay(200);    
+  /*
   Po=1; Bip();
   detachInterrupt(0);
   lcd.clear(); portate();
@@ -25,6 +28,7 @@ if(Po==0 && P==1) // se lo lascio prima, cambia unità di misura e portata analo
   delay(200);
   Mask();
   attachInterrupt(0,ContaAB,FALLING); return;
+  */
   }
 
 // Ogni 10s legge la tensione e disegna l'icona che indica lo stato della batteria, poi ricontrolla il LED 1 (l'I/O è stato messo in input).
@@ -54,9 +58,9 @@ if(E!=0 && LCD==2) // Se è stato ruotato l'encoder e LCD sta in On/Off.
 if(ALLARME && alm)
   {
   ALLARMEo=1;
-  if(f!=0) tone(7,f); else noTone(7);
+  if(f>0)tone(7,f); else noTone(7);
   if     (fc<421)  f=fc;  // Frequenza crescente fino a 420 (=420Hz)
-  else if(fc<611)  f=420; // Fino a 610 rimane a 420Hz 
+  else if(fc<521)  f=420; // Fino a 520 rimane a 420Hz 
   else if(fc<661)  f=0;  // Fino a 660 fa silenzio
   else             fc=100;  // Quando arriva a 601 riparte da 100Hz.
   if(millis()-t6>7) {t6=millis(); fc*=1.01;}
@@ -97,7 +101,7 @@ if(millis()-t3>999) // Una volta al secondo:
   {
   D=DAB;  
   t3=millis();
-  if(Ti<70)
+  if(Ti<TMAX)
     {
     C[m]=D; if(D>DMAX){DMAX=D;} DAB=0; // DMAX: cps massimi (1 secondo).
     cp=0; 
@@ -107,19 +111,31 @@ if(millis()-t3>999) // Una volta al secondo:
     }
     else
     {
-    cp+=D; if(D>DMAX){DMAX=D;} DAB=0; // Ti=70, quindi tempo di integrazione infinito)
+    cp+=D; if(D>DMAX){DMAX=D;} DAB=0; // Ti=TMAX, quindi tempo di integrazione infinito)
     }
-  if(tempo<Ti) {if(long(cp*60/long(tempo-1))>ownbcpm) cpm=long(cp*60/long(tempo-1))-ownbcpm; else cpm=0;} // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
-  else         {if(long(cp*60/long(tempo))>ownbcpm) cpm=long(cp*60/long(tempo))-ownbcpm; else cpm=0;} 
+  if(tempo<Ti && Ti<TMAX) {if(long(cp*60/long(tempo-1))>ownbcpm) cpm=long(cp*60/long(tempo-1))-ownbcpm; else cpm=0;} // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
+    else       {if(long(cp*60/long(tempo))>ownbcpm) cpm=long(cp*60/long(tempo))-ownbcpm; else cpm=0;} 
   Imp=cpm; lcd.setCursor(0,0); printImp(); // Passa i cpm a printImp.
-  if(Auto)
+  uSvph=float(cpm)/sens; // in virgola mobile.
+  if(!Disp2)
     {
-    if(contAuto<5) {cpmAuto[contAuto]=cpm;)
-    if(contAuto==4) cpm=(cpmAuto[0]+cpmAuto[1]+cpmAuto[2]+cpmAuto[3]+cpmAuto[4])/5;
-    contAuto+=1;
+    if(Disp2o==1){Disp2o=0; lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h");}
+    Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); // Se non è in modo Disp2, passa i uSv/h a printRad.
     }
-    uSvph=float(cpm)/sens; // in virgola mobile.
-  Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); // Passa i uSv/h a printRad.
+  else // Se è in modo Disp2, scrive la deviazione standard:
+    {
+    dstd=10*sqrt(cpm*60/(tempo-(tempo<Ti)));
+    if(Disp2o==0){Disp2o==1; /*lcd.setCursor(5,1); lcd.print("  cpm ");*/}
+    lcd.setCursor(0,1); lcd.write(3);
+    if(cpm>=100000) spazio=" "; else spazio="";
+    if     (dstd<1)     lcd.print("   0 cpm  ");
+    else if(dstd<100)    lcd.print("   "+spazio+String(int(dstd/10))+","+String(dstd%10)+" cpm  ");
+    else if(dstd<1000)   lcd.print("  "+spazio+String(int(dstd/10))+" ");
+    else if(dstd<10000)  lcd.print(" "+spazio+String(int(dstd/10))+" ");
+    else if(dstd<100000) lcd.print(spazio+String(int(dstd/10))+" ");
+    else if(dstd>999999) lcd.print(spazio+String(int(dstd/10))+" ");
+    if (dstd>=100) {lcd.setCursor(6,1); lcd.print("cpm  ");}
+    }
 
   lcd.setCursor(10,0);
   ore=int(temposecondi/3600); if(ore>9) oref=String(ore); else oref=" "+String(ore);
@@ -127,12 +143,12 @@ if(millis()-t3>999) // Una volta al secondo:
   secondi=(temposecondi%3600)%60; 
   if(secondi>9) secondif=String(secondi); else secondif=" "+String(secondi);
   
-  if      (tempo<60 || (tempo==60 && Ti!=70))   {lcd.print("   "+secondif+"s");} // Se Ti=60, conta fino a 60 senza scrivere 0m.
-  else if (tempo<3600)  lcd.print(minutif+"m"+secondif+"s");
-  else                  lcd.print(oref+"h"+minutif+"m");
-  tempo+=1; if(Ti<70 && tempo>Ti){tempo=Ti;}
+  if       (tempo<60)   {lcd.print("   "+secondif+"s");}
+  else if (tempo<3600)   lcd.print(minutif+"m"+secondif+"s");
+  else                   lcd.print(oref+"h"+minutif+"m");
+  tempo+=1; if(Ti<TMAX && tempo>Ti){tempo=Ti;}
   temposecondi+=1;
-  if(Ti<70 && temposecondi>Ti) temposecondi-=Ti;
+  if(Ti<TMAX && temposecondi>Ti) temposecondi-=Ti;
   // lcd.setCursor(14,1); if(int(((millis()-millisZero)/1000))%2) lcd.print(":"); else lcd.print(" "); // Fa lampeggiare ":"
   // Al posto dei : lampeggianti scrivo il nome della sonda attiva: A o B (v. sopra).
   piloLED();
