@@ -30,9 +30,7 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
    MENU (durante il funzionamento)
    
    
-   Premendo per un attimo l’encoder, è possibile selezionare l’unità di misura: CPM e μSv/h oppure CPS e mR/h. Alla riaccensione, Geigerino si ridispone sempre in CPM e μSv/h.
-   
-   Premendo nuovamente l’encoder è possibile scegliere la portata analogica fra 0,0001…10μSv/h e 0,01…1mSv/h. Alla riaccensione, Geigerino si ridispone sempre sulla portata 0,0001…10μSv/h.
+   Premendo per un attimo l’encoder, si passa dalla visualizzazione di uSv/h alla visualizzazione della deviazione standard, aggiornata continuamente. 
    
    Tenendo premuto l’encoder per almeno 1 secondo, va all’impostazione del tempo di integrazione, selezionabile fra 10 e 60 secondi a passi di 10, Continuo e 5x 60 secondi. In quest'ultimo caso, effettuerà 5 misurazioni di 60 secondi, poi calcolerà e mostrerà la media e lo scarto quadratico medio (deviazione standard).
    
