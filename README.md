@@ -1,7 +1,7 @@
 # Geigerino
 La mia versione personale di Contatore Geiger
 
-													GEIGERINO v.1.5U
+													GEIGERINO v.1.6U
                                                      
 IMPOSTAZIONI DI BASE (SETUP)
 
@@ -24,7 +24,7 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
    FUNZIONAMENTO
    
    
-   Geigerino effettua sempre una media continua dei valori rilevati. Se il tempo di integrazione (Ti) è impostato fra 10 e 60 secondi, però, allo scadere di Ti i valori vengono sovrascritti, quindi il valore visualizzato è la media degli ultimi Ti secondi, scartando tutte le letture precedenti. Il tempo visualizzato sul display riparte ciclicamente da zero per comodità di lettura, ma in ogni momento la media è sugli ultimi Ti secondi. Se, invece, il tempo è impostato su "Continuo", la media viene aggiornata continuamente tenendo conto di tutti i valori rilevati a partire dall’ultimo azzeramento e il tempo, inizialmente in secondi, viene poi visualizzato in minuti e secondi e poi in ore e minuti.
+   Geigerino effettua sempre una media continua dei valori rilevati. Se il tempo di integrazione (Ti) è impostato fra 10 e 300 secondi, però, allo scadere di Ti i valori vengono sovrascritti, quindi il valore visualizzato è la media degli ultimi Ti secondi, scartando tutte le letture precedenti. Il tempo visualizzato sul display riparte ciclicamente da zero per comodità di lettura, ma in ogni momento la media è sugli ultimi Ti secondi. Se, invece, il tempo è impostato su "Continuo", la media viene aggiornata continuamente tenendo conto di tutti i valori rilevati a partire dall’ultimo azzeramento e il tempo, inizialmente in secondi, viene poi visualizzato in minuti e secondi e poi in ore e minuti.
    
    
    MENU (durante il funzionamento)
@@ -32,7 +32,7 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
    
    Premendo per un attimo l’encoder, si passa dalla visualizzazione di uSv/h alla visualizzazione della deviazione standard, aggiornata continuamente. 
    
-   Tenendo premuto l’encoder per almeno 1 secondo, va all’impostazione del tempo di integrazione, selezionabile fra 10 e 60 secondi a passi di 10, Continuo e 5x 60 secondi. In quest'ultimo caso, effettuerà 5 misurazioni di 60 secondi, poi calcolerà e mostrerà la media e lo scarto quadratico medio (deviazione standard).
+   Tenendo premuto l’encoder per almeno 1 secondo, va all’impostazione del tempo di integrazione, selezionabile fra 10 e 300 secondi a passi di 10 e Continuo.
    
    Se, invece, viene tenuto premuto per 2 secondi, va al menu “AZZERARE?” Sì/No, per azzerare i conteggi, il tempo e il massimo. N.B.: lo stesso risultato si ottiene commutando e ricommutando la sonda.
    
@@ -45,6 +45,6 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
 - Tic-tic: viene emesso solo il Tic-tic software; 
 - Bip + Tic-tic: vengono emessi il Bip e il Tic-tic software.
 
-Tenendolo premuto per 5 secondi si entra nel menu Allarme: On/Off. Se è posto in On, al rag-giungimento della soglia del secondo LED giallo viene emesso un suono di sirena d’allarme.
+Tenendolo premuto per 5 secondi si entra nel menu Allarme: On/Off. Se è posto in On, al raggiungimento della soglia del secondo LED giallo viene emesso un suono di sirena d’allarme.
 
 Tenendolo premuto per 6 secondi si arriva alla selezione della retroilluminazione: sempre accesa (On), oppure comandata dalla rotazione dell’encoder (On/Off). Nel primo caso, la retroilluminazione è sempre accesa (il consumo è minore di 2mA), anche quando Geigerino viene spento e riacceso; impostato su On/Off, invece, se durante il normale funzionamento l’encoder viene ruotato di almeno 3 scatti in un verso o nell’altro, la retroilluminazione viene accesa o spenta e, alla riaccensione, Geigerino si disporrà con retroilluminazione spenta. Solo l’impostazione On – On/Off viene memorizzata nella EEPROM.
