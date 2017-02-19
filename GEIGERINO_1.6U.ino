@@ -119,6 +119,7 @@ int fc=f; // Variabile ausiliaria per la frequenza.
 byte Disp2=0; // 1:Visualizza la deviazione standard al posto dei uSv/h.
 byte Disp2o=0; // Valore precedente di Disp2.
 long dstd=0; // Deviazione standard (Poisson).
+byte dstdPerc=0; // Deviazione standard percentuale.
 String spazio=""; // Per la Deviazione standard se cpm>=100.000
 
 /*  1= SBM-19

@@ -84,11 +84,11 @@
        8/2/17 Ho cambiato il suono di allarme con AUUUuuu... AUUUuuu..., ho aggiunto il menu per escluderlo e ho disattivato il Tic-tic durante l'allarme.
       11/2/17 Correzione: in loop riga 57 ho messo noTone in else, altrimenti nei momenti di silenzio ronzava! (iniziava a suonare e un attimo dopo arrivava noTone).
 1.6U  18/2/17 Facendo click, anzichè al menu delle portate, visualizza la deviazione standard.
-
+      19/2/17 Adesso visualizza la deviazione standard anche in percentuale.
 */
  
 String  ver=" v1.6U";
-String data="180217";
+String data="190217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
