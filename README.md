@@ -30,7 +30,7 @@ Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'enc
    MENU (durante il funzionamento)
    
    
-   Premendo per un attimo l’encoder, si passa dalla visualizzazione di uSv/h alla visualizzazione della deviazione standard, aggiornata continuamente. 
+   Premendo per un attimo l’encoder, si passa dalla visualizzazione di uSv/h alla visualizzazione della deviazione standard in cpm e in percentuale, aggiornate continuamente. 
    
    Tenendo premuto l’encoder per almeno 1 secondo, va all’impostazione del tempo di integrazione, selezionabile fra 10 e 300 secondi a passi di 10 e Continuo.
    
