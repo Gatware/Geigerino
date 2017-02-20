@@ -85,10 +85,11 @@
       11/2/17 Correzione: in loop riga 57 ho messo noTone in else, altrimenti nei momenti di silenzio ronzava! (iniziava a suonare e un attimo dopo arrivava noTone).
 1.6U  18/2/17 Facendo click, anzichè al menu delle portate, visualizza la deviazione standard.
       19/2/17 Adesso visualizza la deviazione standard anche in percentuale.
+      20/2/17 Ho aggiunto 0,5*60 ai cpm prima di dividere per il tempo e 0,5*10 alla dstd prima di calcolare la percentuale per fare le approssimazioni.
 */
  
 String  ver=" v1.6U";
-String data="190217";
+String data="200217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

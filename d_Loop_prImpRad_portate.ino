@@ -113,8 +113,8 @@ if(millis()-t3>999) // Una volta al secondo:
     {
     cp+=D; if(D>DMAX){DMAX=D;} DAB=0; // Ti=TMAX, quindi tempo di integrazione infinito)
     }
-  if(tempo<Ti && Ti<TMAX) {if(long(cp*60/long(tempo-1))>ownbcpm) cpm=long(cp*60/long(tempo-1))-ownbcpm; else cpm=0;} // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
-    else       {if(long(cp*60/long(tempo))>ownbcpm) cpm=long(cp*60/long(tempo))-ownbcpm; else cpm=0;} 
+  if(tempo<Ti && Ti<TMAX) {if(long((cp*60+30)/long(tempo-1))>ownbcpm) cpm=long((cp*60+30)/long(tempo-1))-ownbcpm; else cpm=0;} // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
+    else       {if(long((cp*60+30)/long(tempo))>ownbcpm) cpm=long((cp*60+30)/long(tempo))-ownbcpm; else cpm=0;} //+30: Aggiunge 0,5 ai cpm per l'arrotondamento
   Imp=cpm; lcd.setCursor(0,0); printImp(); // Passa i cpm a printImp.
   uSvph=float(cpm)/sens; // in virgola mobile.
   if(!Disp2)
@@ -129,15 +129,15 @@ if(millis()-t3>999) // Una volta al secondo:
     lcd.setCursor(0,1); lcd.write(3);
     if(cpm>=100000) spazio=" "; else spazio="";
     if     (dstd<1)     lcd.print("   0 cpm  ");
-    else if(dstd<100)    lcd.print("   "+spazio+String(int(dstd/10))+","+String(dstd%10)+" cpm  ");
+    else if(dstd<100)    lcd.print(" "+spazio+String(int(dstd/10))+","+String(dstd%10));
     else if(dstd<1000)   lcd.print("  "+spazio+String(int(dstd/10))+" ");
     else if(dstd<10000)  lcd.print(" "+spazio+String(int(dstd/10))+" ");
     else if(dstd<100000) lcd.print(spazio+String(int(dstd/10))+" ");
     else if(dstd>999999) lcd.print(spazio+String(int(dstd/10))+" ");
-    if (dstd>=100) {lcd.setCursor(6,1); lcd.print("cpm  ");}
+    lcd.setCursor(6,1); lcd.print("cpm  ");
     if(cpm!=0)
-      {
-      dstdPerc=10*dstd/cpm; if(dstd>99) lcd.setCursor(10,1); else lcd.setCursor(11,1);
+      {             // +5: Aggiunge 0,5 alla deviazione standard (dstd è moltiplicata per 10) per arrotondare.
+      dstdPerc=(10*dstd+5)/cpm; lcd.setCursor(10,1); // Es.: 9,6: dstd=96; dstd+5=101, cioè diventa 10,1->10.
       if(dstdPerc>99) lcd.print("++");
       else if(dstdPerc>9) lcd.print(dstdPerc);
       else lcd.print(" "+String(dstdPerc));
