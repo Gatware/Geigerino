@@ -1,5 +1,5 @@
 #                                                            GEIGERINO 1.8U
-                                           La mia versione personale di Contatore Geiger
+                                         La mia versione personale di Contatore Geiger
                                            
 IMPOSTAZIONI DI BASE (SETUP)
 
@@ -18,24 +18,26 @@ Tenendo premuto l’encoder all’accensione per 3 secondi si entra nel menu “
 FUNZIONAMENTO
 
 Geigerino effettua sempre una media continua dei valori rilevati. Se il tempo di integrazione (Ti) è impostato fra 10 e 300 secondi, però, allo scadere di Ti i valori vengono sovrascritti, quindi il valore visualizzato è la media degli ultimi Ti secondi, scartando tutte le letture precedenti. Il tempo visualizzato sul display riparte ciclicamente da zero per comodità di lettura, ma in ogni momento la media è sugli ultimi Ti secondi. Se, invece, il tempo è impostato su "Continuo", la media viene aggiornata continuamente tenendo conto di tutti i valori rilevati a partire dall’ultimo azzeramento e il tempo, inizialmente in secondi, viene poi visualizzato in minuti e secondi e poi in ore e minuti.
+Se il tempo è impostato su "Precisione fissa", il conteggio va avanti finché l'errore scende al di sotto del valore impostato, dopodiché inizia un suono intermittente intervallato dal ticchettio. Contemporaneamente viene visualizzato il tempo stimato rimanente al raggiungimento della precisione impostata.
 
 MENU (durante il funzionamento)
 
 Premendo per un attimo l’encoder, si passa dalla visualizzazione di uSv/h alla visualizzazione della deviazione standard in cpm e in percentuale, aggiornate continuamente.
 
-Tenendo premuto l’encoder per almeno 1 secondo, va all’impostazione del tempo di integrazione, selezionabile fra 10 e 300 secondi a passi di 10 e Continuo.
+Tenendo premuto l’encoder per almeno 1 secondo, si passa al menu. Ruotando l'encoder, scorrono le voci; premendo l'encoder, si accede alla voce.
 
-Se, invece, viene tenuto premuto per 2 secondi, va al menu “AZZERARE?” Sì/No, per azzerare i conteggi, il tempo e il massimo. N.B.: lo stesso risultato si ottiene commutando e ricommutando la sonda.
+1. Tempo di integrazione, selezionabile fra 10 e 300 secondi a passi di 10, Continuo e Precisione fissa.
 
-Tenendolo premuto per 3 secondi vengono visualizzati i valori massimi rilevati di CPM e μSv/h.
+2. “AZZERARE?” Sì/No, per azzerare i conteggi, il tempo e il massimo. N.B.: lo stesso risultato si ottiene commutando e ricommutando la sonda.
 
-Tenendolo premuto per 4 secondi si entra nel menu Suoni, dove ci sono le seguenti opzioni:
+3. Valori massimi rilevati di CPM e μSv/h.
 
+4. Suoni, dove ci sono le seguenti opzioni:
     Nessun suono: nessun suono viene emesso tranne un leggerissimo “Tic” al posto del Bip
     Bip: viene emesso solo il Bip dei menu. Se il Tic-tic software è attivato nel Setup, vengono visualizzate anche le opzioni:
     Tic-tic: viene emesso solo il Tic-tic software;
     Bip + Tic-tic: vengono emessi il Bip e il Tic-tic software.
 
-Tenendolo premuto per 5 secondi si entra nel menu Allarme: On/Off. Se è posto in On, al raggiungimento della soglia del secondo LED giallo viene emesso un suono di sirena d’allarme.
+5. Allarme: On/Off. Se è posto in On, al raggiungimento della soglia del secondo LED giallo viene emesso un suono di sirena d’allarme.
 
-Tenendolo premuto per 6 secondi si arriva alla selezione della retroilluminazione: sempre accesa (On), oppure comandata dalla rotazione dell’encoder (On/Off). Nel primo caso, la retroilluminazione è sempre accesa (il consumo è minore di 2mA), anche quando Geigerino viene spento e riacceso; impostato su On/Off, invece, se durante il normale funzionamento l’encoder viene ruotato di almeno 3 scatti in un verso o nell’altro, la retroilluminazione viene accesa o spenta e, alla riaccensione, Geigerino si disporrà con retroilluminazione spenta. Solo l’impostazione On – On/Off viene memorizzata nella EEPROM.
+6. Retroilluminazione: sempre accesa (On), oppure comandata dalla rotazione dell’encoder (On/Off). Nel primo caso, la retroilluminazione è sempre accesa (il consumo è minore di 2mA), anche quando Geigerino viene spento e riacceso; impostato su On/Off, invece, se durante il normale funzionamento l’encoder viene ruotato di almeno 3 scatti in un verso o nell’altro, la retroilluminazione viene accesa o spenta e, alla riaccensione, Geigerino si disporrà con retroilluminazione spenta. Solo l’impostazione On – On/Off viene memorizzata nella EEPROM.
