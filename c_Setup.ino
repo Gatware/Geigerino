@@ -87,10 +87,10 @@ lcd.clear();
 lcd.setCursor(0,0); lcd.print("GEIGERINO "+ver);
 lcd.setCursor(0,1); lcd.print("G.Giangreco 2016");
 delay(1500); lcd.clear();
-if(Ti<TMAX) lcd.print("Ti="+String(Ti)+" sec."); else if(Ti==TMAX) lcd.print("Ti=Continuo"); else lcd.print("Precisione fissa"); Bip();
+if(Ti<TMAX) lcd.print("Ti="+String(Ti)+" sec."); else if(Ti==TMAX) lcd.print("Ti=Continuo"); else {lcd.print("Precisione fissa"); lcd.setCursor(7,1); lcd.print(String(prec)+"%");} Bip();
 delay(1200);
 attachInterrupt(0, ContaAB, FALLING); Bip();
-Mask(); tempo=0; temposecondi=0; lcd.setCursor(14,0); lcd.print(temposecondi);
+Mask(); Azzera(); lcd.setCursor(14,0); lcd.print(temposecondi);
 millisZero=millis();
 } // END setup
 
