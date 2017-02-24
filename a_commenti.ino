@@ -91,12 +91,12 @@
 ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
 1.7U          Ho modificato la variabile LED da int a byte, facendola variare fra 1 e 3: così durante la rotazione dell'encoder può solo arrivare a 0 e va bene byte.
               Lo chiamo semplicemente 1.7U.
-1.8   23/2/17 Comincio a introdurre le misure a precisione costante. Se Ti=TMAX+10: Precisione fissa.
-              
+1.8   23/2/17 Comincio a introdurre le misure a precisione costante. Se Ti=TMAX+10: Precisione fissa. Al 5% preimpostato funziona.
+      24/2/17 Aggiungo la voce del menu per inserire la precisione desiderata.    
 */
  
-String  ver=" v1.7U";
-String data="230217";
+String  ver=" v1.8U";
+String data="240217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

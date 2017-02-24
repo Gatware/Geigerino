@@ -8,7 +8,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) {cv+=E; E=0; t1=millis(); delay(20);}
-  if(cv>6) {noTone(7); cv=6;}
+  if(cv>7) {noTone(7); cv=7;}
   if(cv<1) {noTone(7); cv=1;}
   lcd.setCursor(2,0); lcd.print (voce[cv]); lcd.setCursor(4,1); lcd.print (voce[cv+1]);
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
@@ -22,6 +22,7 @@ switch(cv)
   case 4: suoni(); break;
   case 5: allarme(); break;
   case 6: retroillum(); break;
+  case 7: precisione(); break;
   }
 }
 

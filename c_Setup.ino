@@ -51,6 +51,7 @@ if(EEPROM.read(1)==255) //
   EEPROM.update(13,0); // Alimentazione: Litio dir.
   EEPROM.update(14,1); // Allarme: Sì  
 //              15 è l'Hi-byte di Ti.
+  EEPROM.update(16,5); // Precisione %
   lcd.setCursor(0,1); lcd.print("     Fatto.     ");
   lcd.clear();
   }  
@@ -76,8 +77,9 @@ LCD=EEPROM.read(11); // LCD: 1:On; 2:On/Off.
 biptic=EEPROM.read(12); // biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
 pwr=EEPROM.read(13); // Alimentazione: 0:Litio dir.; 1:5V.
 alm=EEPROM.read(14); // Allarme: 0:disattivato; 1:attivato.
-
-                       // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna.
+prec=EEPROM.read(16); // Legge la precisione impostata.
+valPrec=10000/prec^2;
+                       // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna:
 if(digitalRead(5)==0) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} 
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
 

@@ -56,7 +56,7 @@ if(ALLARME && alm)
   else             fc=100;  // Quando arriva a 601 riparte da 100Hz.
   if(millis()-t6>7) {t6=millis(); fc*=1.01;}
   }
-else if(ALLARMEo==1) {ALLARMEo=0; fc=255; noTone(7);}
+  else if(ALLARMEo==1) {ALLARMEo=0; fc=255; noTone(7);}
 
 if(millis()-t5>499) // Due volte al secondo:
   {
@@ -142,11 +142,10 @@ if(millis()-t3>999) // Una volta al secondo:
   
   if(Ti==TMAX+10)
   {
-  visualSecondi(3.84*24000/cpm-temposecondi); // 1,96^2=3,84  1/(5%^2)=400
+  visualSecondi(230.4*valPrec/cpm-temposecondi); // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
   if(dstdPerc<=5) {if(millis()%2000>1000) {suonoFine=1; tone(7,1000);} else {suonoFine=0; noTone(7);}}
   }
   else visualSecondi(temposecondi);
-
   
   tempo+=1; if(Ti<TMAX && tempo>Ti) tempo=Ti;
   temposecondi+=1;
