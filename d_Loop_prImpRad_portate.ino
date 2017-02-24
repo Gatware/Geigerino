@@ -116,9 +116,8 @@ if(millis()-t3>999) // Una volta al secondo:
     if(Disp2o==1){Disp2o=0; lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");}
     Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); // Se non è in modo Disp2, passa i uSv/h a printRad.
     }
-  else // Se è in modo Disp2, scrive la deviazione standard:
-    {  
-    if(Disp2o==0){Disp2o==1; /*lcd.setCursor(5,1); lcd.print("  cpm ");*/}
+  else if(tempo>1) // Se è in modo Disp2, scrive la deviazione standard:
+    {     // Ho dovuto mettere tempo>1 perché poco dopo l'azzeramento appariva ± -2622.
     lcd.setCursor(0,1); lcd.write(3);
     if(cpm>=100000) spazio=" "; else spazio="";
     if     (dstd<1)     lcd.print("   0 cpm  ");
@@ -138,12 +137,13 @@ if(millis()-t3>999) // Una volta al secondo:
       }
     else {lcd.setCursor(10,1); lcd.print(" 0 ");}
     }
-  lcd.setCursor(10,0);
-  
+  else {lcd.setCursor(1,1); lcd.print("   0 ");}
+
+  lcd.setCursor(10,0);  
   if(Ti==TMAX+10)
   {
   visualSecondi(230.4*valPrec/cpm-temposecondi); // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
-  if(dstdPerc<=5) {if(millis()%2000>1000) {suonoFine=1; tone(7,1000);} else {suonoFine=0; noTone(7);}}
+  if(dstdPerc<=5 && tempo>2) {if(millis()%2000>1000) {suonoFine=1; tone(7,1000);} else {suonoFine=0; noTone(7);}}
   }
   else visualSecondi(temposecondi);
   
