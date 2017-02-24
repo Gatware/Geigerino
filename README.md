@@ -41,3 +41,5 @@ Tenendo premuto l’encoder per almeno 1 secondo, si passa al menu. Ruotando l'e
 5. Allarme: On/Off. Se è posto in On, al raggiungimento della soglia del secondo LED giallo viene emesso un suono di sirena d’allarme.
 
 6. Retroilluminazione: sempre accesa (On), oppure comandata dalla rotazione dell’encoder (On/Off). Nel primo caso, la retroilluminazione è sempre accesa (il consumo è minore di 2mA), anche quando Geigerino viene spento e riacceso; impostato su On/Off, invece, se durante il normale funzionamento l’encoder viene ruotato di almeno 3 scatti in un verso o nell’altro, la retroilluminazione viene accesa o spenta e, alla riaccensione, Geigerino si disporrà con retroilluminazione spenta. Solo l’impostazione On – On/Off viene memorizzata nella EEPROM.
+
+7. Precisione: ruotando l'encoder si sceglie la precisione di fine misura per le misure a precisione fissa tra l'1% e il 10%.
