@@ -18,7 +18,9 @@ Tenendo premuto l’encoder all’accensione per 3 secondi si entra nel menu “
 FUNZIONAMENTO
 
 Geigerino effettua sempre una media continua dei valori rilevati. Se il tempo di integrazione (Ti) è impostato fra 10 e 300 secondi, però, allo scadere di Ti i valori vengono sovrascritti, quindi il valore visualizzato è la media degli ultimi Ti secondi, scartando tutte le letture precedenti. Il tempo visualizzato sul display riparte ciclicamente da zero per comodità di lettura, ma in ogni momento la media è sugli ultimi Ti secondi. Se, invece, il tempo è impostato su "Continuo", la media viene aggiornata continuamente tenendo conto di tutti i valori rilevati a partire dall’ultimo azzeramento e il tempo, inizialmente in secondi, viene poi visualizzato in minuti e secondi e poi in ore e minuti.
-Se il tempo è impostato su "Precisione fissa", il conteggio va avanti finché l'errore scende al di sotto del valore impostato, dopodiché inizia un suono intermittente intervallato dal ticchettio. Contemporaneamente viene visualizzato il tempo stimato rimanente al raggiungimento della precisione impostata. Nel funzionamento a tempo o Continuo i valori stimati hanno un intervallo di confidenza del 68% (SD), mentre nel funzionamento a precisione fissa l'intervallo di condìfidenza è del 95% (1,96*SD), dove SD è la deviazione standard.
+Premendo brevemente l'encoder viene visualizzato l'errore stimato.
+Se il tempo è impostato su "Precisione fissa", il conteggio va avanti finché l'errore scende al di sotto del valore impostato, dopodiché inizia un suono intermittente intervallato dal ticchettio. Contemporaneamente viene visualizzato il tempo stimato rimanente al raggiungimento della precisione impostata. Premendo l'encoder, si torna alla visualizzazione dei uSv/h e del tempo trascorso.
+Nel funzionamento a tempo o Continuo i valori stimati hanno un intervallo di confidenza del 68% (SD), mentre nel funzionamento a precisione fissa l'intervallo di condìfidenza è del 95% (1,96*SD), dove SD è la deviazione standard.
 
 MENU (durante il funzionamento)
 
