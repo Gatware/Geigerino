@@ -13,7 +13,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   lcd.setCursor(2,0); lcd.print (voce[cv]); lcd.setCursor(4,1); lcd.print (voce[cv+1]);
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
-delay(200);
+delay(200); lcd.clear();
 switch(cv)
   {
   case 1: Integrazione(); break;
@@ -29,7 +29,6 @@ switch(cv)
 void Integrazione()
 {
 //    -------- Tempo d'integrazione --------
-lcd.clear();
 lcd.print(F("Tempo d'integr.?"));
 t1=millis();
 while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
