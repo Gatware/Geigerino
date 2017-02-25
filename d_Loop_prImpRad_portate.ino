@@ -142,7 +142,7 @@ if(millis()-t3>999) // Una volta al secondo:
   lcd.setCursor(10,0);  
   if(Ti==TMAX+10)
   {
-  visualSecondi(230.4*valPrec/cpm-temposecondi); // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
+  visualSecondi(230.5*valPrec/cpm-tempo); // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
   if(dstdPerc<=5 && tempo>2) {if(millis()%2000>1000) {suonoFine=1; tone(7,1000);} else {suonoFine=0; noTone(7);}}
   }
   else visualSecondi(temposecondi);

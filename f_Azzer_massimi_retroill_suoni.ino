@@ -136,7 +136,7 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   lcd.setCursor(6,1); if(prec<10) lcd.print(" "+String(prec)+"%"); else lcd.print(String(prec)+"%");
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
-if(prec!=EEPROM.read(16)) {valPrec=10000/prec^2; EEPROM.update(16,prec); Biip(); lcd.setCursor(12,1); lcd.print(F("SET!")); delay(500);}
+if(prec!=EEPROM.read(16)) {valPrec=10000/sq(prec); EEPROM.update(16,prec); Biip(); lcd.setCursor(12,1); lcd.print(F("SET!")); delay(500);}
 else Bip();  
 }
 

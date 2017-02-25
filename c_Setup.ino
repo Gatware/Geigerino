@@ -78,7 +78,7 @@ biptic=EEPROM.read(12); // biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
 pwr=EEPROM.read(13); // Alimentazione: 0:Litio dir.; 1:5V.
 alm=EEPROM.read(14); // Allarme: 0:disattivato; 1:attivato.
 prec=EEPROM.read(16); // Legge la precisione impostata.
-valPrec=10000/prec^2;
+valPrec=10000/sq(prec);
                        // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna:
 if(digitalRead(5)==0) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} 
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
