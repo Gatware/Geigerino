@@ -128,7 +128,7 @@ const String PROGMEM voce[]={"","Tempo d'int.","Azzeramento ","Massimi     ","Su
 byte cv=1; // Contatore per le voci del menu.
 byte suonoFine=0; // precisione fissa: 1:suono per errore giunto al valore impostato.
 byte prec=0; // Precisione impostata in %.
-unsigned long valPrec=0; // per 5%: valPrec=1/(0,05^2)=400
+unsigned int valPrec=0; // per 5%: valPrec=1/(0,05^2)=400
 
 /*  1= SBM-19
  *  2= SBM-20
