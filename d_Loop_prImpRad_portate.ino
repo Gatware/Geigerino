@@ -102,7 +102,7 @@ if(millis()-t3>999) // Una volta al secondo:
     }
     else
     {
-    cp+=D; if(D>DMAX){DMAX=D;} DAB=0; // Ti=TMAX, quindi tempo di integrazione infinito)
+    cp+=D; if(D>DMAX){DMAX=D;} DAB=0; // Ti=TMAX, quindi tempo di integrazione infinito, o Ti=TMAX+10, quindi precisione fissa.
     }
   if(tempo<Ti && Ti<TMAX) {if(long((cp*60+30)/long(tempo-1))>ownbcpm) cpm=long((cp*60+30)/long(tempo-1))-ownbcpm; else cpm=0;} // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
     else       {if(long((cp*60+30)/long(tempo))>ownbcpm) cpm=long((cp*60+30)/long(tempo))-ownbcpm; else cpm=0;} //+30: Aggiunge 0,5 ai cpm per l'arrotondamento
@@ -144,7 +144,7 @@ if(millis()-t3>999) // Una volta al secondo:
     else {lcd.setCursor(1,1); lcd.print("   0 ");} // Se tempo<=1 
   if(Ti==TMAX+10)
   {
-  if(dstdPerc<=5 && tempo>2) {if(millis()%2000>1000) {suonoFine=1; tone(7,1000);} else {suonoFine=0; noTone(7);}}
+  if(dstdPerc<=prec && tempo>2) {if(millis()%2000>1000) {suonoFine=1; tone(7,1000);} else {suonoFine=0; noTone(7);}}
   }
   tempo+=1; if(Ti<TMAX && tempo>Ti) tempo=Ti;
   temposecondi+=1;
