@@ -147,7 +147,9 @@ if(millis()-t3>999) // Una volta al secondo:
     if(dstdPerc<=prec && tempo>2)
       {
       suonoFine=1;
-      while(digitalRead(5)==1){if(millis()%2000>1000) tone(7,1000); else noTone(7);}
+      while(digitalRead(5)==HIGH){if(millis()%2000>1000) tone(7,1000); else noTone(7);}
+      while(digitalRead(5)==LOW) {delay(200);} // Esce, tacitando il suono.
+      while(digitalRead(5)==HIGH) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.
       delay(200);
       Azzera();
       }
