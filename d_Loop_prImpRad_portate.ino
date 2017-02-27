@@ -120,7 +120,7 @@ if(millis()-t3>999) // Una volta al secondo:
   else if(tempo>1) // Se è in modo Disp2, scrive la deviazione standard:
     {     // Ho dovuto mettere tempo>1 perché poco dopo l'azzeramento appariva ± -2622.
     lcd.setCursor(10,0);
-    if(Ti==TMAX+10) visualSecondi(230.5*valPrec/cpm-tempo); // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
+    if(Ti==TMAX+10) {unsigned long residuo=230.5*valPrec/cpm-tempo; if(residuo>0) visualSecondi(residuo); else visualSecondi(0);} // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
       else visualSecondi(temposecondi);
     lcd.setCursor(0,1); lcd.write(3);
     if(cpm>=100000) spazio=" "; else spazio="";
@@ -143,10 +143,17 @@ if(millis()-t3>999) // Una volta al secondo:
     }
     else {lcd.setCursor(1,1); lcd.print("   0 ");} // Se tempo<=1 
   if(Ti==TMAX+10)
-  {
-  if(dstdPerc<=prec && tempo>2) {if(millis()%2000>1000) {suonoFine=1; tone(7,1000);} else {suonoFine=0; noTone(7);}}
-  }
-  tempo+=1; if(Ti<TMAX && tempo>Ti) tempo=Ti;
+    {
+    if(dstdPerc<=prec && tempo>2)
+      {
+      suonoFine=1;
+      while(digitalRead(5)==1){if(millis()%2000>1000) tone(7,1000); else noTone(7);}
+      delay(200);
+      Azzera();
+      }
+    }
+  tempo+=1;
+  if(Ti<TMAX && tempo>Ti) tempo=Ti;
   temposecondi+=1;
   if(Ti<TMAX && temposecondi>Ti) temposecondi-=Ti;
   // lcd.setCursor(14,1); if(int(((millis()-millisZero)/1000))%2) lcd.print(":"); else lcd.print(" "); // Fa lampeggiare ":"

@@ -44,9 +44,9 @@ while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
   if(E!=0){E=0; t1=millis(); delay(20);}
   
   lcd.setCursor(0,1);
-  if(Ti<TMAX) lcd.print("    "+String(Ti)+" sec.     ");
-  else if(Ti==TMAX) lcd.print(F("    Continuo    ")); // Se Ti=TMAX, integra continuamente a tempo infinito.
-  else lcd.print(F("Precisione fissa"));
+  if(Ti<TMAX) {lcd.print("    "+String(Ti)+" sec.     "); Disp2=0;}
+  else if(Ti==TMAX) {lcd.print(F("    Continuo    ")); Disp2=0;} // Se Ti=TMAX, integra continuamente a tempo infinito.
+  else {lcd.print(F("Precisione fissa")); Disp2=1;}
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
 delay(200);
