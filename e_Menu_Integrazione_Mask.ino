@@ -1,10 +1,10 @@
 void Menu()
 {
 lcd.clear(); lcd.print("> "+String(voce[cv]));
-while((PIND&0x20)>>5==0) // Attende che venga lasciato il pulsante.
+while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
 {delay(200);}
 t1=millis();
-while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
+while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) {cv+=E; E=0; t1=millis(); delay(20);}
@@ -31,11 +31,11 @@ void Integrazione()
 //    -------- Tempo d'integrazione --------
 lcd.print(F("Tempo d'integr.?"));
 t1=millis();
-while((PIND&0x20)>>5==0){delay(200);} // Attende che venga lasciato il pulsante.
+while(!(PIND&0x20)){delay(200);} // Attende che venga lasciato il pulsante.
 {if(millis()-t1>999) {Bip(); lcd.clear(); Azzeramento(); return;}}
 // Premuto per almeno 1 secondo (2 totali) salta a Azzeramento, poi ritorna ed esce.
 t1=millis();
-while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
+while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0)  Ti+=10*E;
