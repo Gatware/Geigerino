@@ -6,10 +6,10 @@ sonda=EEPROM.read(1); // Carica il tipo di sonda A.
 var=EEPROM.read(2)+EEPROM.read(3)*256; // Carica Lo-byte e Hi-byte di var del tubo A.
 ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.
 t1=millis();
-while((PIND&0x20)>>5==0)// Attende che venga lasciato il pulsante.
+while(digitalRead(5)==0)// Attende che venga lasciato il pulsante.
 {delay(300);} // Antirimbalzo 
 t1=millis();
-while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
+while(digitalRead(5)==1) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0){sonda+=E; E=0; t1=millis(); delay(20);}
@@ -28,11 +28,11 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   {                           // variabile
   lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?  "));
   lcd.setCursor(5,1); lcd.print(F("         ")); printVar();
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0)
   lcd.setCursor(10,1); lcd.print(F("Cent."));
   delay(300);
   t1=millis();
-  while((PIND&0x20)>>5==1)
+  while(digitalRead(5)==1)
     { // Centinaia
     encoder();
     if(E!=0){var+=100*E; E=0; t1=millis(); delay(20);}
@@ -42,11 +42,11 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle centinaia.
     
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0);
   lcd.setCursor(10,1); lcd.print(F("Decine"));
   Bip(); delay(300);
   t1=millis();
-  while((PIND&0x20)>>5==1)
+  while(digitalRead(5)==1)
     { // Decine
     encoder();
     if(E!=0){var+=10*E; E=0; t1=millis(); delay(20);}
@@ -56,11 +56,11 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle decine.
     
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0);
   lcd.setCursor(10,1); lcd.print("Unit"); lcd.write(1); lcd.print(" ");
   Bip(); delay(300);
   t1=millis();
-  while((PIND&0x20)>>5==1)
+  while(digitalRead(5)==1)
     { // Unità
     encoder();
     if(E!=0){var+=E; E=0; t1=millis(); delay(20);}
@@ -77,12 +77,12 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     }
   else Bip();
     
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0);
   lcd.clear();
   lcd.setCursor(2,0); lcd.print(F("CPM di fondo  "));
   delay(300);
   t1=millis();
-  while((PIND&0x20)>>5==1)
+  while(digitalRead(5)==1)
     { // Cpm di background della sonda
     encoder();
     if(E>0 && ownbcpm<255){ownbcpm+=1; E=0; t1=millis(); delay(20);}
@@ -108,9 +108,9 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   {
   lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
   lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0);
   delay(500);
-  while((PIND&0x20)>>5==1);
+  while(digitalRead(5)==1);
   Bip();
   } // END Sonda==1...ntipi-1
   
@@ -121,10 +121,10 @@ sonda=EEPROM.read(6); // Carica il tipo di sonda B.
 var=EEPROM.read(7)+EEPROM.read(8)*256; // Carica Lo-byte e Hi-byte di var del tubo B.
 ownbcpm=EEPROM.read(9); // cpm di fondo proprio del tubo B.
 t1=millis();
-while((PIND&0x20)>>5==0) // Attende che venga lasciato il pulsante.
+while(digitalRead(5)==0) // Attende che venga lasciato il pulsante.
 {delay(300);} // Antirimbalzo 
 t1=millis();
-while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
+while(digitalRead(5)==1) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0){sonda+=E; E=0; t1=millis(); delay(20);}
@@ -143,11 +143,11 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   {                           // variabile
   lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?  "));
   lcd.setCursor(5,1); lcd.print(F("         ")); printVar();
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0);
   lcd.setCursor(10,1); lcd.print(F("Cent."));
   delay(300);
   t1=millis();
-  while((PIND&0x20)>>5==1)
+  while(digitalRead(5)==1)
     { // Centinaia
     encoder();
     if(E!=0){var+=100*E; E=0; t1=millis(); delay(20);}
@@ -157,11 +157,11 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle centinaia.
     
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0);
   lcd.setCursor(10,1); lcd.print(F("Decine"));
   Bip(); delay(300);
   t1=millis();
-  while((PIND&0x20)>>5==1)
+  while(digitalRead(5)==1)
     { // Decine
     encoder();
     if(E!=0){var+=10*E; E=0; t1=millis(); delay(20);}
@@ -171,11 +171,11 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento delle decine.
     
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0);
   lcd.setCursor(10,1); lcd.print(F("Unit")); lcd.write(1); lcd.print(F(" ")); // lcd.write(1): à
   Bip(); delay(300);
   t1=millis();
-  while((PIND&0x20)>>5==1)
+  while(digitalRead(5)==1)
     { // Unità
     encoder();
     if(E!=0){var+=E; E=0; t1=millis(); delay(20);}
@@ -192,12 +192,12 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     }
   else Bip();
     
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0);
   lcd.clear();
   lcd.setCursor(2,0); lcd.print(F("CPM di fondo  "));
   delay(300);
   t1=millis();
-  while((PIND&0x20)>>5==1)
+  while(digitalRead(5)==1)
     { // Cpm di background della sonda
     encoder();
     if(E>0 && ownbcpm<255){ownbcpm+=1; E=0; t1=millis(); delay(20);}
@@ -223,9 +223,9 @@ else // IF Sonda==1...ntipi-1
   {
   lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
   lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
-  while((PIND&0x20)>>5==0);
+  while(digitalRead(5)==0);
   delay(500);
-  while((PIND&0x20)>>5==1);
+  while(digitalRead(5)==1);
   Bip();
   } // END Sonda==1...9
   

@@ -1,6 +1,6 @@
 void loop()
 { // PIND&0x20)>>5 è come dire digitalRead(5).
-P=(PIND&0x20)>>5; // Legge il pulsante dell'encoder (0=Premuto)
+P=digitalRead(5); // Legge il pulsante dell'encoder (0=Premuto)
 if(Po==1 && P==0) {t1=millis(); Po=0;} // Quando viene premuto il pulsante legge il tempo
 if(Po==0 && P==0)     // Se era ed è premuto per almeno 1 secondo
   {                   // salta a Menu, poi ritorna ed esce.
@@ -9,7 +9,7 @@ if(Po==0 && P==0)     // Se era ed è premuto per almeno 1 secondo
     Po=1; Bip();
     detachInterrupt(0);         // Blocca gli interrupt per evitare che si accumulino conteggi
     Menu();             // che poi verrebbero divisi per un tempo brevissimo, non essendo
-    while((PIND&0x20)>>5==0); // stata, nel frattempo, incrementata la variabile tempo.
+    while(digitalRead(5)==0) // stata, nel frattempo, incrementata la variabile tempo.
     delay(200);
     Mask();
     attachInterrupt(0,ContaAB,FALLING); return;
@@ -147,9 +147,9 @@ if(millis()-t3>999) // Una volta al secondo:
     if(dstdPerc<=prec && tempo>2)
       {
       suonoFine=1;
-      while((PIND&0x20)>>5==1) {if(millis()%2000>1000) tone(7,1000); else noTone(7);} // Attende che venga premuto l'encoder ed esce, tacitando il suono.
-      while((PIND&0x20)>>5==0) {delay(200);} // Attende che venga lasciato l'encoder
-      while((PIND&0x20)>>5==1) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.
+      while(digitalRead(5)==1) {if(millis()%2000>1000) tone(7,1000); else noTone(7);} // Attende che venga premuto l'encoder ed esce, tacitando il suono.
+      while(digitalRead(5)==0) {delay(200);} // Attende che venga lasciato l'encoder
+      while(digitalRead(5)==1) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.
       delay(200);
       Azzera();
       }
