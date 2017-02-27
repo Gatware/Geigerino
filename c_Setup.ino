@@ -80,7 +80,7 @@ alm=EEPROM.read(14); // Allarme: 0:disattivato; 1:attivato.
 prec=EEPROM.read(16); // Legge la precisione impostata.
 valPrec=10000/sq(prec);
                        // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna:
-if(digitalRead(5)==0) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} 
+if((PIND&0x20)>>5==0) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} 
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
 
 lcd.clear();
@@ -101,11 +101,11 @@ void dotBar()
 lcd.print("       LED      "); 
 t1=millis();
 lcd.setCursor(0,1); lcd.print(" Off   Dot   Bar");
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+while((PIND&0x20)>>5==0) // Attende che venga lasciato il pulsante.
 {if(millis()-t1>3000) {lcd.clear(); powerSetup();}}
 delay(300);
 t1=millis();
-while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) LED+=E;
@@ -125,10 +125,10 @@ else Bip();
 
 void TICSwSiNo()
 {
-while(digitalRead(5)==0); // Attende che venga lasciato il pulsante
+while((PIND&0x20)>>5==0); // Attende che venga lasciato il pulsante
 lcd.print(" TIC software?  ");
 t1=millis();
-while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) TS+=E;

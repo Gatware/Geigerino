@@ -159,7 +159,7 @@ void ContaAB() // INTERRUPT 0
 detachInterrupt(0);  
 DAB++;
 if(TS) Tic(); // TIC-TIC SOFTWARE
-//while(digitalRead(5)==0); // Usando "FALLING" (fronte di discesa) non dovrebbe servire.
+//while((PIND&0x20)>>5==0); // Usando "FALLING" (fronte di discesa) non dovrebbe servire.
 attachInterrupt(0,ContaAB,FALLING);
 }
 

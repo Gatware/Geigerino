@@ -4,10 +4,10 @@ void Azzeramento()
 lcd.print(F("   AZZERARE?    "));
 t1=millis();
 delay(300);
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+while((PIND&0x20)>>5==0) // Attende che venga lasciato il pulsante.
 {if(millis()-t1>999) {Bip(); lcd.clear(); massimi(); return;}}  // Premuto per almeno 1 secondo (3 totali) salta a massimi(), poi ritorna ed esce.
 t1=millis();
-while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0)   Azz+=E;
@@ -33,26 +33,26 @@ void massimi()
 {
 lcd.print(F("    Massimi     ")); 
 t1=millis();
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+while((PIND&0x20)>>5==0) // Attende che venga lasciato il pulsante.
 {if(millis()-t1>999) {Bip(); lcd.clear(); suoni(); return;}}  // Premuto per almeno 1 secondo (4 totali) salta a retroillum(), poi ritorna ed esce.
 t1=millis();
 Mask(); lcd.setCursor(11,0); lcd.print("max"); lcd.setCursor(13,1); lcd.print("max"); 
 lcd.setCursor(0,0); if(DMAX*60>ownbcpm) Imp=DMAX*60-ownbcpm; else Imp=0; printImp(); // D è in cps; printImp vuole cpm.
 lcd.setCursor(0,1); Rad=float(Imp)/sens; printRad(); // uSv/h in virgola mobile. 
 delay(300);
-while(digitalRead(5)==HIGH){if(millis()-t1>9999) return;} // Attende che venga premuto il pulsante, ma dopo 10 secondi comunque esce.
+while((PIND&0x20)>>5==1){if(millis()-t1>9999) return;} // Attende che venga premuto il pulsante, ma dopo 10 secondi comunque esce.
 } // END massimi()
 
 void suoni()
 {
 lcd.print("     Suoni      ");
 t1=millis();
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+while((PIND&0x20)>>5==0) // Attende che venga lasciato il pulsante.
 {if(millis()-t1>999) {Bip(); lcd.clear(); allarme(); return;}}  // Premuto per almeno 1 secondo (5 totali) salta ad allarme(), poi ritorna ed esce.
 delay(300);
 t1=millis();
 mute=1;
-while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) biptic+=E;
@@ -76,11 +76,11 @@ void allarme()
 {
 lcd.print(F("    Allarme      "));
 t1=millis();
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+while((PIND&0x20)>>5==0) // Attende che venga lasciato il pulsante.
 {if(millis()-t1>999) {Bip(); lcd.clear(); retroillum(); return;}}  // Premuto per almeno 1 secondo (5 totali) salta a retroillum(), poi ritorna ed esce.
 delay(300);
 t1=millis();
-while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0)   alm+=E;
@@ -101,10 +101,10 @@ void retroillum()
 {
 lcd.print(F(" Retroillumin.  "));
 t1=millis();
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+while((PIND&0x20)>>5==0) // Attende che venga lasciato il pulsante.
 {delay(300);}
 t1=millis();
-while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) LCD+=E;
@@ -123,10 +123,10 @@ void precisione()
 {
 lcd.print(F("   Precisione   "));
 t1=millis();
-while(digitalRead(5)==LOW) // Attende che venga lasciato il pulsante.
+while((PIND&0x20)>>5==0) // Attende che venga lasciato il pulsante.
 {delay(300);}
 t1=millis();
-while(digitalRead(5)==HIGH) // Continua a leggere l'encoder finché non premo
+while((PIND&0x20)>>5==1) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) prec+=E;
