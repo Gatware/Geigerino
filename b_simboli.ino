@@ -39,6 +39,17 @@ byte piumeno[8]=
  B00000,
  B11111};
 
+// Lo metterà in carattere 4:
+byte piemme[8]=
+{B01100,
+ B01010,
+ B01100,
+ B01000,
+ B00000,
+ B11110,
+ B10101,
+ B10101};
+ 
 // Batteria: metterà quello scelto in carattere 0:
 byte Batt_0[8]=
 {10,17, 0,17, 0,17, 0,21};

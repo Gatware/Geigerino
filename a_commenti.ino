@@ -93,10 +93,13 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Lo chiamo semplicemente 1.7U.
 1.8   23/2/17 Comincio a introdurre le misure a precisione costante. Se Ti=TMAX+10: Precisione fissa. Al 5% preimpostato funziona.
       24/2/17 Aggiungo la voce del menu per inserire la precisione desiderata.    
+      28/2/17 Al raggiungimento della precisione impostata, premendo, se stava emettendo suono, diventava continuo. Corretto.
+              Ho messo i segni + e - ai tempi trascorso e rimanente.
+              Ho introdotto la scritta cpm con il carattere "piemme" (char 4).
 */
  
 String  ver=" v1.8U";
-String data="270217";
+String data="280217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

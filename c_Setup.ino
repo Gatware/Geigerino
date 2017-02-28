@@ -30,6 +30,7 @@ for(n=0; n<62; n++) {C[n]=0;}
 lcd.createChar(1,aaccentata);
 lcd.createChar(2,micro);
 lcd.createChar(3,piumeno);
+lcd.createChar(4,piemme);
 
 if(EEPROM.read(1)==255) // 
   {
