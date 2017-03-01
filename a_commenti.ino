@@ -96,6 +96,7 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
       28/2/17 Al raggiungimento della precisione impostata, premendo, se stava emettendo suono, diventava continuo. Corretto.
               Ho messo i segni + e - ai tempi trascorso e rimanente.
               Ho introdotto la scritta cpm con il carattere "piemme" (char 4).
+       1/3/17 Ho corretto il calcolo della percentuale di errore (approssimazione) e del tempo residuo.
 */
  
 String  ver=" v1.8U";
