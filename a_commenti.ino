@@ -99,7 +99,7 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
 */
  
 String  ver=" v1.8U";
-String data="280217";
+String data="010317";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

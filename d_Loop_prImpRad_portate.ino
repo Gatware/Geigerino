@@ -108,9 +108,9 @@ if(millis()-t3>999) // Una volta al secondo:
     else       {if(long((cp*60+30)/long(tempo))>ownbcpm) cpm=long((cp*60+30)/long(tempo))-ownbcpm; else cpm=0;} //+30: Aggiunge 0,5 ai cpm per l'arrotondamento
   Imp=cpm; lcd.setCursor(0,0); printImp(); // Passa i cpm a printImp.
   uSvph=float(cpm)/sens; // in virgola mobile.
-  dstd=(10+(Ti==TMAX+10)*9.6)*sqrt(cpm*60/(tempo-(tempo<Ti))); // Adotto coefficiente 1 (*10 perché sono decimi) per considerare una confidenza del 68%, oppure 1,96 (*10) nel caso della 
-                // +10: Aggiunge 0,5 alla deviazione standard (dstd è moltiplicata per 10) per arrotondare.
-  dstdPerc=(10*dstd+10)/cpm; // Es.: 9,1: dstd=91; dstd+10=101, cioè diventa 10,1->10. Indica 9 solo quando è migliore di 9.                                                                           // precisione fissa (Ti==TMAX+10)=1 per considerare una confidenza del 95%.
+  dstd=(10+(Ti==TMAX+10)*9.6)*sqrt(cpm*60/(tempo-(tempo<Ti))); // Adotto coefficiente 1 (*10 perché sono decimi) per considerare una confidenza del 68%, 
+  //                                           oppure 1,96 (*10) nel caso della precisione fissa (Ti==TMAX+10)=1 per considerare una confidenza del 95%.
+  dstdPerc=10*dstd/cpm+1; // +1: Aggiunge 1 alla percentuale (dstd è già moltiplicata per 10) per arrotondare.
   if(!Disp2)
     {
     if(Disp2o==1){Disp2o=0; lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");}
