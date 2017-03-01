@@ -109,19 +109,19 @@ if(millis()-t3>999) // Una volta al secondo:
   Imp=cpm; lcd.setCursor(0,0); printImp(); // Passa i cpm a printImp.
   uSvph=float(cpm)/sens; // in virgola mobile.
   dstd=(10+(Ti==TMAX+10)*9.6)*sqrt(cpm*60/(tempo-(tempo<Ti))); // Adotto coefficiente 1 (*10 perché sono decimi) per considerare una confidenza del 68%, oppure 1,96 (*10) nel caso della 
-                // +10: Aggiunge 0,5 alla deviazione standard (dstd è moltiplicata per 10) per arrotondare.
-  dstdPerc=(10*dstd+10)/cpm; // Es.: 9,1: dstd=91; dstd+10=101, cioè diventa 10,1->10. Indica 9 solo quando è migliore di 9.                                                                           // precisione fissa (Ti==TMAX+10)=1 per considerare una confidenza del 95%.
+                // +10: Aggiunge 0,5 alla deviazione standard (dstd è moltiplicata per 10) per arrotondare.      // precisione fissa (Ti==TMAX+10)=1 per considerare una confidenza del 95%.
+  dstdPerc=10*dstd/cpm+1; // Es.: 9,1: dstd=91; dstd+10=101, cioè diventa 10,1->10. Indica 9 solo quando è migliore di 9.                                                                         
   if(!Disp2)
     {
     if(Disp2o==1){Disp2o=0; lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");}
     Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); // Se non è in modo Disp2, passa i uSv/h a printRad.
-    lcd.setCursor(10,0); visualSecondi(temposecondi);
+    lcd.setCursor(9,0); lcd.print("+"); visualSecondi(temposecondi);
     }
   else if(tempo>1) // Se è in modo Disp2, scrive la deviazione standard:
     {     // Ho dovuto mettere tempo>1 perché poco dopo l'azzeramento appariva ± -2622.
-    lcd.setCursor(10,0);
-    if(Ti==TMAX+10) {unsigned long residuo=230.5*valPrec/cpm-tempo; if(residuo>0) visualSecondi(residuo); else visualSecondi(0);} // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
-      else visualSecondi(temposecondi);
+    lcd.setCursor(9,0);
+    if(Ti==TMAX+10) {lcd.print("-"); unsigned long residuo=230.5*valPrec/cpm-tempo; if(residuo>0) visualSecondi(residuo); else visualSecondi(0);} // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
+      else {lcd.print("+"); visualSecondi(temposecondi);}
     lcd.setCursor(0,1); lcd.write(3);
     if(cpm>=100000) spazio=" "; else spazio="";
     if     (dstd<1)     lcd.print("   0 cpm  ");
@@ -144,10 +144,12 @@ if(millis()-t3>999) // Una volta al secondo:
     else {lcd.setCursor(1,1); lcd.print("   0 ");} // Se tempo<=1 
   if(Ti==TMAX+10)
     {
-    if(dstdPerc<=prec && tempo>2)
+    if((dstdPerc<=prec) && tempo>2)
       {
       suonoFine=1;
       while(digitalRead(5)==1) {if(millis()%2000>1000) tone(7,1000); else noTone(7);} // Attende che venga premuto l'encoder ed esce, tacitando il suono.
+      noTone(7);
+      lcd.setCursor(9,0); lcd.print("+"); visualSecondi(temposecondi);
       while(digitalRead(5)==0) {delay(200);} // Attende che venga lasciato l'encoder
       while(digitalRead(5)==1) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.
       delay(200);
