@@ -144,7 +144,7 @@ if(millis()-t3>999) // Una volta al secondo:
     else {lcd.setCursor(1,1); lcd.print("   0 ");} // Se tempo<=1 
   if(Ti==TMAX+10)
     {
-    if((dstdPerc<=prec) && tempo>2)
+    if((dstdPerc<=prec) && cp>100)
       {
       suonoFine=1;
       while(digitalRead(5)==1) {if(millis()%2000>1000) tone(7,1000); else noTone(7);} // Attende che venga premuto l'encoder ed esce, tacitando il suono.
