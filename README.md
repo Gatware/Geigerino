@@ -11,18 +11,23 @@ Seconda impostazione: Tic-tic software. Se l'hardware non ha un avvisatore acust
 
 La terza impostazione riguarda il modello di sonda interna e il modello di sonda esterna. Entrambe sono selezionabili fra SBM-19, SBM-20, 2xSBM-20, SBM-21, SBT-9, SBT-11, SI-1G, SI-3BG, SI-22G, SI-29BG, LND-712, Variabile. Altri modelli possono essere aggiunti, purché il byte ntipi sia pari al numero totale di opzioni (compresa Variabile). Se è scelto un modello preimpostato, vengono visualizzati i valori richiamati. Se, invece, è scelto Variabile, bisogna impostare le sensibilità (in cpm/(μSv/h)) e il fondo proprio della sonda. Dove non specificato diversamente, le impostazioni modificate vengono immediatamente memorizzate nella EEPROM. Ciò viene evidenziato mediante la scritta “SET!”. Se un’impostazione non viene modificata o, comunque, viene selezionato il valore o l’opzione apparsi nel momento in cui si è entrati nell’impostazione, la memorizzazione non viene effettuata.
 
+
 IMPOSTAZIONE DELL’HARDWARE
 
 Tenendo premuto l’encoder all’accensione per 3 secondi si entra nel menu “Alimentazione?”, che serve per correggere il duty cycle del PWM dell’uscita per lo strumento analogico secondo la tensione di alimentazione: se Geigerino è alimentato direttamente da un elemento al Litio, il PWM deve essere costantemente corretto in base alla tensione assunta dall’elemento; se, invece, viene alimentato a 5V tramite un convertitore o regolatore di tensione, il valore di Vb seguirà comunque la tensione della batteria, ma il duty cycle dovrà rimanere immutato, proporzionato alla tensione di alimentazione fissa a 5V.
+
 
 FUNZIONAMENTO
 
 Geigerino effettua sempre una media continua dei valori rilevati. Se il tempo di integrazione (Ti) è impostato fra 10 e 300 secondi, però, allo scadere di Ti i valori vengono sovrascritti, quindi il valore visualizzato è la media degli ultimi Ti secondi, scartando tutte le letture precedenti. Il tempo visualizzato sul display riparte ciclicamente da zero per comodità di lettura, ma in ogni momento la media è sugli ultimi Ti secondi. Se, invece, il tempo è impostato su "Continuo", la media viene aggiornata continuamente tenendo conto di tutti i valori rilevati a partire dall’ultimo azzeramento e il tempo, inizialmente in secondi, viene poi visualizzato in minuti e secondi e poi in ore e minuti.
 Premendo brevemente l'encoder viene visualizzato l'errore stimato.
+
 Se il tempo è impostato su "Precisione fissa", il conteggio va avanti finché l'errore scende al di sotto del valore impostato, dopodiché inizia un suono intermittente intervallato dal ticchettio. Contemporaneamente viene visualizzato il tempo stimato rimanente al raggiungimento della precisione impostata (preceduto dal segno "-"). Premendo l'encoder, si torna alla visualizzazione dei uSv/h e del tempo trascorso (preceduto dal segno "+").
+
 Nel funzionamento a tempo o Continuo i valori stimati hanno un intervallo di confidenza del 68% (SD), mentre nel funzionamento a precisione fissa l'intervallo di condìfidenza è del 95% (1,96*SD), dove SD è la deviazione standard.
 
 Il simbolo in basso a destra indica lo stato della batteria. Quando è completamente scarica e Geigerino deve essere spento, la retroilluminazione del display lampeggia.
+
 
 MENU (durante il funzionamento)
 
