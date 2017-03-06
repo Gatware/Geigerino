@@ -98,10 +98,11 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Ho introdotto la scritta cpm con il carattere "piemme" (char 4).
        1/3/17 Ho corretto il calcolo della percentuale di errore (approssimazione) e del tempo residuo.
        5/3/17 A volte la misura a precisione costante finiva subito, con cpm ancora a zero. Adesso la misura può finire solo se cpm>0 e cp>20.
+       6/3/17 Ho aggiunto l'intermittenza della retroilluminazione quando la batteria è scarica.
 */
  
 String  ver=" v1.8U";
-String data="050317";
+String data="060317";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

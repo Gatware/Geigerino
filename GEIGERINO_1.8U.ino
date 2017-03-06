@@ -129,6 +129,7 @@ byte cv=1; // Contatore per le voci del menu.
 byte suonoFine=0; // precisione fissa: 1:suono per errore giunto al valore impostato.
 byte prec=0; // Precisione impostata in %.
 unsigned int valPrec=0; // per 5%: valPrec=1/(0,05^2)=400
+byte restoPrecedente=0; // Usata localmente per far lampeggiare la retroilluminazione quando la batteria è scarica.
 
 /*  1= SBM-19
  *  2= SBM-20

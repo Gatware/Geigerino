@@ -151,7 +151,7 @@ if(millis()-t3>999) // Una volta al secondo:
       noTone(7);
       lcd.setCursor(9,0); lcd.print("+"); visualSecondi(temposecondi);
       while(!(PIND&0x20)) {delay(200);} // Attende che venga lasciato l'encoder
-      while(PIND&0x20) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.
+      while(PIND&0x20) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.3
       delay(200);
       Azzera();
       }
@@ -163,6 +163,10 @@ if(millis()-t3>999) // Una volta al secondo:
   // lcd.setCursor(14,1); if(int(((millis()-millisZero)/1000))%2) lcd.print(":"); else lcd.print(" "); // Fa lampeggiare ":"
   // Al posto dei : lampeggianti scrivo il nome della sonda attiva: A o B (v. sopra).
   piloLED();
+  
+  byte resto=millis()%2000; if(Vb<676 && resto!=restoPrecedente) {digitalWrite(A0,!digitalRead(A0)); restoPrecedente=resto;} // Se la batteria è scarica,
+  //                                                                                             fa lampeggiare la retroilluminazione.
+  
   } // END una volta al secondo
 } // END loop
 
