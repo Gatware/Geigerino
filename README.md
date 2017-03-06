@@ -21,6 +21,7 @@ Geigerino effettua sempre una media continua dei valori rilevati. Se il tempo di
 Premendo brevemente l'encoder viene visualizzato l'errore stimato.
 Se il tempo è impostato su "Precisione fissa", il conteggio va avanti finché l'errore scende al di sotto del valore impostato, dopodiché inizia un suono intermittente intervallato dal ticchettio. Contemporaneamente viene visualizzato il tempo stimato rimanente al raggiungimento della precisione impostata (preceduto dal segno "-"). Premendo l'encoder, si torna alla visualizzazione dei uSv/h e del tempo trascorso (preceduto dal segno "+").
 Nel funzionamento a tempo o Continuo i valori stimati hanno un intervallo di confidenza del 68% (SD), mentre nel funzionamento a precisione fissa l'intervallo di condìfidenza è del 95% (1,96*SD), dove SD è la deviazione standard.
+
 Il simbolo in basso a destra indica lo stato della batteria. Quando è completamente scarica e Geigerino deve essere spento, la retroilluminazione del display lampeggia.
 
 MENU (durante il funzionamento)
