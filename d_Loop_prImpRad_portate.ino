@@ -148,7 +148,7 @@ if(millis()-t3>999) // Una volta al secondo:
       {
       suonoFine=1;
       while(PIND&0x20) {if(millis()%2000>1000) tone(7,1000); else noTone(7);} // Attende che venga premuto l'encoder ed esce, tacitando il suono.
-      noTone(7);
+      noTone(7); Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");
       lcd.setCursor(9,0); lcd.print("+"); visualSecondi(temposecondi);
       while(!(PIND&0x20)) {delay(200);} // Attende che venga lasciato l'encoder
       while(PIND&0x20) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.3
@@ -163,10 +163,8 @@ if(millis()-t3>999) // Una volta al secondo:
   // lcd.setCursor(14,1); if(int(((millis()-millisZero)/1000))%2) lcd.print(":"); else lcd.print(" "); // Fa lampeggiare ":"
   // Al posto dei : lampeggianti scrivo il nome della sonda attiva: A o B (v. sopra).
   piloLED();
-  
   byte resto=millis()%2000; if(Vb<676 && resto!=restoPrecedente) {digitalWrite(A0,!digitalRead(A0)); restoPrecedente=resto;} // Se la batteria è scarica,
-  //                                                                                             fa lampeggiare la retroilluminazione.
-  
+  //                                                                                             fa lampeggiare la retroilluminazione. 
   } // END una volta al secondo
 } // END loop
 
