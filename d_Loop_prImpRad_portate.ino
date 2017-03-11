@@ -121,13 +121,13 @@ if(millis()-t3>999) // Una volta al secondo:
     {
     if(Disp2o==1){Disp2o=0; lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");}
     Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); // Se non è in modo Disp2, passa i uSv/h a printRad.
-    lcd.setCursor(9,0); lcd.print("+"); visualSecondi(temposecondi);
+    lcd.setCursor(9,0); if(Ti==TMAX+10) lcd.print("+"); else lcd.print(" "); visualSecondi(temposecondi); 
     }
   else if(tempo>1) // Se è in modo Disp2, scrive la deviazione standard:
     {     // Ho dovuto mettere tempo>1 perché poco dopo l'azzeramento appariva ± -2622.
     lcd.setCursor(9,0);
     if(Ti==TMAX+10) {lcd.print("-"); unsigned long residuo=230.5*valPrec/cpm-tempo; if(residuo>0) visualSecondi(residuo); else visualSecondi(0);} // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
-      else {lcd.print("+"); visualSecondi(temposecondi);}
+      else {lcd.print(" "); visualSecondi(temposecondi);}
     lcd.setCursor(0,1); lcd.write(3);
     if(cpm>=100000) spazio=" "; else spazio="";
     if     (dstd<1)     {lcd.print("   0 c"); lcd.write(4); lcd.print("   ");}
