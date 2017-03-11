@@ -169,8 +169,9 @@ if(millis()-t3>999) // Una volta al secondo:
   // lcd.setCursor(14,1); if(int(((millis()-millisZero)/1000))%2) lcd.print(":"); else lcd.print(" "); // Fa lampeggiare ":"
   // Al posto dei : lampeggianti scrivo il nome della sonda attiva: A o B (v. sopra).
   piloLED();
-  byte resto=millis()%2000; if(Vb<676 && resto!=restoPrecedente) {digitalWrite(A0,!digitalRead(A0)); restoPrecedente=resto;} // Se la batteria è scarica,
-  //                                                                                             fa lampeggiare la retroilluminazione. 
+
+  // Se la batteria è scarica, fa lampeggiare la retroilluminazione:
+  byte resto=millis()%2000; if(Vb<676 && resto!=restoPrecedente) {digitalWrite(A0,!digitalRead(A0)); restoPrecedente=resto;} 
   } // END una volta al secondo
 } // END loop
 
@@ -183,9 +184,9 @@ ore=int(S/3600); if(ore>9) oref=String(ore); else oref=" "+String(ore);
 minuti=int((S%3600)/60); if(minuti>9) minutif=String(minuti); else minutif=" "+String(minuti);
 secondi=(S%3600)%60; 
 if(secondi>9) secondif=String(secondi); else secondif=" "+String(secondi);
-if      (S<60)           lcd.print("   "+secondif+"s");
-else if (S<3600)   lcd.print(minutif+"m"+secondif+"s");
-else                   lcd.print(oref+"h"+minutif+"m");
+if      (S<60)         lcd.print("   "+secondif+"s");
+else if (S<3600) lcd.print(minutif+"m"+secondif+"s");
+else                 lcd.print(oref+"h"+minutif+"m");
 }
 
 void piloLED()
