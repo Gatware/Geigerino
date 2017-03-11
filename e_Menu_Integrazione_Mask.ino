@@ -8,7 +8,7 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) {cv+=E; E=0; t1=millis(); delay(20);}
-  if(cv>7) {noTone(7); cv=7;}
+  if(cv>8) {noTone(7); cv=8;}
   if(cv<1) {noTone(7); cv=1;}
   lcd.setCursor(2,0); lcd.print (voce[cv]); lcd.setCursor(4,1); lcd.print (voce[cv+1]);
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
@@ -23,6 +23,7 @@ switch(cv)
   case 5: allarme(); break;
   case 6: retroillum(); break;
   case 7: precisione(); break;
+  case 8: autonomia(); break;
   }
 }
 
@@ -39,8 +40,8 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0)  Ti+=10*E;
-  if(Ti>TMAX+10) {noTone(7); Ti=TMAX+10;}
-  if(Ti<10) {noTone(7); Ti=10;}
+  if(Ti>TMAX+10) {noTone(7); Ti=10;}
+  if(Ti<10) {noTone(7); Ti=TMAX+10;}
   if(E!=0){E=0; t1=millis(); delay(20);}
   
   lcd.setCursor(0,1);

@@ -22,6 +22,12 @@ if(Po==0 && P==1) // se lo lascio prima, cambia unità di misura e portata analo
   delay(200);    
   }
 
+if(biptic==0 && particella==1)
+  {
+  if(particellao==0) {t7=millis(); PORTC|=B00100000; particellao=1;} // Accende il LED rosso.
+  else if(millis()-t7>10) {PORTC&=B11011111; particella=0; particellao=0;} // Spegne il LED rosso.
+  }
+
 // Ogni 10s legge la tensione e disegna l'icona che indica lo stato della batteria, poi ricontrolla il LED 1 (l'I/O è stato messo in input).
 if(millis()-t4>9999) {t4=millis(); BattIco(); piloLED();}
 

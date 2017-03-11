@@ -100,10 +100,13 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
        5/3/17 A volte la misura a precisione fissa finiva subito, con cpm ancora a zero. Adesso la misura può finire solo se cpm>0 e cp>20.
        6/3/17 Ho aggiunto l'intermittenza della retroilluminazione quando la batteria è scarica.
        7/3/17 Adesso, finita la misura a precisione fissa e tacitato l'avvisatore, compaiono anche i uSv/h.
+      11/3/17 Ho aggiunto la rotazione continua dei tempi di integrazione, ricominciando dall'inizio dopo Precisione fissa.
+              Ho aggiunto il lampeggio del LED rosso per ogni particella rilevata quando Suoni è impostato su Nessun suono. 
+              Ho aggiunto la lettura di Vbat e il calcolo dell'autonomia.
 */
  
 String  ver=" v1.8U";
-String data="070317";
+String data="110317";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
@@ -159,4 +162,7 @@ String data="070317";
  *11 LCD: retroilluminazione dell'LCD: 1:On; 2:Auto.
  *12 biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
  *13 pwr: Alimentazione: 0:Litio diretta; 1:5V.
+ *14 Allarme
+ *15
+ *17 VSB: Velocità di scarica della batteria in mV/h.
  */

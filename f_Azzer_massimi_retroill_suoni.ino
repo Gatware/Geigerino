@@ -140,3 +140,18 @@ if(prec!=EEPROM.read(16)) {valPrec=10000/sq(prec); EEPROM.update(16,prec); Biip(
 else Bip();  
 }
 
+
+void autonomia()
+{
+lcd.print(F("V batt.:"));
+if(((500*Vb/1023)%100)>9) lcd.print(String(int(500*Vb/102300)) +"." +String((500*Vb/1023)%100));
+else{lcd.print(String(int(500*Vb/102300)) +".0" +String((500*Vb/1023)%100));}
+lcd.print("V");
+lcd.setCursor(0,1);
+lcd.print("Autonomia:" + String(int(Vb*10000/205 - 32000) /VSB*Vb/859) + "h ");
+
+while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
+{delay(300);}
+while(PIND&0x20); // Attende che venga premuto il pulsante.
+Bip();
+}

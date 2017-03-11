@@ -86,11 +86,30 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
 if(pwr!=EEPROM.read(13)) {EEPROM.update(13,pwr); Biip(); lcd.setCursor(9,1); lcd.print(F("SET!   ")); delay(500);}
   else Bip();
 delay(300); 
+
+// -------------------------------- Impostazione della capacità della batteria --------------------------------
+lcd.clear(); lcd.print("VScarBt:");
+while(!(PIND&0x20))
+{delay(300);} // Attende che venga lasciato il pulsante.
+while(PIND&0x20) // Continua a leggere l'encoder finché non premo
+  {
+  encoder();
+  if(E!=0){VSB+=E;E=0;delay(20);}
+  if(VSB<20)VSB=20; // 20=2,0mV/h
+  if(VSB>99)VSB=99; // 99=9,9mV/h
+  lcd.setCursor(8,0); lcd.print(String(VSB/10)+"."+String(VSB%10)+"mV/h");
+  lcd.setCursor(0,1); lcd.print("Auton. Max:" +String(int(10000/VSB)) +"h");
+  };
+Bip(); // Ho premuto il pulsante, perciò prosegue 
+if (VSB!=EEPROM.read(17)) {EEPROM.update(17,VSB); lcd.setCursor(11,1); lcd.print(" SET!"); delay(1200);}
+delay(300);                    // Se è cambiata, memorizza l'impostazione in EEPROM 9.
+
 lcd.clear();
 lcd.setCursor(4,0); lcd.print(ver);
 lcd.setCursor(5,1); lcd.print(data);
 while(PIND&0x20);
 while(!(PIND&0x20)){delay(300);}
+
 Riavvia();
 }
 

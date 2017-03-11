@@ -68,6 +68,7 @@ unsigned long t3=0; // Lettura del tempo per C[m] (1 volta al secondo).
 unsigned long t4=0; // Lettura del tempo per la misura e l'icona dello stato della batteria.
 unsigned long t5=0; // Lettura del tempo per la lettura del commutatore della sonda (2 volte al secondo).
 unsigned long t6=0; // Lettura del tempo per la modulazione del suono dell'allarme.
+unsigned long t7=0; // Lettura del tempo per il lampeggio del LED rosso se biptic==0.
 int E; // Risultato della routine encoder(): 1, -1, 0.
 byte S; // Lettura dei due valori dell'encoder.
 byte So;// Lettura precedente dell'encoder.
@@ -124,12 +125,15 @@ byte Disp2o=0; // Valore precedente di Disp2.
 long dstd=0; // Deviazione standard (Poisson).
 byte dstdPerc=0; // Deviazione standard percentuale.
 String spazio=""; // Per la Deviazione standard se cpm>=100.000
-const String PROGMEM voce[]={"","Tempo d'int.","Azzeramento ","Massimi     ","Suoni       ","Allarme     ","Retroillum. ","Precisione  ","            "};
+const String PROGMEM voce[]={"","Tempo d'int.","Azzeramento ","Massimi     ","Suoni       ","Allarme     ","Retroillum. ","Precisione  ","Autonomia   ","            "};
 byte cv=1; // Contatore per le voci del menu.
 byte suonoFine=0; // precisione fissa: 1:suono per errore giunto al valore impostato.
 byte prec=0; // Precisione impostata in %.
 unsigned int valPrec=0; // per 5%: valPrec=1/(0,05^2)=400
 byte restoPrecedente=0; // Usata localmente per far lampeggiare la retroilluminazione quando la batteria è scarica.
+byte particella=0; // 1:se biptic==0, fa lampeggiare il LED rosso.
+byte particellao=0; // Stato precedente di particella.
+int VSB=0; // Velocità di scarica della batteria in 10*mV/h per determinare l'autonomia
 
 /*  1= SBM-19
  *  2= SBM-20
@@ -160,6 +164,7 @@ void ContaAB() // INTERRUPT 0
 detachInterrupt(0);  
 DAB++;
 if(TS) Tic(); // TIC-TIC SOFTWARE
+particella=1;
 //while(!(PIND&0x20)); // Usando "FALLING" (fronte di discesa) non dovrebbe servire.
 attachInterrupt(0,ContaAB,FALLING);
 }
