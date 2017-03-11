@@ -3,7 +3,7 @@
                                            
 IMPOSTAZIONI DI BASE (SETUP)
 
-Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'encoder.
+Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'encoder all'accensione.
 
 Prima impostazione: LED Off, Dot, Bar. Permette di scegliere se i 5 LED segnalatori del livello di pericolosità devono rimanere sempre spenti (per ridurre il consumo) oppure si devono accendere uno per volta oppure a barra.
 
