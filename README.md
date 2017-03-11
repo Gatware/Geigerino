@@ -16,6 +16,9 @@ IMPOSTAZIONE DELL’HARDWARE
 
 Tenendo premuto l’encoder all’accensione per 3 secondi si entra nel menu “Alimentazione?”, che serve per correggere il duty cycle del PWM dell’uscita per lo strumento analogico secondo la tensione di alimentazione: se Geigerino è alimentato direttamente da un elemento al Litio, il PWM deve essere costantemente corretto in base alla tensione assunta dall’elemento; se, invece, viene alimentato a 5V tramite un convertitore o regolatore di tensione, il valore di Vb seguirà comunque la tensione della batteria, ma il duty cycle dovrà rimanere immutato, proporzionato alla tensione di alimentazione fissa a 5V.
 
+L'impostazione seguente è la velocità di scarica della batteria in mV/h, che può essere impostata fra 2,0 e 9,9mV/h. In base a questa, Geigerino calcola l'autonomia residua. Ruotando l'encoder varia la velocità di scarica e la corrispondente autonomia a piena carica stimata.
+La velocità di scarica si determina misurando con precisione la tensione dell'elemento una prima volta; poi, di nuovo, dopo averlo tenuto in funzione per circa un'ora e dividendo l'abbassamento di tensione per il tempo trascorso in ore e decimali: ad es. 45 minuti=0,75h; 1h30=1,5h.
+
 
 FUNZIONAMENTO
 
@@ -52,3 +55,5 @@ Tenendo premuto l’encoder per almeno 1 secondo, si passa al menu. Ruotando l'e
 6. Retroilluminazione: sempre accesa (On), oppure comandata dalla rotazione dell’encoder (On/Off). Nel primo caso, la retroilluminazione è sempre accesa (il consumo è minore di 2mA), anche quando Geigerino viene spento e riacceso; impostato su On/Off, invece, se durante il normale funzionamento l’encoder viene ruotato di almeno 3 scatti in un verso o nell’altro, la retroilluminazione viene accesa o spenta e, alla riaccensione, Geigerino si disporrà con retroilluminazione spenta. Solo l’impostazione On – On/Off viene memorizzata nella EEPROM.
 
 7. Precisione: ruotando l'encoder si sceglie la precisione di fine misura per le misure a precisione fissa tra l'1% e il 10%.
+
+8. Autonomia: appaiono la tensione dell'elemento e l'autonomia residua stimata.
