@@ -103,10 +103,12 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
       11/3/17 Ho aggiunto la rotazione continua dei tempi di integrazione, ricominciando dall'inizio dopo Precisione fissa.
               Ho aggiunto il lampeggio del LED rosso per ogni particella rilevata quando Suoni è impostato su Nessun suono. 
               Ho aggiunto la lettura di Vbat e il calcolo dell'autonomia.
+       2/4/17 Uscita analogica: già non c'era più la selezione della portata; ho messo portata fissa da 0,01uSv/h a 1mSv/h.
+              Ho spostato la parte dell'uscita analogica, perché funzionava solo quando erano visualizzati i uSv/h, ma non quando erano visualizzati i cpm (Disp2).
 */
  
 String  ver=" v1.8U";
-String data="110317";
+String data="020417";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

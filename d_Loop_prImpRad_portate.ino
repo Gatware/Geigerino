@@ -148,6 +148,19 @@ if(millis()-t3>999) // Una volta al secondo:
       else {lcd.setCursor(10,1); lcd.print(" 0 ");}
     }
     else {lcd.setCursor(1,1); lcd.print("   0 ");} // Se tempo<=1 
+
+  // analogOut è abilitato?
+  if(analogOut)
+    {
+    anOut=((log10(uSvph)+2)*51); // log10(0,01)=-2; log1.000(10)=3
+    // if(por==0) anOut=((log10(uSvph)+2)*51); // log10(0,0001)=-4; log10(10)=1
+    //   else     anOut=((log10(uSvph)+2)*51); // log10(0,01)=-2; log10(1.000)=3   
+    if(pwr==0) anOut=int(anOut*635/Vb); // Se è alimemtato direttamente da Litio (605=3V)
+      else     anOut=int(anOut*635/1024); // Se è alimentato a 5V.
+    if(anOut<0) anOut=0; else if(anOut>255) anOut=255;
+    analogWrite(6,anOut); 
+    }
+    
   if(Ti==TMAX+10)
     {
     if(dstdPerc<=prec && cpm>0 && cp>20)
@@ -236,17 +249,6 @@ else if(Rad<100)   {lcd.print(" "); lcd.print(Rad,1); lcd.print(" ");}  // Es.: 
 else if(Rad<1000) {lcd.print("  "); lcd.print(Rad,0); lcd.print(" ");}  // Es.:   512
 else if(Rad<10000) {lcd.print(" "); lcd.print(Rad,0); lcd.print(" ");}  // Es.:  1450
 else                                lcd.print(Rad,0);                   // Es.: 21450
-// analogOut è abilitato?
-if(analogOut)
-  {
-  if(por==0) anOut=((log10(uSvph)+4)*51); // log10(0,0001)=-4; log10(10)=1
-    else     anOut=((log10(uSvph)+2)*51); // log10(0,01)=-2; log10(1.000)=3
-    
-  if(pwr==0) anOut=int(anOut*635/Vb); // Se è alimemtato direttamente da Litio (605=3V)
-    else     anOut=int(anOut*635/1024); // Se è alimentato a 5V.
-  if(anOut<0) anOut=0; if(anOut>255) anOut=255;
-  analogWrite(6,anOut); 
-  }
 } // END printRad()
 
 
