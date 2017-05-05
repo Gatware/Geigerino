@@ -105,10 +105,13 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Ho aggiunto la lettura di Vbat e il calcolo dell'autonomia.
        2/4/17 Uscita analogica: già non c'era più la selezione della portata; ho messo portata fissa da 0,01uSv/h a 1mSv/h.
               Ho spostato la parte dell'uscita analogica, perché funzionava solo quando erano visualizzati i uSv/h, ma non quando erano visualizzati i cpm (Disp2).
+       5/5/17 In modalità a precisione fissa, raggiunta la precisione impostata la prima pressione dell'encoder tacita solo il suono; la seconda cambia la visualizzazione
+              da cpm e dstd% a uSv/h o, adesso, anche viceversa se erano visualizzati i uSv/h; la terza azzera e fa ripartire il conteggio.
+              Ho esteso il valore massimo della precisione impostabile dal 10% al 15%.
 */
  
 String  ver=" v1.8U";
-String data="020417";
+String data="050517";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

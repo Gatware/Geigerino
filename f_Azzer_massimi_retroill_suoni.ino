@@ -130,7 +130,7 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
   if(E!=0) prec+=E;
-  if(prec>10){noTone(7); prec=10;}
+  if(prec>15){noTone(7); prec=15;}
   if(prec<1) {noTone(7); prec=1;}
   if(E!=0) {E=0; t1=millis(); delay(20);}
   lcd.setCursor(6,1); if(prec<10) lcd.print(" "+String(prec)+"%"); else lcd.print(String(prec)+"%");

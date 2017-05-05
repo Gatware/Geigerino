@@ -128,24 +128,7 @@ if(millis()-t3>999) // Una volta al secondo:
     lcd.setCursor(9,0);
     if(Ti==TMAX+10) {lcd.print("-"); unsigned long residuo=230.5*valPrec/cpm-tempo; if(residuo>0) visualSecondi(residuo); else visualSecondi(0);} // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
       else {lcd.print(" "); visualSecondi(temposecondi);}
-    lcd.setCursor(0,1); lcd.write(3);
-    if(cpm>=100000) spazio=" "; else spazio="";
-    if     (dstd<1)     {lcd.print("   0 c"); lcd.write(4); lcd.print("   ");}
-    else if(dstd<100)    lcd.print(" "+spazio+String(int(dstd/10))+","+String(dstd%10)+" ");
-    else if(dstd<1000)   lcd.print("  "+spazio+String(int(dstd/10))+" ");
-    else if(dstd<10000)  lcd.print(" "+spazio+String(int(dstd/10))+" ");
-    else if(dstd<100000) lcd.print(spazio+String(int(dstd/10))+" ");
-    else if(dstd>999999) lcd.print(spazio+String(int(dstd/10))+" ");
-    lcd.setCursor(6,1); lcd.print("c"); lcd.write(4); lcd.print("   ");
-    if(cpm!=0)
-      {
-      lcd.setCursor(10,1);             
-      if(dstdPerc>99) lcd.print("++");
-      else if(dstdPerc>9) lcd.print(dstdPerc);
-      else lcd.print(" "+String(dstdPerc));
-      lcd.print("%"); if(dstd>99) lcd.print(" ");
-      }
-      else {lcd.setCursor(10,1); lcd.print(" 0 ");}
+    scriveCpmEDstd();
     }
     else {lcd.setCursor(1,1); lcd.print("   0 ");} // Se tempo<=1 
 
@@ -166,13 +149,22 @@ if(millis()-t3>999) // Una volta al secondo:
     if(dstdPerc<=prec && cpm>0 && cp>20)
       {
       suonoFine=1;
-      while(PIND&0x20) {if(millis()%2000>1000) tone(7,1000); else noTone(7);} // Attende che venga premuto l'encoder ed esce, tacitando il suono.
-      noTone(7); Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");
-      lcd.setCursor(9,0); lcd.print("+"); visualSecondi(temposecondi);
+      while(PIND&0x20) {if(millis()%2000>1000) tone(7,1000); else noTone(7);} // Finché non viene premeuto l'encoder fa Biiip - Biiip - Biiip...
+      noTone(7); while(!(PIND&0x20)); delay (300); // Premuto l'encoder, si tacita e attende che venga lasciato il pulsante.
+      while(PIND&0x20); // Quando viene premuto di nuovo cambia la visualizzazione.
+      delay(200);
+      if(Disp2)
+        {
+        Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");
+        lcd.setCursor(9,0); lcd.print("+"); visualSecondi(temposecondi);
+        }
+      else scriveCpmEDstd();
+        
       while(!(PIND&0x20)) {delay(200);} // Attende che venga lasciato l'encoder
-      while(PIND&0x20) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.3
+      while(PIND&0x20) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.
       delay(200);
       Azzera();
+      if(!Disp2){lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");} // Se è impostato per visualizzare i uSv/h, lo riscrive e cancella la dstd%.
       }
     }
   tempo+=1;
@@ -251,4 +243,25 @@ else if(Rad<10000) {lcd.print(" "); lcd.print(Rad,0); lcd.print(" ");}  // Es.: 
 else                                lcd.print(Rad,0);                   // Es.: 21450
 } // END printRad()
 
+void scriveCpmEDstd()
+{
+lcd.setCursor(0,1); lcd.write(3);
+if(cpm>=100000) spazio=" "; else spazio="";
+if     (dstd<1)     {lcd.print("   0 c"); lcd.write(4); lcd.print("   ");}
+else if(dstd<100)    lcd.print(" "+spazio+String(int(dstd/10))+","+String(dstd%10)+" ");
+else if(dstd<1000)   lcd.print("  "+spazio+String(int(dstd/10))+" ");
+else if(dstd<10000)  lcd.print(" "+spazio+String(int(dstd/10))+" ");
+else if(dstd<100000) lcd.print(spazio+String(int(dstd/10))+" ");
+else if(dstd>999999) lcd.print(spazio+String(int(dstd/10))+" ");
+lcd.setCursor(6,1); lcd.print("c"); lcd.write(4); lcd.print("   ");
+if(cpm!=0)
+  {
+  lcd.setCursor(10,1);             
+  if(dstdPerc>99) lcd.print("++");
+  else if(dstdPerc>9) lcd.print(dstdPerc);
+  else lcd.print(" "+String(dstdPerc));
+  lcd.print("%"); if(dstd>99) lcd.print(" ");
+  }
+  else {lcd.setCursor(10,1); lcd.print(" 0 ");}
+} // END scriveCpmEDstd()
 
