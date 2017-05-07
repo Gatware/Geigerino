@@ -96,6 +96,7 @@ if(millis()-t5>499) // Due volte al secondo:
   
 if(millis()-t3>999) // Una volta al secondo:
   {
+  if(TS && (biptic==2||biptic==3) && alm+ALLARME!=2 && suonoFine==0) TicSi=1; else TicSi=0;
   D=DAB;  
   t3=millis();
   if(Ti<TMAX)
@@ -114,21 +115,19 @@ if(millis()-t3>999) // Una volta al secondo:
     else       {if(long((cp*60+30)/long(tempo))>ownbcpm) cpm=long((cp*60+30)/long(tempo))-ownbcpm; else cpm=0;} //+30: Aggiunge 0,5 ai cpm per l'arrotondamento
   Imp=cpm; lcd.setCursor(0,0); printImp(); // Passa i cpm a printImp.
   uSvph=float(cpm)/sens; // in virgola mobile.
-  dstd=(10+(Ti==TMAX+10)*9.6)*sqrt(cpm*60/(tempo-(tempo<Ti))); // Adotto coefficiente 1 (*10 perché sono decimi) per considerare una confidenza del 68%, 
-  //                                           oppure 1,96 (*10) nel caso della precisione fissa (Ti==TMAX+10)=1 per considerare una confidenza del 95%.
-  dstdPerc=10*dstd/cpm+1; // +1: Aggiunge 1 alla percentuale (dstd è già moltiplicata per 10) per arrotondare.
+  calcDstdEDstdPerc();
   if(!Disp2)
     {
-    if(Disp2o==1){Disp2o=0; lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");}
+    if(Disp2o==1){Disp2o=0; lcd.setCursor(6,1); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));}
     Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); // Se non è in modo Disp2, passa i uSv/h a printRad.
     lcd.setCursor(9,0); if(Ti==TMAX+10) lcd.print("+"); else lcd.print(" "); visualSecondi(temposecondi); 
-    }
+    }                       // TMAX+10: Precisione fissa.
   else if(tempo>1) // Se è in modo Disp2, scrive la deviazione standard:
     {     // Ho dovuto mettere tempo>1 perché poco dopo l'azzeramento appariva ± -2622.
     lcd.setCursor(9,0);
     if(Ti==TMAX+10) {lcd.print("-"); unsigned long residuo=230.5*valPrec/cpm-tempo; if(residuo>0) visualSecondi(residuo); else visualSecondi(0);} // 1,96^2*60=230,4;  per 5%: valPrec=1/(5%^2)=400
       else {lcd.print(" "); visualSecondi(temposecondi);}
-    scriveCpmEDstd();
+    scriveDstd(); scriveDstdPerc();
     }
     else {lcd.setCursor(1,1); lcd.print("   0 ");} // Se tempo<=1 
 
@@ -143,7 +142,7 @@ if(millis()-t3>999) // Una volta al secondo:
     if(anOut<0) anOut=0; else if(anOut>255) anOut=255;
     analogWrite(6,anOut); 
     }
-    
+  calcDstdEDstdPerc(); scriveDstdPerc();   
   if(Ti==TMAX+10)
     {
     if(dstdPerc<=prec && cpm>0 && cp>20)
@@ -151,22 +150,21 @@ if(millis()-t3>999) // Una volta al secondo:
       suonoFine=1;
       while(PIND&0x20) {if(millis()%2000>1000) tone(7,1000); else noTone(7);} // Finché non viene premeuto l'encoder fa Biiip - Biiip - Biiip...
       noTone(7); while(!(PIND&0x20)); delay (300); // Premuto l'encoder, si tacita e attende che venga lasciato il pulsante.
-      while(PIND&0x20); // Quando viene premuto di nuovo cambia la visualizzazione.
+      while(PIND&0x20); // Attende di essere premuto di nuovo per cambiare la visualizzazione.
       delay(200);
       if(Disp2)
         {
-        Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");
-        lcd.setCursor(9,0); lcd.print("+"); visualSecondi(temposecondi);
+        Rad=uSvph; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad(); lcd.setCursor(6,1); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));
+        lcd.setCursor(9,0); lcd.print("+"); visualSecondi(temposecondi);                                                // micro               Sv                  /h
         }
-      else scriveCpmEDstd();
-        
+      else scriveDstd();
       while(!(PIND&0x20)) {delay(200);} // Attende che venga lasciato l'encoder
       while(PIND&0x20) {delay(200);} // Attende una nuova pressione dell'encoder per azzerare.
       delay(200);
       Azzera();
-      if(!Disp2){lcd.setCursor(6,1); lcd.write(byte(2)); lcd.print("Sv/h  ");} // Se è impostato per visualizzare i uSv/h, lo riscrive e cancella la dstd%.
-      }
-    }
+      if(!Disp2){lcd.setCursor(6,1); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));} // Se è impostato per visualizzare i uSv/h, lo riscrive.
+      } 
+    }  
   tempo+=1;
   if(Ti<TMAX && tempo>Ti) tempo=Ti;
   temposecondi+=1;
@@ -174,7 +172,7 @@ if(millis()-t3>999) // Una volta al secondo:
   // lcd.setCursor(14,1); if(int(((millis()-millisZero)/1000))%2) lcd.print(":"); else lcd.print(" "); // Fa lampeggiare ":"
   // Al posto dei : lampeggianti scrivo il nome della sonda attiva: A o B (v. sopra).
   piloLED();
-
+  
   // Se la batteria è scarica, fa lampeggiare la retroilluminazione:
   byte resto=millis()%2000; if(Vb<676 && resto!=restoPrecedente) {digitalWrite(A0,!digitalRead(A0)); restoPrecedente=resto;} 
   } // END una volta al secondo
@@ -243,7 +241,14 @@ else if(Rad<10000) {lcd.print(" "); lcd.print(Rad,0); lcd.print(" ");}  // Es.: 
 else                                lcd.print(Rad,0);                   // Es.: 21450
 } // END printRad()
 
-void scriveCpmEDstd()
+void calcDstdEDstdPerc()
+{
+dstd=(10+(Ti==TMAX+10)*9.6)*sqrt(cpm*60/(tempo-(tempo<Ti))); // Adotto coefficiente 1 (*10 perché sono decimi) per considerare una confidenza del 68%, 
+  //                                           oppure 1,96 (*10) nel caso della precisione fissa (Ti==TMAX+10)=1 per considerare una confidenza del 95%.
+dstdPerc=10*dstd/cpm+1; // +1: Aggiunge 1 alla percentuale (dstd è già moltiplicata per 10) per arrotondare.
+} // END calcDstdEDtsdPerc()
+  
+void scriveDstd()
 {
 lcd.setCursor(0,1); lcd.write(3);
 if(cpm>=100000) spazio=" "; else spazio="";
@@ -253,7 +258,11 @@ else if(dstd<1000)   lcd.print("  "+spazio+String(int(dstd/10))+" ");
 else if(dstd<10000)  lcd.print(" "+spazio+String(int(dstd/10))+" ");
 else if(dstd<100000) lcd.print(spazio+String(int(dstd/10))+" ");
 else if(dstd>999999) lcd.print(spazio+String(int(dstd/10))+" ");
-lcd.setCursor(6,1); lcd.print("c"); lcd.write(4); lcd.print("   ");
+lcd.setCursor(6,1); lcd.print("c"); lcd.write(4); lcd.print(" "); // Cancella il carattere /h.
+} // END scriveDstd()
+
+void scriveDstdPerc()
+{
 if(cpm!=0)
   {
   lcd.setCursor(10,1);             
@@ -263,5 +272,5 @@ if(cpm!=0)
   lcd.print("%"); if(dstd>99) lcd.print(" ");
   }
   else {lcd.setCursor(10,1); lcd.print(" 0 ");}
-} // END scriveCpmEDstd()
+} // END scriveDstdPerc()
 

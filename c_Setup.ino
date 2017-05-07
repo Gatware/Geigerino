@@ -31,6 +31,8 @@ lcd.createChar(1,aaccentata);
 lcd.createChar(2,micro);
 lcd.createChar(3,piumeno);
 lcd.createChar(4,piemme);
+lcd.createChar(5,Sievert);
+lcd.createChar(6,all_ora);
 
 if(EEPROM.read(1)==255) // 
   {

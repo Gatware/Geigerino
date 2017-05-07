@@ -115,6 +115,7 @@ int L=0; // Conteggio dell'encoder per la retroilluminazione On/Off.
 int Lo=0; // Valore precedente di L.
 byte mute=0; // 1:non fa fare Bip quando si ruota l'encoder (quando LCD=1 (On)).
 int biptic=1; // 0:Nessun suono; 1:Bip; 2:Tic; 3:Bip+Tic.
+byte TicSi=1; // Viene impostata 1 volta al secondo per far fare o no il Tic nell'interrupt.
 int alm=0; // 1:Allarme attivo
 byte ALLARME=0; // 1: L'allarme sta suonando!
 byte ALLARMEo=0; // Stato precedente.
@@ -163,7 +164,7 @@ void ContaAB() // INTERRUPT 0
 {
 detachInterrupt(0);  
 DAB++;
-if(TS) Tic(); // TIC-TIC SOFTWARE
+if(TicSi) tone(SPK,1000,5); // TIC-TIC SOFTWARE
 particella=1;
 //while(!(PIND&0x20)); // Usando "FALLING" (fronte di discesa) non dovrebbe servire.
 attachInterrupt(0,ContaAB,FALLING);

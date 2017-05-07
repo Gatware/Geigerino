@@ -108,10 +108,14 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
        5/5/17 In modalità a precisione fissa, raggiunta la precisione impostata la prima pressione dell'encoder tacita solo il suono; la seconda cambia la visualizzazione
               da cpm e dstd% a uSv/h o, adesso, anche viceversa se erano visualizzati i uSv/h; la terza azzera e fa ripartire il conteggio.
               Ho esteso il valore massimo della precisione impostabile dal 10% al 15%.
+       6/5/17 Adesso la percentuale di errore viene visulizzata anche con i uSv/h.
+       7/5/17 Ho eliminato la funzione Tic() e ne ho spostato il contenuto in un if che imposta la variabile TicSi, letta poi velocemente in ContaAB() (interrupt),
+              così non deve fare il salto ogni volta.
+              Ho abbreviato il Tic da 10 a 5mS (5 cicli a 1KHz).
 */
  
 String  ver=" v1.8U";
-String data="050517";
+String data="070517";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
