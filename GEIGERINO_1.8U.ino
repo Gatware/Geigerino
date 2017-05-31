@@ -62,6 +62,7 @@ int pwr=0; // Contatore per alimentazione Litio diretta/5V (1:5V).
 int TS=0; // 1: fa TIC-TIC software
 unsigned long millisZero=0; // Lettura del tempo iniziale per far lampeggiare sempre i due punti sui secondi dispari:
                             // a volte, dopo aver impostato il tipo di sonda, lampeggiavano al contrario.
+//             t:      Variabile locale in Autonomia per la lettura ogni secondo.             
 unsigned long t1=0; // Lettura del tempo per la durata della pressione del pulsante e per la rotazione dell'encoder per On/Off.
 unsigned long t2=0; // Lettura del tempo per il Bip
 unsigned long t3=0; // Lettura del tempo per C[m] (1 volta al secondo).

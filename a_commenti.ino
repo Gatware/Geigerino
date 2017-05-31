@@ -112,10 +112,12 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
        7/5/17 Ho eliminato la funzione Tic() e ne ho spostato il contenuto in un if che imposta la variabile TicSi, letta poi velocemente in ContaAB() (interrupt),
               così non deve fare il salto ogni volta.
               Ho abbreviato il Tic da 10 a 5mS (5 cicli a 1KHz).
+      31/5/17 Nella funzione Autonomia veniva letto solo il valore di Vb corrente, quindi tensione e autonomia non venivano aggiornate continuamente. Adesso vengono
+              aggiornate ogni secondo.
 */
  
 String  ver=" v1.8U";
-String data="070517";
+String data="310517";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

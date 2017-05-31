@@ -1,5 +1,5 @@
 // while(!(PIND&0x20)) è come scrivere: while(digitalRead(5)=LOW)
-// while( (PIND&0x20)) è come scrivere: digitalRead(5)=HIGH
+// while( (PIND&0x20)) è come scrivere: while(digitalRead(5)=HIGH)
 
 void setup()
 {
