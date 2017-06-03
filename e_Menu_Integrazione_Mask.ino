@@ -39,13 +39,21 @@ t1=millis();
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0)  Ti+=10*E;
-  if(Ti>TMAX+10) {noTone(7); Ti=10;}
-  if(Ti<10) {noTone(7); Ti=TMAX+10;}
-  if(E!=0){E=0; t1=millis(); delay(20);}
-  
+  if(E!=0)
+    {
+    if(Ti>=10) Ti+=10*E;
+    if(Ti==5)
+      {
+      if(E==1) Ti=10;
+      else Ti=TMAX+10;
+      }
+    if(Ti>TMAX+10 || Ti==0) Ti=5;
+    E=0; t1=millis(); delay(20);
+    }
+      
   lcd.setCursor(0,1);
   if(Ti<TMAX) {lcd.print("    "+String(Ti)+" sec.     "); Disp2=0;}
+  if(Ti==5) lcd.print(" ");
   else if(Ti==TMAX) {lcd.print(F("    Continuo    ")); Disp2=0;} // Se Ti=TMAX, integra continuamente a tempo infinito.
   else {lcd.print(F("Precisione fissa")); Disp2=1;}
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.

@@ -114,10 +114,11 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Ho abbreviato il Tic da 10 a 5mS (5 cicli a 1KHz).
       31/5/17 Nella funzione Autonomia veniva letto solo il valore di Vb corrente, quindi tensione e autonomia non venivano aggiornate continuamente. Adesso vengono
               aggiornate ogni secondo.
+       3/6/17 Adesso il tempo d'integrazione parte da 5 secondi.
 */
  
 String  ver=" v1.8U";
-String data="310517";
+String data="030617";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
