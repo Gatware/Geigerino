@@ -26,7 +26,7 @@ else Bip();
 } // END Azzeramento()
 
 void Azzera()
-{for(m1=1; m1<61; m1++){C[m1]=0;} m=1; m1=1; cp=0; tempo=0; temposecondi=0; t3=0; DAB=0; D=0; DMAX=0; suonoFine=0;}
+{for(m1=1; m1<61; m1++){C[m1]=0;} m=1; m1=1; cp=0; tempo=0; temposecondi=0; t3=0; DAB=0; D=0; cpmMAX=0; suonoFine=0;}
  // END Azzera()
 
 void massimi()
@@ -36,8 +36,8 @@ t1=millis();
 while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
 {if(millis()-t1>999) {Bip(); lcd.clear(); suoni(); return;}}  // Premuto per almeno 1 secondo (4 totali) salta a retroillum(), poi ritorna ed esce.
 t1=millis();
-Mask(); lcd.setCursor(11,0); lcd.print("max"); lcd.setCursor(13,1); lcd.print("max"); 
-lcd.setCursor(0,0); if(DMAX*60>ownbcpm) Imp=DMAX*60-ownbcpm; else Imp=0; printImp(); // D è in cps; printImp vuole cpm.
+Mask(); lcd.setCursor(11,0); lcd.print("max"); lcd.setCursor(11,1); lcd.print("max"); 
+lcd.setCursor(0,0); Imp=cpmMAX; printImp();
 lcd.setCursor(0,1); Rad=float(Imp)/sens; printRad(); // uSv/h in virgola mobile. 
 delay(300);
 while(PIND&0x20){if(millis()-t1>9999) return;} // Attende che venga premuto il pulsante, ma dopo 10 secondi comunque esce.

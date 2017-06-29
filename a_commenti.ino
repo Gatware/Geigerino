@@ -115,10 +115,11 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
       31/5/17 Nella funzione Autonomia veniva letto solo il valore di Vb corrente, quindi tensione e autonomia non venivano aggiornate continuamente. Adesso vengono
               aggiornate ogni secondo.
        3/6/17 Adesso il tempo d'integrazione parte da 5 secondi.
+      29/6/17 Adesso il valore massimo viene considerato solo se tempo>4, per ignorare i primi valori che possono essere erroneamente molto alti. 
 */
  
 String  ver=" v1.8U";
-String data="030617";
+String data="290617";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

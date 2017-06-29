@@ -101,7 +101,7 @@ if(millis()-t3>999) // Una volta al secondo:
   t3=millis();
   if(Ti<TMAX)
     {
-    C[m]=D; if(D>DMAX){DMAX=D;} DAB=0; // DMAX: cps massimi (1 secondo).
+    C[m]=D; DAB=0;
     cp=0; 
     for(m1=1; m1<=tempo; m1++) {cp+=C[m1];} // Somma gli impulsi memorizzati nel tempo Ti.
     if(m<Ti) {m+=1;}
@@ -109,10 +109,11 @@ if(millis()-t3>999) // Una volta al secondo:
     }
     else
     {
-    cp+=D; if(D>DMAX){DMAX=D;} DAB=0; // Ti=TMAX, quindi tempo di integrazione infinito, o Ti=TMAX+10, quindi precisione fissa.
+    cp+=D; DAB=0; // Ti=TMAX, quindi tempo di integrazione infinito, o Ti=TMAX+10, quindi precisione fissa.
     }
   if(tempo<Ti && Ti<TMAX) {if(long((cp*60+30)/long(tempo-1))>ownbcpm) cpm=long((cp*60+30)/long(tempo-1))-ownbcpm; else cpm=0;} // Impulsi al minuto (ownbcpm: cpm di background proprio del tubo). 
     else       {if(long((cp*60+30)/long(tempo))>ownbcpm) cpm=long((cp*60+30)/long(tempo))-ownbcpm; else cpm=0;} //+30: Aggiunge 0,5 ai cpm per l'arrotondamento
+  if (cpm>cpmMAX && tempo>4) cpmMAX=cpm;
   Imp=cpm; lcd.setCursor(0,0); printImp(); // Passa i cpm a printImp.
   uSvph=float(cpm)/sens; // in virgola mobile.
   calcDstdEDstdPerc();

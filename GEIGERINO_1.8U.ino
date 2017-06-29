@@ -80,7 +80,6 @@ int por=0; // Portata analogica: 0: range 0,0001...10uSv/h
            //                    1: range  10uSv/h...1Sv/h
 volatile unsigned int DAB=0; // Accumula gli impulsi nell'interrupt 0 (sonda A) (impulsi in 1 secondo).
 unsigned long D=0; // Copia DA o DB, secondo quale sonda è selezionata.
-unsigned long DMAX=0; // D MAX conteggiati (valore massimo dei cps [in 1 secondo]).
 unsigned long C[61]; // Impulsi (Count) per ogni secondo (60 secondi MAX; non uso C[0]).
 float uSvph=0; // microSievert/h in virgola mobile.
 float Rad=0; // Valore che viene passato a prRad() per la visualizzazione.
@@ -92,6 +91,7 @@ byte m1=1;// Contatore per i cpm (da 1 a Ti).
 byte n=0; // Contatore per l'azzeramento iniziale di N[] e per l'elenco delle sonde.
 unsigned long  cp=0; // Impulsi nel tempo Ti.
 unsigned long cpm=0; // Impulsi al minuto.
+unsigned long cpmMAX=0; // cpm massimi visualizzati.
 unsigned long Imp=0; // Valore che viene passato a prCp() per la visualizzazione.
 String cpmf; // cpm formattato.
 byte ore;
