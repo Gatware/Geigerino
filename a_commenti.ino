@@ -117,10 +117,13 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
        3/6/17 Adesso il tempo d'integrazione parte da 5 secondi.
       29/6/17 Adesso il valore massimo viene considerato solo se tempo>4, per ignorare i primi valori che possono essere erroneamente molto alti.
 1.9U  15/7/17 Introduco il calcolo della dose in mSv.
+              Ho dovuto sostituire la variabile Disp (modo di visualizzazione 0,1,2) a Disp2 (modo 2 off/on), cambiando Disp2=0 in Disp=0 e Disp2=1 in Disp=1
+      16/7/17 Durante la visualizzazione della dose (Disp=2) non visualizzava il tempo: corretto.
+              Ho corretto qualche altro problema che si era creto nella visualizzazione dovuto al nuovo valore possibile Disp=2.
 */
  
 String  ver=" v1.9U";
-String data="150717";
+String data="160717";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
