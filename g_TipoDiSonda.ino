@@ -21,7 +21,7 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
   }
   
-if(sonda!=EEPROM.read(1)) {EEPROM.update(1,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!  "); delay(500);}
+if(sonda!=EEPROM.read(1)) {EEPROM.update(1,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!   "); delay(500);}
 else Bip();
 
 if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
@@ -136,7 +136,7 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
   }
   
-if(sonda!=EEPROM.read(6)) {EEPROM.update(6,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!   "); delay(500);}
+if(sonda!=EEPROM.read(6)) {EEPROM.update(6,sonda); Biip(); lcd.setCursor(5,1); lcd.print("  SET!    "); delay(500);}
 else Bip();
 
 if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")

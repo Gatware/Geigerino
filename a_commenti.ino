@@ -121,8 +121,8 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Ho corretto qualche altro problema che si era creto nella visualizzazione dovuto al nuovo valore possibile Disp=2.
 1.9UX 19/7/17 Introduco la lettura della tensione di alimentazione (Vcc) separata da quella della tensione della batteria (Vb) per consentire il corretto funzionamento
               dell'uscita analogica in PWM anche quando l'alimentazione viene commutata sui 5V USB durante la carica.
-       1/8/17 Utilizzo i recenti simboli Sv e /h anche nelle impostazioni di sensibilità, al posto della scrittura estesa ancora presente.        
-
+       1/8/17 Utilizzo i recenti simboli Sv e /h anche nelle impostazioni di sensibilità, al posto della scrittura estesa ancora presente.
+              Nell'impostazione del tipo di sonda metto uno spazio in più dopo ciascun "SET!" (sonda A e sonda B), poiché la "e" di Variabile non veniva cancellata.
 */
 String  ver=" v1.9UX";
 String data="010817";
