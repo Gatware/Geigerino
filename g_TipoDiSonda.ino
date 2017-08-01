@@ -106,7 +106,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   
   else // IF Sonda==1...ntipi-1
   {
-  lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
+  lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/"); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));
   lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
   while(!(PIND&0x20));
   delay(500);
@@ -221,7 +221,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   
 else // IF Sonda==1...ntipi-1
   {
-  lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/("); lcd.write(2); lcd.print("Sv/h)");
+  lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/"); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));
   lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
   while(!(PIND&0x20));
   delay(500);

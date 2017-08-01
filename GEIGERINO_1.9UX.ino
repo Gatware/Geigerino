@@ -61,8 +61,8 @@ byte Po=1; // Stato precedente del pulsante
 int Azz=0; // Contatore sì/no per l'encoder in Azzerare.
 int pwr=0; // Contatore per alimentazione Litio diretta/5V (1:5V).
 int TS=0; // 1: fa TIC-TIC software
-unsigned long millisZero=0; // Lettura del tempo iniziale per far lampeggiare sempre i due punti sui secondi dispari:
-                            // a volte, dopo aver impostato il tipo di sonda, lampeggiavano al contrario.
+// unsigned long millisZero=0; // Lettura del tempo iniziale per far lampeggiare sempre i due punti sui secondi dispari:
+                               // a volte, dopo aver impostato il tipo di sonda, lampeggiavano al contrario. DUE PUNTI NON USATI.
 //             t:      Variabile locale in Autonomia per la lettura ogni secondo.             
 unsigned long t1=0; // Lettura del tempo per la durata della pressione del pulsante e per la rotazione dell'encoder per On/Off.
 unsigned long t2=0; // Lettura del tempo per il Bip

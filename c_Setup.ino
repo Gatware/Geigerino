@@ -99,7 +99,7 @@ if(Ti<TMAX) lcd.print("Ti="+String(Ti)+" sec."); else if(Ti==TMAX) lcd.print("Ti
 delay(1200);
 attachInterrupt(0, ContaAB, FALLING); Bip(); delay(50);
 Mask(); Azzera(); lcd.setCursor(14,0); lcd.print(temposecondi);
-millisZero=millis();
+// millisZero=millis(); DUE PUNTI NON USATI.
 } // END setup
 
 // -----------------------------------------------------------------------------

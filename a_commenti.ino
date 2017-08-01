@@ -1,4 +1,3 @@
-
 /*
 0.1  15/10/16 Cerco di fare tutta la selezione dei menu nel loop.
 0.2  16/10/16 Torno ai salti da un menu all'altro come in Limiti.
@@ -20,7 +19,7 @@
 0.3d231/10/16 In modo continuo i secondi andavano a passi di 2, perché incrementavo tempo 2 volte, e il conteggio si fermava a 1m11s.  
 0.3e 31/10/16 I calcoli di Hi-byte di var erano sbagliati, perché dividevo e moltiplicavo per 16, anziché per 256!
               A volte, dopo aver impostato il tipo di sonda, i due punti lampeggiavano sui secondi pari anziché dispari: ho introdotto
-              millisZero, ottenendo un azzeramento iniziale del tempo letto dalla funzione dei due punti.
+              millisZero, ottenendo un azzeramento iniziale del tempo letto dalla funzione dei due punti. DUE PUNTI NON USATI.
               Riduco l'antirimbalzo di Centinaia-Decine-Unità della sensibilità variabile da 500mS a 300mS.
 0.3f  3/11/16 Come la 0.3e, ma con le connessioni come nella seguente 0.4: Encoder A e B da PD3 e PD4 a PD0 e PD1 per liberare l'interrupt 1.
 0.3g  4/11/16 Nella 0.3f non avevo messo gli I/O 0 e 1 nel setup per INPUT e PULLUP. Corretti. 
@@ -122,11 +121,11 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Ho corretto qualche altro problema che si era creto nella visualizzazione dovuto al nuovo valore possibile Disp=2.
 1.9UX 19/7/17 Introduco la lettura della tensione di alimentazione (Vcc) separata da quella della tensione della batteria (Vb) per consentire il corretto funzionamento
               dell'uscita analogica in PWM anche quando l'alimentazione viene commutata sui 5V USB durante la carica.
+       1/8/17 Utilizzo i recenti simboli Sv e /h anche nelle impostazioni di sensibilità, al posto della scrittura estesa ancora presente.        
 
 */
- 
 String  ver=" v1.9UX";
-String data="190717";
+String data="010817";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
@@ -165,10 +164,13 @@ String data="190717";
  * 0 Simboli Batt_0...7
  * 1 Lettera "à"
  * 2 Lettera "μ"
- * 3 10 simboli della percentuale del tempo
+ * 3 Simbolo "+/-"
+ * 4 Simbolo "pm" (per scrivere cpm)
+ * 5 Simbolo "Sv"
+ * 6 Simbolo "/h"
  * 
  * ***** EEPROM *****
- * 0 Ti: Tempo di integrazione
+ * 0 Ti: Tempo di integrazione (lo-byte); hi-byte: v.15
  * 1 sonda: Tipo di sonda A
  * 2 var lo-byte: Sensibilità variabile A (lo-byte)
  * 3 var hi-byte: Sensibilità variabile A (hi-byte)
@@ -182,7 +184,8 @@ String data="190717";
  *11 LCD: retroilluminazione dell'LCD: 1:On; 2:Auto.
  *12 biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
  *13 pwr: Alimentazione: 0:Litio diretta; 1:5V.
- *14 Allarme
- *15
+ *14 alm: Allarme: 0:disattivato; 1:attivato.
+ *15 Ti (hi-byte)
+ *16 prec: Precisione % impostata
  *17 VSB: Velocità di scarica della batteria in mV/h.
  */
