@@ -123,9 +123,10 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               dell'uscita analogica in PWM anche quando l'alimentazione viene commutata sui 5V USB durante la carica.
        1/8/17 Utilizzo i recenti simboli Sv e /h anche nelle impostazioni di sensibilità, al posto della scrittura estesa ancora presente.
               Nell'impostazione del tipo di sonda metto uno spazio in più dopo ciascun "SET!" (sonda A e sonda B), poiché la "e" di Variabile non veniva cancellata.
+       7/8/17 Faccio lampeggiare il LED rosso se biptic<2, anziché solo se biptic=0.
 */
 String  ver=" v1.9UX";
-String data="010817";
+String data="070817";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
