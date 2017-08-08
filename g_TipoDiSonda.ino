@@ -29,7 +29,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?  "));
   lcd.setCursor(5,1); lcd.print(F("         ")); printVar();
   while(!(PIND&0x20))
-  lcd.setCursor(10,1); lcd.print(F("Cent."));
+  lcd.setCursor(0,1); lcd.print(F("Centin."));
   delay(300);
   t1=millis();
   while(PIND&0x20)
@@ -43,7 +43,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     } // Fine dell'inserimento delle centinaia.
     
   while(!(PIND&0x20));
-  lcd.setCursor(10,1); lcd.print(F("Decine"));
+  lcd.setCursor(0,1); lcd.print(F("Decine "));
   Bip(); delay(300);
   t1=millis();
   while(PIND&0x20)
@@ -57,7 +57,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     } // Fine dell'inserimento delle decine.
     
   while(!(PIND&0x20));
-  lcd.setCursor(10,1); lcd.print("Unit"); lcd.write(1); lcd.print(" ");
+  lcd.setCursor(0,1); lcd.print(" Unit"); lcd.write(1); lcd.print(" ");
   Bip(); delay(300);
   t1=millis();
   while(PIND&0x20)
@@ -144,7 +144,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?  "));
   lcd.setCursor(5,1); lcd.print(F("         ")); printVar();
   while(!(PIND&0x20));
-  lcd.setCursor(10,1); lcd.print(F("Cent."));
+  lcd.setCursor(0,1); lcd.print(F("Centin."));
   delay(300);
   t1=millis();
   while(PIND&0x20)
@@ -158,7 +158,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     } // Fine dell'inserimento delle centinaia.
     
   while(!(PIND&0x20));
-  lcd.setCursor(10,1); lcd.print(F("Decine"));
+  lcd.setCursor(0,1); lcd.print(F("Decine "));
   Bip(); delay(300);
   t1=millis();
   while(PIND&0x20)
@@ -172,7 +172,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     } // Fine dell'inserimento delle decine.
     
   while(!(PIND&0x20));
-  lcd.setCursor(10,1); lcd.print(F("Unit")); lcd.write(1); lcd.print(F(" ")); // lcd.write(1): à
+  lcd.setCursor(0,1); lcd.print(F(" Unit")); lcd.write(1); lcd.print(F(" ")); // lcd.write(1): à
   Bip(); delay(300);
   t1=millis();
   while(PIND&0x20)
@@ -234,7 +234,7 @@ lcd.clear();
 
 void printVar()
 {
-lcd.setCursor(6,1);
+lcd.setCursor(7,1);
 if(var<10) lcd.print("  "+String(var));
 else if(var<100) lcd.print(" "+String(var));
 else lcd.print(var);
