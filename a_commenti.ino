@@ -126,9 +126,11 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
        7/8/17 Faccio lampeggiare il LED rosso se biptic<2, anziché solo se biptic=0.
        8/8/17 In "Tipo di sonda", Variabile, ho spostato "Centin.", "Decine", "Unità" a sinistra anziché a destra, togliendo anche il punto che in origine rimaneva.
               Per fare questo ho dovuto spostare il valore più a destra di 1 carattere (da 6 a 7).
+     13/10/17 Ho messo la "X" nell'indirizzo github, all'inizio.
+              Ho tolto detachInterrupt all'inizio della ISR void ContaAB() e attachInterrupt alla fine poiché, durante un interrupt, il processore non ne rileva un altro.
 */
 String  ver=" v1.9UX";
-String data="080817";
+String data="131017";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

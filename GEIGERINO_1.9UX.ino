@@ -3,7 +3,7 @@
 *   ******************** G E I G E R I N O ************************   *
 *         ******* Un Contatore Geiger con Arduino ********            *
 *   *********  Copyright Gianluca Giangreco 2016-2017  ************   *
-****** https://github.com/Gatware/Geigerino/tree/GEIGERINO_1.9U *******                              
+****** https://github.com/Gatware/Geigerino/tree/GEIGERINO_1.9UX ******                              
 *                                                                     *
 * Questo software è a puro scopo didattico, pertanto  non assumo res- *
 * ponsabilità sulla precisione e veridicità  dei valori riportati. Mi *
@@ -167,12 +167,10 @@ byte ownbcpm=0; // Valore di Own Background letto dall'array ownb[].
 
 void ContaAB() // INTERRUPT 0
 {
-detachInterrupt(0);  
 DAB++;
 if(TicSi) tone(SPK,1000,5); // TIC-TIC SOFTWARE
 particella=1;
 //while(!(PIND&0x20)); // Usando "FALLING" (fronte di discesa) non dovrebbe servire.
-attachInterrupt(0,ContaAB,FALLING);
 }
 
 
