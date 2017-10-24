@@ -12,7 +12,7 @@ t1=millis();
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0){sonda+=E; E=0; t1=millis(); delay(20);}
+  if(E!=0){sonda+=E; E=0; t1=millis(); delay(10);}
   if(sonda>ntipi) {sonda=ntipi; noTone(7);}
   if(sonda<1) {sonda=1; noTone(7);}
   
@@ -35,7 +35,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   while(PIND&0x20)
     { // Centinaia
     encoder();
-    if(E!=0){var+=100*E; E=0; t1=millis(); delay(20);}
+    if(E!=0){var+=100*E; E=0; t1=millis(); delay(10);}
     if(var>999) var-=100;
     if(var<0) var+=100;
     printVar();
@@ -49,7 +49,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   while(PIND&0x20)
     { // Decine
     encoder();
-    if(E!=0){var+=10*E; E=0; t1=millis(); delay(20);}
+    if(E!=0){var+=10*E; E=0; t1=millis(); delay(10);}
     if(var>999) var-=10;
     if(var<0) var+=10;
     printVar();
@@ -63,7 +63,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   while(PIND&0x20)
     { // Unità
     encoder();
-    if(E!=0){var+=E; E=0; t1=millis(); delay(20);}
+    if(E!=0){var+=E; E=0; t1=millis(); delay(10);}
     if(var>999) {var=999;}
     else if(var<1) {var=1;}
     printVar();
@@ -85,8 +85,8 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   while(PIND&0x20)
     { // Cpm di background della sonda
     encoder();
-    if(E>0 && ownbcpm<255){ownbcpm+=1; E=0; t1=millis(); delay(20);}
-    if(E<0 && ownbcpm>0)  {ownbcpm-=1; E=0; t1=millis(); delay(20);}
+    if(E>0 && ownbcpm<255){ownbcpm+=1; E=0; t1=millis(); delay(10);}
+    if(E<0 && ownbcpm>0)  {ownbcpm-=1; E=0; t1=millis(); delay(10);}
     
     lcd.setCursor(6,1);
     if(ownbcpm<10) lcd.print("  "+String(ownbcpm));
@@ -127,7 +127,7 @@ t1=millis();
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0){sonda+=E; E=0; t1=millis(); delay(20);}
+  if(E!=0){sonda+=E; E=0; t1=millis(); delay(10);}
   if(sonda>ntipi) sonda=ntipi;
   if(sonda<1) sonda=1;
   
@@ -150,7 +150,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   while(PIND&0x20)
     { // Centinaia
     encoder();
-    if(E!=0){var+=100*E; E=0; t1=millis(); delay(20);}
+    if(E!=0){var+=100*E; E=0; t1=millis(); delay(10);}
     if(var>999) var-=100;
     if(var<0) var+=100;
     printVar();
@@ -164,7 +164,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   while(PIND&0x20)
     { // Decine
     encoder();
-    if(E!=0){var+=10*E; E=0; t1=millis(); delay(20);}
+    if(E!=0){var+=10*E; E=0; t1=millis(); delay(10);}
     if(var>999) var-=10;
     if(var<0) var+=10;
     printVar();
@@ -178,7 +178,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   while(PIND&0x20)
     { // Unità
     encoder();
-    if(E!=0){var+=E; E=0; t1=millis(); delay(20);}
+    if(E!=0){var+=E; E=0; t1=millis(); delay(10);}
     if(var>999) {var=999;}
     else if(var<1) {var=1;}
     printVar();
@@ -200,8 +200,8 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   while(PIND&0x20)
     { // Cpm di background della sonda
     encoder();
-    if(E>0 && ownbcpm<255){ownbcpm+=1; E=0; t1=millis(); delay(20);}
-    if(E<0 && ownbcpm>0)  {ownbcpm-=1; E=0; t1=millis(); delay(20);}
+    if(E>0 && ownbcpm<255){ownbcpm+=1; E=0; t1=millis(); delay(10);}
+    if(E<0 && ownbcpm>0)  {ownbcpm-=1; E=0; t1=millis(); delay(10);}
     
     lcd.setCursor(6,1);
     if(ownbcpm<10) lcd.print("  "+String(ownbcpm));

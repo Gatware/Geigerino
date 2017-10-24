@@ -128,9 +128,13 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Per fare questo ho dovuto spostare il valore più a destra di 1 carattere (da 6 a 7).
      13/10/17 Ho messo la "X" nell'indirizzo github, all'inizio.
               Ho tolto detachInterrupt all'inizio della ISR void ContaAB() e attachInterrupt alla fine poiché, durante un interrupt, il processore non ne rileva un altro.
+     24/10/17 Ho aggiunto la taratura di Vref da menu. Ci si arriva tenendo premuto il pulsante per 3 secondi all'accensione. Si deve immettere la tensione letta sul pin 21.
+              Ho messo il Biip() quando viene aggiornata la EEPROM in Power Setup, Impostazione della capacità della batteria e Taratura di Vref.
+              Ho messo il noTone(7) in Taratura di Vref. Ho dovuto modificare qualcosa, come si vede rispetto alle righe precedenti dove non l'ho fatto.
+              Nelle impostazioni con ampia gamma di regolazione da parte dell'encoder ho ridotto il delay(20) tra i passi dell'encoder a delay(10) per una variazione più rapida.
 */
 String  ver=" v1.9UX";
-String data="131017";
+String data="241017";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
@@ -193,4 +197,5 @@ String data="131017";
  *15 Ti (hi-byte)
  *16 prec: Precisione % impostata
  *17 VSB: Velocità di scarica della batteria in mV/h.
+ *18 VrefDec: Parte decimale della tensione letta sul pin 21 (Vref interna) per la taratura (1,1V +/-10%)
  */

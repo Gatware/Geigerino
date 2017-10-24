@@ -50,8 +50,10 @@
 LiquidCrystal lcd(8,9,10,11,12,13); // RS,EN,D4,D5,D6,D7
 void(* Riavvia)(void) = 0; // Riavvia() riavvia il Contatore Geiger (usato per uscire dalle impostazioni di setup dopo ...secondi).
 
-unsigned long XVref=0.940*1072; // 0,94 * Vref in mV. Inserire qui il valore letto con il multimetro sul pin 21 dell'ATmega328P
-                                // o il valore del riferimento di tensione esterno montato.
+// unsigned long XVref=0.940*1072; // 0,94 * Vref in mV. Inserire qui il valore letto con il multimetro sul pin 21 dell'ATmega328P
+                                   // o il valore del riferimento di tensione esterno montato.
+unsigned long XVref=1000; // Valore iniziale in mV, che sarà poi calcolato in base a VrefDec: XVref=0,94*(1000+VrefDec).  
+int VrefDec=100; // Valore iniziale, che sarà poi letto da EEPROM o impostato di default.  
 unsigned long Vb; // Tensione della batteria, letta su A3. Deve essere long per permettere i calcoli per la lettura della tensione.
 unsigned long Vcc; // Tensione di alimentazione (circ 5V quando la batteria è in carica, se c'è il circuito di commutazione).
 byte bat=7;  // Stato corrente della batteria (indice dell'icona).

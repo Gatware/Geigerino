@@ -45,7 +45,7 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
       else Ti=TMAX+10;
       }
     if(Ti>TMAX+10 || Ti==0) Ti=5;
-    E=0; t1=millis(); delay(20);
+    E=0; t1=millis(); delay(10);
     }
       
   lcd.setCursor(0,1);
