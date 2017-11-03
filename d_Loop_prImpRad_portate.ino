@@ -23,7 +23,7 @@ if(Po==0 && P==1) // se lo lascio prima, cambia uSv/h > deviazione standard (+/-
   delay(200);    
   }
 
-if(biptic==0 && particella==1)
+if(biptic<2 && particella==1)
   {
   if(particellao==0) {t7=millis(); PORTC|=B00100000; particellao=1;} // Accende il LED rosso.
   else if(millis()-t7>10) {PORTC&=B11011111; particella=0; particellao=0;} // Spegne il LED rosso.

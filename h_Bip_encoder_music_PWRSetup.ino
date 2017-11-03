@@ -81,7 +81,7 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   if(pwr==0) lcd.print(F("Litio dir."));
     else lcd.print(F("   5V     "));
   }
-if(pwr!=EEPROM.read(13)) {EEPROM.update(13,pwr); Biip(); lcd.setCursor(9,1); lcd.print(F("SET!   ")); delay(500);}
+if(pwr!=EEPROM.read(13)) {EEPROM.update(13,pwr); Biip(); lcd.setCursor(9,1); lcd.print(F("SET!   ")); Biip(); delay(500);}
   else Bip();
 delay(300); 
 
@@ -92,15 +92,33 @@ while(!(PIND&0x20))
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0){VSB+=E;E=0;delay(20);}
+  if(E!=0){VSB+=E;E=0;delay(10);}
   if(VSB<20)VSB=20; // 20=2,0mV/h
   if(VSB>99)VSB=99; // 99=9,9mV/h
   lcd.setCursor(8,0); lcd.print(String(VSB/10)+"."+String(VSB%10)+"mV/h");
   lcd.setCursor(0,1); lcd.print("Auton. Max:" +String(int(10000/VSB)) +"h");
   };
 Bip(); // Ho premuto il pulsante, perciò prosegue 
-if (VSB!=EEPROM.read(17)) {EEPROM.update(17,VSB); lcd.setCursor(11,1); lcd.print(" SET!"); delay(1200);}
-delay(300);                    // Se è cambiata, memorizza l'impostazione in EEPROM 9.
+if (VSB!=EEPROM.read(17)) {EEPROM.update(17,VSB); lcd.setCursor(11,1); lcd.print(" SET!"); Biip(); delay(1200);}
+delay(300);                    // Se è cambiata, memorizza l'impostazione in EEPROM 17.
+
+// ------------------------------------------- Impostazione di Vref -------------------------------------------
+lcd.clear(); lcd.print("Taratura di Vref");
+lcd.setCursor(1,1); lcd.print("Vpin21:     mV");
+while(!(PIND&0x20))
+{delay(300);} // Attende che venga lasciato il pulsante.
+while(PIND&0x20) // Continua a leggere l'encoder finché non premo
+  {
+  encoder();
+  if(E!=0){VrefDec+=E;}
+  if(VrefDec<0){VrefDec=0; noTone(7);} // 0=1000mV
+  if(VrefDec>200){VrefDec=200; noTone(7);} // 200=1200mV
+  if(E){E=0; delay(10);}
+  lcd.setCursor(9,1); lcd.print(1000+VrefDec);  
+  };
+Bip(); // Ho premuto il pulsante, perciò prosegue
+if (VrefDec!=EEPROM.read(18)) {EEPROM.update(18,VrefDec); lcd.setCursor(1,1); lcd.print("   SET!"); Biip(); delay(1200);}
+delay(300);                    // Se è cambiata, memorizza l'impostazione in EEPROM 18.
 
 lcd.clear();
 lcd.setCursor(4,0); lcd.print(ver);
