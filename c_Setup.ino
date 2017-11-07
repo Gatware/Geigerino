@@ -59,6 +59,8 @@ if(EEPROM.read(1)==255) //
   //           (15 è l'Hi-byte di Ti; v. sopra.)
   EEPROM.update(16,5); // Precisione %
   EEPROM.update(17,60); // Velocità di scarica della batteria in 10*mV/h.
+  EEPROM.update(18,100); // VrefDec: Parte decimale di Vref (100=1,100V) per la taratura
+
   lcd.setCursor(0,1); lcd.print("     Fatto.     ");
   lcd.clear();
   }  
@@ -87,8 +89,11 @@ alm=EEPROM.read(14); // Allarme: 0:disattivato; 1:attivato.
 prec=EEPROM.read(16); // Legge la precisione impostata.
 valPrec=10000/sq(prec);
 VSB=EEPROM.read(17); // Legge la velocità di scarica della batteria.
-                       // Se il pulsante è già premuto, salta alle impostazioni, poi ritorna:
-if(!(PIND&0x20)) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} 
+VrefDec=EEPROM.read(18); // Legge la parte decimale di Vref che è stata impostata in fase di taratura.
+XVref=0.94*(1000+VrefDec);
+
+if(!(PIND&0x20)) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} // Se il pulsante
+                                                                  // è già premuto, salta alle impostazioni, poi ritorna.
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
 
 lcd.clear();
@@ -99,7 +104,7 @@ if(Ti<TMAX) lcd.print("Ti="+String(Ti)+" sec."); else if(Ti==TMAX) lcd.print("Ti
 delay(1200);
 attachInterrupt(0, ContaAB, FALLING); Bip(); delay(50);
 Mask(); Azzera(); lcd.setCursor(14,0); lcd.print(temposecondi);
-millisZero=millis();
+// millisZero=millis(); DUE PUNTI INTERMITTENTI NON USATI.
 } // END setup
 
 // -----------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-
 /*
 0.1  15/10/16 Cerco di fare tutta la selezione dei menu nel loop.
 0.2  16/10/16 Torno ai salti da un menu all'altro come in Limiti.
@@ -20,7 +19,7 @@
 0.3d231/10/16 In modo continuo i secondi andavano a passi di 2, perché incrementavo tempo 2 volte, e il conteggio si fermava a 1m11s.  
 0.3e 31/10/16 I calcoli di Hi-byte di var erano sbagliati, perché dividevo e moltiplicavo per 16, anziché per 256!
               A volte, dopo aver impostato il tipo di sonda, i due punti lampeggiavano sui secondi pari anziché dispari: ho introdotto
-              millisZero, ottenendo un azzeramento iniziale del tempo letto dalla funzione dei due punti.
+              millisZero, ottenendo un azzeramento iniziale del tempo letto dalla funzione dei due punti. DUE PUNTI NON USATI.
               Riduco l'antirimbalzo di Centinaia-Decine-Unità della sensibilità variabile da 500mS a 300mS.
 0.3f  3/11/16 Come la 0.3e, ma con le connessioni come nella seguente 0.4: Encoder A e B da PD3 e PD4 a PD0 e PD1 per liberare l'interrupt 1.
 0.3g  4/11/16 Nella 0.3f non avevo messo gli I/O 0 e 1 nel setup per INPUT e PULLUP. Corretti. 
@@ -122,11 +121,26 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Ho corretto qualche altro problema che si era creto nella visualizzazione dovuto al nuovo valore possibile Disp=2.
 1.9UX 19/7/17 Introduco la lettura della tensione di alimentazione (Vcc) separata da quella della tensione della batteria (Vb) per consentire il corretto funzionamento
               dell'uscita analogica in PWM anche quando l'alimentazione viene commutata sui 5V USB durante la carica.
+       1/8/17 Utilizzo i recenti simboli Sv e /h anche nelle impostazioni di sensibilità, al posto della scrittura estesa ancora presente.
+              Nell'impostazione del tipo di sonda metto uno spazio in più dopo ciascun "SET!" (sonda A e sonda B), poiché la "e" di Variabile non veniva cancellata.
+       7/8/17 Faccio lampeggiare il LED rosso se biptic<2, anziché solo se biptic=0.
+       8/8/17 In "Tipo di sonda", Variabile, ho spostato "Centin.", "Decine", "Unità" a sinistra anziché a destra, togliendo anche il punto che in origine rimaneva.
+              Per fare questo ho dovuto spostare il valore più a destra di 1 carattere (da 6 a 7).
+     13/10/17 Ho messo la "X" nell'indirizzo github, all'inizio.
+              Ho tolto detachInterrupt all'inizio della ISR void ContaAB() e attachInterrupt alla fine poiché, durante un interrupt, il processore non ne rileva un altro.
+     24/10/17 Ho aggiunto la taratura di Vref da menu. Ci si arriva tenendo premuto il pulsante per 3 secondi all'accensione. Si deve immettere la tensione letta sul pin 21.
+              Ho messo il Biip() quando viene aggiornata la EEPROM in Power Setup, Impostazione della capacità della batteria e Taratura di Vref.
+              Ho messo il noTone(7) in Taratura di Vref. Ho dovuto modificare qualcosa, come si vede rispetto alle righe precedenti dove non l'ho fatto.
+              Nelle impostazioni con ampia gamma di regolazione da parte dell'encoder ho ridotto il delay(20) tra i passi dell'encoder a delay(10) per una variazione più rapida.
+      3/11/17 Ho ridotto il tempo massimo di integrazione da 300 a 60 secondi, poiché C[] (che era C[61], quindi produceva catastrofi con tempi maggiori di 60s!) deve avere
+              un numero di elementi pari ai secondi più 1 (non uso lo 0) e già con 90 rimane poca RAM e potrebbero esserci problemi di stabilità.
+      7/11/17 Nella funzione Autonomia ho messo la scrittura della tensione in una funzione per leggere inizialmente il valore corrente di Vb; poi metto il pin in INPUT,
+              attendo 500mS per la stabilizzazione, leggo Vb e comincio a visualizzarlo ciclicamente. Precedentemente, appena selezionato "Autonomia" appariva per circa 1 secondo
+              una tensione più bassa di 100~200mV.
 
 */
- 
 String  ver=" v1.9UX";
-String data="190717";
+String data="071117";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
@@ -165,10 +179,13 @@ String data="190717";
  * 0 Simboli Batt_0...7
  * 1 Lettera "à"
  * 2 Lettera "μ"
- * 3 10 simboli della percentuale del tempo
+ * 3 Simbolo "+/-"
+ * 4 Simbolo "pm" (per scrivere cpm)
+ * 5 Simbolo "Sv"
+ * 6 Simbolo "/h"
  * 
  * ***** EEPROM *****
- * 0 Ti: Tempo di integrazione
+ * 0 Ti: Tempo di integrazione (lo-byte); hi-byte: v.15
  * 1 sonda: Tipo di sonda A
  * 2 var lo-byte: Sensibilità variabile A (lo-byte)
  * 3 var hi-byte: Sensibilità variabile A (hi-byte)
@@ -182,7 +199,9 @@ String data="190717";
  *11 LCD: retroilluminazione dell'LCD: 1:On; 2:Auto.
  *12 biptic: 0:Nssuno; 1:Bip; 2:Tic-tic; 3:Bip + Tic-tic.
  *13 pwr: Alimentazione: 0:Litio diretta; 1:5V.
- *14 Allarme
- *15
+ *14 alm: Allarme: 0:disattivato; 1:attivato.
+ *15 Ti (hi-byte)
+ *16 prec: Precisione % impostata
  *17 VSB: Velocità di scarica della batteria in mV/h.
+ *18 VrefDec: Parte decimale della tensione letta sul pin 21 (Vref interna) per la taratura (1,1V +/-10%)
  */
