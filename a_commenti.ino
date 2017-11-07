@@ -137,7 +137,7 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
       7/11/17 Nella funzione Autonomia ho messo la scrittura della tensione in una funzione per leggere inizialmente il valore corrente di Vb; poi metto il pin in INPUT,
                 attendo 500mS per la stabilizzazione, leggo Vb e comincio a visualizzarlo ciclicamente. Precedentemente, appena selezionato "Autonomia" appariva per circa 1 secondo
                 una tensione più bassa di 100~200mV.
-              Menu Integrazione: era ciclico, poiché aveva oltre 30 possibilità. Ora che i tempi vanno solo da 5 a 60 (più Continuo e P.Fissa) gli metto le battute a inizio e fine corsa.
+              Menu Tempo d'Integrazione: era ciclico, poiché aveva oltre 30 possibilità. Ora che i tempi vanno solo da 5 a 60 (più Continuo e P.Fissa) gli metto le battute a inizio e fine corsa.
               
 
 */
