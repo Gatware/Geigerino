@@ -42,9 +42,10 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
     if(Ti==5)
       {
       if(E==1) Ti=10;
-      else Ti=TMAX+10;
-      }
-    if(Ti>TMAX+10 || Ti==0) Ti=5;
+      else noTone(7);
+      }    
+    if(Ti>TMAX+10) {Ti=TMAX+10; noTone(7);}
+    if(Ti==0) Ti=5;
     E=0; t1=millis(); delay(10);
     }
       
