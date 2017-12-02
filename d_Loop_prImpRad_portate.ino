@@ -81,7 +81,7 @@ if(millis()-t5>499) // Due volte al secondo:
       ownbcpm=EEPROM.read(4); // cpm di fondo proprio del tubo A.   
       lcd.print("A");  
       } // END if(sinto==1)
-      else
+    else
       {
       sonda=EEPROM.read(6); // Carica il tipo di sonda B.
       var=EEPROM.read(7)+EEPROM.read(8)*256; // Carica Lo-byte e Hi-byte di var del tubo B.
@@ -90,7 +90,7 @@ if(millis()-t5>499) // Due volte al secondo:
       } // END else
       
     if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile") sens=var;
-      else{sens=cost[sonda]; ownbcpm=ownb[sonda];}
+    else{sens=cost[sonda]; ownbcpm=ownb[sonda];}
     attachInterrupt(0,ContaAB,FALLING);
     } // END se digitalRead(4) è cambiato
   } // END 2 volte al secondo.
@@ -107,9 +107,9 @@ if(millis()-t3>999) // Una volta al secondo:
     cp=0; 
     for(m1=1; m1<=tempo; m1++) {cp+=C[m1];} // Somma gli impulsi memorizzati nel tempo Ti.
     if(m<Ti) {m+=1;}
-      else {m=1;} 
+    else {m=1;} 
     }
-    else
+  else
     {
     cp+=D; DAB=0; // Ti=TMAX, quindi tempo di integrazione infinito, o Ti=TMAX+10, quindi precisione fissa.
     }
@@ -156,7 +156,7 @@ if(millis()-t3>999) // Una volta al secondo:
     // if(por==0) anOut=((log10(uSvph)+2)*51); // log10(0,0001)=-4; log10(10)=1
     //   else     anOut=((log10(uSvph)+2)*51); // log10(0,01)=-2; log10(1.000)=3   
     if(pwr==0) anOut=int(anOut*635/Vcc); // Se è alimentato direttamente da Litio (605=3V) o 5V in carica.
-      else     anOut=int(anOut*635/1024); // Se è alimentato a 5V fissi.
+    else     anOut=int(anOut*635/1024); // Se è alimentato a 5V fissi.
     if(anOut<0) anOut=0; else if(anOut>255) anOut=255;
     analogWrite(6,anOut); 
     }

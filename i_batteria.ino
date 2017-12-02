@@ -1,7 +1,7 @@
 void BattIco()
 {
 pinMode(A1,INPUT);
-delayMicroseconds(100);
+delay(10);
 Vb=int(analogRead(A1)*XVref/1000L);
 pinMode(A1,OUTPUT);
 piloLED(); // Ripristina lo stato dei LED.

@@ -90,12 +90,11 @@ prec=EEPROM.read(16); // Legge la precisione impostata.
 valPrec=10000/sq(prec);
 VSB=EEPROM.read(17); // Legge la velocità di scarica della batteria.
 VrefDec=EEPROM.read(18); // Legge la parte decimale di Vref che è stata impostata in fase di taratura.
-XVref=0.94*(1000+VrefDec);
-
+XVref=0.935*(1000+VrefDec); // Se si desidera maggiore precisione,
+                            // aggiustare lo 0.935 in base alla tolleranza delle resistenze del partitore di Vb.
 if(!(PIND&0x20)) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} // Se il pulsante
                                                                   // è già premuto, salta alle impostazioni, poi ritorna.
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
-
 lcd.clear();
 lcd.setCursor(0,0); lcd.print("GEIGERINO"+ver);
 lcd.setCursor(0,1); lcd.print("G.Giangreco 2016");

@@ -101,18 +101,18 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     EEPROM.update(4,ownbcpm);
     lcd.setCursor(10,1); lcd.print(F("  SET!  ")); Biip(); delay(500);
     }
-    else Bip();
+  else Bip();
   } // END if(tipo[sonda]==Variabile)
   
   else // IF Sonda==1...ntipi-1
-  {
-  lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/"); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));
-  lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
-  while(!(PIND&0x20));
-  delay(500);
-  while(PIND&0x20);
-  Bip();
-  } // END Sonda==1...ntipi-1
+    {
+    lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/"); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));
+    lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
+    while(!(PIND&0x20));
+    delay(500);
+    while(PIND&0x20);
+    Bip();
+    } // END Sonda==1...ntipi-1
   
 lcd.clear();
 

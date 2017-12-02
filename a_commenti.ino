@@ -15,11 +15,11 @@
 0.3c 25/10/16 Ho aggiunto la sottrazione dei cpm di background propri per il tubo selezionato o variabile.
 0.3d 25/10/16 In TipoDiSonda aggiungo la visualizzazione di sensibilità e background del tubo caricato.
 0.3d126/10/16 Ho fatto delle correzioni su tempo nel loop, poiché il conteggio del tempo non partiva da 0s ma da 1s
-              e la prima visualizzazione veniva immediatamente sovrascritta da quella che calcola anche minuti e secondi.
+                e la prima visualizzazione veniva immediatamente sovrascritta da quella che calcola anche minuti e secondi.
 0.3d231/10/16 In modo continuo i secondi andavano a passi di 2, perché incrementavo tempo 2 volte, e il conteggio si fermava a 1m11s.  
 0.3e 31/10/16 I calcoli di Hi-byte di var erano sbagliati, perché dividevo e moltiplicavo per 16, anziché per 256!
               A volte, dopo aver impostato il tipo di sonda, i due punti lampeggiavano sui secondi pari anziché dispari: ho introdotto
-              millisZero, ottenendo un azzeramento iniziale del tempo letto dalla funzione dei due punti. DUE PUNTI NON USATI.
+                millisZero, ottenendo un azzeramento iniziale del tempo letto dalla funzione dei due punti. DUE PUNTI NON USATI.
               Riduco l'antirimbalzo di Centinaia-Decine-Unità della sensibilità variabile da 500mS a 300mS.
 0.3f  3/11/16 Come la 0.3e, ma con le connessioni come nella seguente 0.4: Encoder A e B da PD3 e PD4 a PD0 e PD1 per liberare l'interrupt 1.
 0.3g  4/11/16 Nella 0.3f non avevo messo gli I/O 0 e 1 nel setup per INPUT e PULLUP. Corretti. 
@@ -58,7 +58,7 @@
               Un #define permette di selezionare Altoparlante indipendente oppure la stessa piezo che fa Bip.
 1.4U  1/12/16 Versione con ingresso unico.
 1.5U  8/12/16 Ho introdotto la variabile temposecondi, che conta i secondi insieme a tempo ma ogni volta che supera Ti viene posta a 1 per
-              visualizzare ciclicamente i secondi quando non è in modalità "Continuo".
+                visualizzare ciclicamente i secondi quando non è in modalità "Continuo".
      10/12/16 Ho prolungato il "Tic-tic" da 2 a 10mS.
      24/12/16 Ho cambiato i valori di soglia ei LED.
      25/12/16 Metto il pilotaggio dei LED nella funzione piloLED(), che richiamo anche dopo aver letto la tensione della batteria ogni 10s,
@@ -67,17 +67,17 @@
               Al posto dei ":" lampeggianti ho messo l'indicazione di sonda A o B.
               Ho cambiato l'ordine dei tipi di sonde, mettendo le Sxx in ordine alfabetico.
               La media cresceva lentamente, poiché la divisione viene effettuata per un numero di secondi pari a tempo+1: adesso un 
-              if(tempo<Ti) fa dividere per tempo-1 e sembra risolto. Non ho trovato una soluzione migliore :-(
+                if(tempo<Ti) fa dividere per tempo-1 e sembra risolto. Non ho trovato una soluzione migliore :-(
      28/12/16 Velocizzo la lettura del commutatore di sonda da 1 a 2 volte a secondo (il commutatore è comodo anche per azzerare).
      31/12/16 Adesso per accendere e spegnere la retroilluminazione (se in modalità On/Off) bisogna ruotare l'encoder di 3 scatti in 200mS
-              e i suoni per On e Off sono diversi dal Bip().
+                e i suoni per On e Off sono diversi dal Bip().
               Adesso la numerazione delle opzioni delle sonde parte da 1 anziché da 0 e non è più necessario che Variabile (o variabile) sia
-              l'ultima opzione, poiché non viene più letto l'indice (che era l'ultimo) ma il nome (Variabile o variabile).
+                l'ultima opzione, poiché non viene più letto l'indice (che era l'ultimo) ma il nome (Variabile o variabile).
               Ho aggiunto Riavvia() per usarla al posto di return nel menu di setup: riavvia tutto anziché passare al menu seguente.
               Adesso gli azzeramenti fanno Biip().
               Ho aggiunto music().
        1/1/17 Aggiungo nel menu Setup la selezione Alimentazione Litio dir./5V: con l'alimentazione diretta da Litio la tensione di alimentazione
-              è più bassa e varia, quindi bisogna compensare il PWM dello strumento analogico.
+                è più bassa e varia, quindi bisogna compensare il PWM dello strumento analogico.
        7/2/17 Ho corretto la cancellazione finale del display in printRad.
               Ho cambiato da int a long le variabili per i cps.
        8/2/17 Ho cambiato il suono di allarme con AUUUuuu... AUUUuuu..., ho aggiunto il menu per escluderlo e ho disattivato il Tic-tic durante l'allarme.
@@ -105,14 +105,14 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
        2/4/17 Uscita analogica: già non c'era più la selezione della portata; ho messo portata fissa da 0,01uSv/h a 1mSv/h.
               Ho spostato la parte dell'uscita analogica, perché funzionava solo quando erano visualizzati i uSv/h, ma non quando erano visualizzati i cpm (Disp2).
        5/5/17 In modalità a precisione fissa, raggiunta la precisione impostata la prima pressione dell'encoder tacita solo il suono; la seconda cambia la visualizzazione
-              da cpm e dstd% a uSv/h o, adesso, anche viceversa se erano visualizzati i uSv/h; la terza azzera e fa ripartire il conteggio.
+                da cpm e dstd% a uSv/h o, adesso, anche viceversa se erano visualizzati i uSv/h; la terza azzera e fa ripartire il conteggio.
               Ho esteso il valore massimo della precisione impostabile dal 10% al 15%.
        6/5/17 Adesso la percentuale di errore viene visulizzata anche con i uSv/h.
        7/5/17 Ho eliminato la funzione Tic() e ne ho spostato il contenuto in un if che imposta la variabile TicSi, letta poi velocemente in ContaAB() (interrupt),
-              così non deve fare il salto ogni volta.
+                così non deve fare il salto ogni volta.
               Ho abbreviato il Tic da 10 a 5mS (5 cicli a 1KHz).
       31/5/17 Nella funzione Autonomia veniva letto solo il valore di Vb corrente, quindi tensione e autonomia non venivano aggiornate continuamente. Adesso vengono
-              aggiornate ogni secondo.
+                aggiornate ogni secondo.
        3/6/17 Adesso il tempo d'integrazione parte da 5 secondi.
       29/6/17 Adesso il valore massimo viene considerato solo se tempo>4, per ignorare i primi valori che possono essere erroneamente molto alti.
 1.9U  15/7/17 Introduco il calcolo della dose in mSv.
@@ -120,21 +120,31 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
       16/7/17 Durante la visualizzazione della dose (Disp=2) non visualizzava il tempo: corretto.
               Ho corretto qualche altro problema che si era creto nella visualizzazione dovuto al nuovo valore possibile Disp=2.
 1.9UX 19/7/17 Introduco la lettura della tensione di alimentazione (Vcc) separata da quella della tensione della batteria (Vb) per consentire il corretto funzionamento
-              dell'uscita analogica in PWM anche quando l'alimentazione viene commutata sui 5V USB durante la carica.
+                dell'uscita analogica in PWM anche quando l'alimentazione viene commutata sui 5V USB durante la carica.
        1/8/17 Utilizzo i recenti simboli Sv e /h anche nelle impostazioni di sensibilità, al posto della scrittura estesa ancora presente.
               Nell'impostazione del tipo di sonda metto uno spazio in più dopo ciascun "SET!" (sonda A e sonda B), poiché la "e" di Variabile non veniva cancellata.
        7/8/17 Faccio lampeggiare il LED rosso se biptic<2, anziché solo se biptic=0.
        8/8/17 In "Tipo di sonda", Variabile, ho spostato "Centin.", "Decine", "Unità" a sinistra anziché a destra, togliendo anche il punto che in origine rimaneva.
-              Per fare questo ho dovuto spostare il valore più a destra di 1 carattere (da 6 a 7).
+                Per fare questo ho dovuto spostare il valore più a destra di 1 carattere (da 6 a 7).
      13/10/17 Ho messo la "X" nell'indirizzo github, all'inizio.
               Ho tolto detachInterrupt all'inizio della ISR void ContaAB() e attachInterrupt alla fine poiché, durante un interrupt, il processore non ne rileva un altro.
      24/10/17 Ho aggiunto la taratura di Vref da menu. Ci si arriva tenendo premuto il pulsante per 3 secondi all'accensione. Si deve immettere la tensione letta sul pin 21.
               Ho messo il Biip() quando viene aggiornata la EEPROM in Power Setup, Impostazione della capacità della batteria e Taratura di Vref.
               Ho messo il noTone(7) in Taratura di Vref. Ho dovuto modificare qualcosa, come si vede rispetto alle righe precedenti dove non l'ho fatto.
               Nelle impostazioni con ampia gamma di regolazione da parte dell'encoder ho ridotto il delay(20) tra i passi dell'encoder a delay(10) per una variazione più rapida.
+      3/11/17 Ho ridotto il tempo massimo di integrazione da 300 a 60 secondi, poiché C[] (che era C[61], quindi produceva catastrofi con tempi maggiori di 60s!) deve avere
+                un numero di elementi pari ai secondi più 1 (non uso lo 0) e già con 90 rimane poca RAM e potrebbero esserci problemi di stabilità.
+      7/11/17 Nella funzione Autonomia ho messo la scrittura della tensione in una funzione per leggere inizialmente il valore corrente di Vb; poi metto il pin in INPUT,
+                attendo 500mS per la stabilizzazione, leggo Vb e comincio a visualizzarlo ciclicamente. Precedentemente, appena selezionato "Autonomia" appariva per circa 1 secondo
+                una tensione più bassa di 100~200mV.
+              Menu Tempo d'Integrazione: era ciclico, poiché aveva oltre 30 possibilità. Ora che i tempi vanno solo da 5 a 60 (più Continuo e P.Fissa) gli metto le battute a inizio e fine corsa.
+      2/12/17 In BattIco() ho aumentato il delay prima della lettura della tensione da 100uS a 10mS per una prima lettura più precisa.
+              Dopo le letture da EEPROM ho aggiustato il coefficiente per la lettura della tensione portandolo da 0,94 a 0,935 per una lettura più precisa (secondo la tolleranza delle resistenze
+                del partitore di tensione).
+
 */
 String  ver=" v1.9UX";
-String data="241017";
+String data="021217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

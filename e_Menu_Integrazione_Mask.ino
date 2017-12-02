@@ -42,9 +42,10 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
     if(Ti==5)
       {
       if(E==1) Ti=10;
-      else Ti=TMAX+10;
-      }
-    if(Ti>TMAX+10 || Ti==0) Ti=5;
+      else noTone(7);
+      }    
+    if(Ti>TMAX+10) {Ti=TMAX+10; noTone(7);}
+    if(Ti==0) Ti=5;
     E=0; t1=millis(); delay(10);
     }
       
@@ -59,7 +60,7 @@ delay(200);
 if(Ti>TMAX) {lcd.setCursor(0,1); lcd.print("       "+String(prec)+"%       "); delay(1200);}
 if(Ti!=Tio) {lcd.setCursor(4,1); lcd.print(" ZERO   ");} // Se il tempo impostato è diverso dal precedente, segnala che azzera.
 if(Ti!=EEPROM.read(0)+EEPROM.read(15)*256) {EEPROM.update(0,Ti&0xFF); EEPROM.update(15,Ti>>8); Biip(); lcd.setCursor(10,1); lcd.print("  SET!"); delay(500);}
-  else Bip();
+else Bip();
 if(Ti!=Tio) {Biip(); Azzera();} // Se è cambiato, azzera e fa Biip.
 Tio=Ti;
 }
