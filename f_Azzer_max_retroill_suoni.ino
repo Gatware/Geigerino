@@ -62,7 +62,7 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.  
   }
 mute=0;
-if(biptic!=EEPROM.read(12)) {EEPROM.update(12,biptic); Biip(); lcd.setCursor(10,1); lcd.print(F(". SET!")); delay(500);}
+if(biptic!=EEPROM.read(12)) {EEPROM.update(12,biptic); Biip(); lcd.setCursor(11,1); lcd.print(F(" SET!")); delay(500);}
 else Bip();  
 } // END suoni()
 
@@ -135,7 +135,10 @@ void autonomia()
 unsigned long t=millis()+500;
 lcd.print(F("V batt.:    V"));
 lcd.setCursor(0,1); lcd.print("Autonomia:");
+scriveTensione(); // Inizialmente usa il valore corrente di Vb.
 pinMode(A1,INPUT);
+delay(500);
+Vb=int(analogRead(A1)*XVref/1000L); // Per avere un valore stabile bisogna attendere circa 500mS.
 while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
 {delay(300);}
 
@@ -145,12 +148,17 @@ while(PIND&0x20) // Finché non viene premuto il pulsante:
     {
     t=millis();
     Vb=int(analogRead(A1)*XVref/1000L);
-    lcd.setCursor(8,0);
-    if(((500*Vb/1023)%100)>9) lcd.print(String(int(500*Vb/102300)) +"." +String((500*Vb/1023)%100));
-    else{lcd.print(String(int(500*Vb/102300)) +".0" +String((500*Vb/1023)%100));}
-    lcd.setCursor(10,1); lcd.print(String(int(Vb*10000/205 - 32000) /VSB*Vb/859) + "h ");
+    scriveTensione();
     }
   }
 pinMode(A1,OUTPUT);
 Bip();
+}
+
+void scriveTensione()
+{
+lcd.setCursor(8,0);
+if(((500*Vb/1023)%100)>9) lcd.print(String(int(500*Vb/102300)) +"." +String((500*Vb/1023)%100));
+else{lcd.print(String(int(500*Vb/102300)) +".0" +String((500*Vb/1023)%100));}
+lcd.setCursor(10,1); lcd.print(String(int(Vb*10000/205 - 32000) /VSB*Vb/859) + "h ");
 }
