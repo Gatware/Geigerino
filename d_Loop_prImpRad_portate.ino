@@ -18,7 +18,7 @@ if(Po==0 && P==0)     // Se era ed è premuto per almeno 1 secondo
   
 if(Po==0 && P==1) // se lo lascio prima, cambia uSv/h > deviazione standard (+/-cpm) > Dose.
   {
-  Po=1; Dispo=Disp; Disp+=1; if(Disp==3) Disp=0; // 0:uSv/h; 1:deviazione standard (+/-cpm); 2:Dose
+  Po=1; Dispo=Disp; Disp+=1; if(Disp==4) Disp=0; // 0:uSv/h; 1:deviazione standard (+/-cpm); 2:mR/h; 3:Dose
   if (Disp==2 && Ti==TMAX+10) {Disp=0; Dispo=2;} // nel modo a precisione fissa salta la Dose, che non ha senso.
   delay(200);    
   }
@@ -136,12 +136,18 @@ if(millis()-t3>999) // Una volta al secondo:
       }
     else {lcd.setCursor(1,1); lcd.print("   0 ");} // Se tempo<=1 
     }
-  else // Disp=2: Dose; nel modo a precisione fissa non viene visualizzata.
+  else if(Disp==2) // mR/h
+    {
+    if(Dispo!=2){Dispo=2; lcd.setCursor(6,1); lcd.print("mR"); lcd.write(byte(6));} // Se è appena stato commutato, scrive mR/h.
+    Rad=uSvph/10; lcd.setCursor(0,1); lcd.print("      "); lcd.setCursor(0,1); printRad();
+    }
+  else // Disp=3: Dose; nel modo a precisione fissa non viene visualizzata.
     {
     Rad=dose/1000;
     lcd.setCursor(0,1); printRad(); lcd.print("mSv");
     lcd.setCursor(9,0); lcd.print(" "); visualSecondi(temposecondi); 
     }
+
     
   pinMode(A2,INPUT);
   delayMicroseconds(100);

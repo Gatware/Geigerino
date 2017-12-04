@@ -140,11 +140,12 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Menu Tempo d'Integrazione: era ciclico, poiché aveva oltre 30 possibilità. Ora che i tempi vanno solo da 5 a 60 (più Continuo e P.Fissa) gli metto le battute a inizio e fine corsa.
       2/12/17 In BattIco() ho aumentato il delay prima della lettura della tensione da 100uS a 10mS per una prima lettura più precisa.
               Dopo le letture da EEPROM ho aggiustato il coefficiente per la lettura della tensione portandolo da 0,94 a 0,935 per una lettura più precisa (secondo la tolleranza delle resistenze
-                del partitore di tensione).
+                del partitore di tensione)
+1.9a-UX3/12/17 Aggiungo la visualizzazione in mR/h per poter confrontare direttamente i valori con altri contatori classici.
 
 */
-String  ver=" v1.9UX";
-String data="021217";
+String  ver="v1.9aUX";
+String data="031217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
