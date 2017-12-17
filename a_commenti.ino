@@ -144,12 +144,13 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
 1.9aUX3/12/17 Aggiungo la visualizzazione in mR/h per poter confrontare direttamente i valori con altri contatori classici.
 1.9a 17/12/17 Semplifico il numero della versione che appare all'accensione in 1.9a.
               Nell'impostazione della sensibilità delle sonde A e B aggiungo 6 spazi dopo "Sensibilità?" per cancellare qualcosa che rimane se era selezionata una sonda memorizzata.
-              Abbasso il background di 2xSBM-20 da 47 a 22cpm in base a prove nelle gallerie della A24 dove, con background=0 (sonda Variabile) leggevo 22cpm.
-              In BattIco() porto il delay a 200mS per cercare di risolvere il problema della lettura diversa tra quella ogni 10s nel loop e quella in Autonomia ma non cambia nulla,
-                quindi rimetto come prima.
-              In Autonomia aggiungo BattIco() per far apparire il simbolo della batteria. Essendo continuo è sempre stabilissimo, contrariamente a quando leggo nel loop anche se sta su Sonda B
-                senza sonda! Per risolvere il problema nel loop, in BattIco() aggiungo un semplice analogRead() pleonastico prima di leggere Vb: OK!!!
-              Nel loop, nella pressione breve dell'encode (riga 23) riduco il delay da 200 a 100mS (mi sembrava eccessivo e inutile).
+              Ho abbassato il background di 2xSBM-20 da 47 a 22cpm in base a prove nelle gallerie della A24 dove, con background=0 (sonda Variabile), leggevo 22cpm.
+              Ho portato a 16 quello della singola SBM-20 (non poteva essere superiore!).
+              In BattIco() ho portato il delay a 200mS per cercare di risolvere il problema della lettura diversa tra quella ogni 10s nel loop e quella in Autonomia ma non è cambiato nulla,
+                quindi ho rimesso come prima.
+              In Autonomia ho aggiunto BattIco() per far apparire il simbolo della batteria. Essendo continuo è sempre stabilissimo, contrariamente a quando leggo nel loop anche se sta su Sonda B
+                senza sonda! Per risolvere il problema nel loop, in BattIco() ho aggiunto un semplice analogRead() pleonastico prima di leggere Vb: OK!!!
+              Nel loop, nella pressione breve dell'encode (riga 23) ho ridotto il delay da 200 a 100mS (mi sembrava eccessivo e inutile).
 */
 String  ver="  v1.9a";
 String data="171217";

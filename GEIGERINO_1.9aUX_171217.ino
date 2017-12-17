@@ -159,7 +159,7 @@ int VSB=0; // Velocità di scarica della batteria in 10*mV/h per determinare l'a
 //Tipo di sonda -      1         2           3         4        5         6         7          8          9          10          11         12
 String tipo[]={"", "SBM-19", "SBM-20", "2xSBM-20", "SBM-21", "SBT-9", "SBT-11", " SI-1G", " SI-3BG", " SI-22G", " SI-29BG",  "LND-712", "Variabile"};
 int    cost[]={0,     21,      166,       332,        667,       92,     318,      167,        2,        583,       100,        168};
-byte   ownb[]={0,    110,       32,        22,         12,       10,      15,       25,       12,         70,        15,         20}; // Own Background in cpm.
+byte   ownb[]={0,    110,       16,        22,         12,       10,      15,       25,       12,         70,        15,         20}; // Own Background in cpm.
 // 2xSBM-20: con ownb=47 il fondo ambientale è simile a quello della SBT-11. 
 byte ntipi=12; // Scrivere qui il numero dell'ultima voce nella lista dei tipi di sonde (il primo elemento di ogni array è nullo).
 
