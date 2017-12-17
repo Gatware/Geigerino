@@ -16,11 +16,11 @@ if(Po==0 && P==0)     // Se era ed è premuto per almeno 1 secondo
     }
   } // END premuto per almeno 1 secondo
   
-if(Po==0 && P==1) // se lo lascio prima, cambia uSv/h > deviazione standard (+/-cpm) > Dose.
+if(Po==0 && P==1) // se lo lascio prima, cambia uSv/h > deviazione standard (+/-cpm) > mR/h > Dose.
   {
   Po=1; Dispo=Disp; Disp+=1; if(Disp==4) Disp=0; // 0:uSv/h; 1:deviazione standard (+/-cpm); 2:mR/h; 3:Dose
   if (Disp==2 && Ti==TMAX+10) {Disp=0; Dispo=2;} // nel modo a precisione fissa salta la Dose, che non ha senso.
-  delay(200);    
+  delay(100);    
   }
 
 if(biptic<2 && particella==1)

@@ -137,8 +137,8 @@ lcd.print(F("V batt.:    V"));
 lcd.setCursor(0,1); lcd.print("Autonomia:");
 scriveTensione(); // Inizialmente usa il valore corrente di Vb.
 pinMode(A1,INPUT);
-delay(500);
-Vb=int(analogRead(A1)*XVref/1000L); // Per avere un valore stabile bisogna attendere circa 500mS.
+analogRead(A1); // Prima lettura per averne, poi, una precisa e stabile.
+BattIco();
 while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
 {delay(300);}
 
@@ -147,7 +147,7 @@ while(PIND&0x20) // Finché non viene premuto il pulsante:
   if(millis()-t>1000) // 1 volta al secondo
     {
     t=millis();
-    Vb=int(analogRead(A1)*XVref/1000L);
+    BattIco();
     scriveTensione();
     }
   }

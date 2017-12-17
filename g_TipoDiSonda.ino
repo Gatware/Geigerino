@@ -26,7 +26,7 @@ else Bip();
 
 if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   {                           // variabile
-  lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?  "));
+  lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?        "));
   lcd.setCursor(5,1); lcd.print(F("         ")); printVar();
   while(!(PIND&0x20))
   lcd.setCursor(0,1); lcd.print(F("Centin."));
@@ -141,7 +141,7 @@ else Bip();
 
 if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   {                           // variabile
-  lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?  "));
+  lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?        "));
   lcd.setCursor(5,1); lcd.print(F("         ")); printVar();
   while(!(PIND&0x20));
   lcd.setCursor(0,1); lcd.print(F("Centin."));
