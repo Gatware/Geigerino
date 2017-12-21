@@ -155,6 +155,7 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Ho eliminato la dichiarazione di unsigned long t2, che ho scoperto non essere più usato (ma il compilatore se n'era accorto, perché non ho guadagnato nulla! >:( )
               -- N.B.: LA MEMORIA RAM E' AL LIMITE! Credo che avanzi 1 BYTE! --    Ho già dovuto "raschiare" modificando la variabile int in byte nelle selezioni "Sì/No" modificando, di conseguenza,
                 il programma, in quanto non può più assumere momentaneamente valori negativi durante la selezione stessa.
+              Il superamento del limite dellaa RAM viene mostrato appena accade nel menu "VScarBat", poiché comincia a sparire la cifra intera del valore in mV e poi altro.
 */
 String  ver="  v1.9b";
 String data="211217";
