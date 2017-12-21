@@ -8,9 +8,9 @@ t1=millis();
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0)   Azz+=E;
-  if(Azz>1) {noTone(7); Azz=1;}
-  if(Azz<0) {noTone(7); Azz=0;}
+  if(Azz==0 && E==1) Azz=1;
+  else if(Azz==1 && E==-1) Azz=0;
+  else noTone(7);
   if(E!=0)  {E=0; t1=millis(); delay(20);}
     
   lcd.setCursor(7,1);

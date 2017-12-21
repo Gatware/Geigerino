@@ -114,7 +114,7 @@ lcd.print("       LED      ");
 t1=millis();
 lcd.setCursor(0,1); lcd.print(" Off   Dot   Bar");
 while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
-{if(millis()-t1>3000) {lcd.clear(); powerSetup();}}
+{if(millis()-t1>3000) {lcd.clear(); powerSetup();}} // Se il pulsante continua a essere premuto, a 3 secondi salta a powerSetup().
 delay(300);
 t1=millis();
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo

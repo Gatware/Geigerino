@@ -151,6 +151,7 @@ if(millis()-t3>999) // Una volta al secondo:
     
   pinMode(A2,INPUT);
   delayMicroseconds(100);
+  analogRead(A2); // Prelettura
   Vcc=int(analogRead(A2)*XVref/1000L); // Legge la tensione di alimentazione.
   pinMode(A2,OUTPUT);
   piloLED(); // Ripristina lo stato dei LED.
@@ -158,7 +159,7 @@ if(millis()-t3>999) // Una volta al secondo:
   // analogOut è abilitato?
   if(analogOut)
     {
-    anOut=((log10(uSvph)+2)*51); // log10(0,01)=-2; log1.000(10)=3
+    anOut=((log10(uSvph)+2)*51); // log10(0,01)=-2; log10(1000)=3
     // if(por==0) anOut=((log10(uSvph)+2)*51); // log10(0,0001)=-4; log10(10)=1
     //   else     anOut=((log10(uSvph)+2)*51); // log10(0,01)=-2; log10(1.000)=3   
     if(pwr==0) anOut=int(anOut*635/Vcc); // Se è alimentato direttamente da Litio (605=3V) o 5V in carica.

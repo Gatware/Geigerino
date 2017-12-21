@@ -151,9 +151,13 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               In Autonomia ho aggiunto BattIco() per far apparire il simbolo della batteria. Essendo continuo è sempre stabilissimo, contrariamente a quando leggo nel loop anche se sta su Sonda B
                 senza sonda! Per risolvere il problema nel loop, in BattIco() ho aggiunto un semplice analogRead() pleonastico prima di leggere Vb: OK!!!
               Nel loop, nella pressione breve dell'encode (riga 23) ho ridotto il delay da 200 a 100mS (mi sembrava eccessivo e inutile).
+1.9b 21/12/17 Nel menu che appare tenendo premuto 3 secondi all'accensione ho aggiunto il menu "Test strumento", che posiziona l'indice in sequenza a 0,1, 1, 10, 100, 1000uSv/h.
+              Ho eliminato la dichiarazione di unsigned long t2, che ho scoperto non essere più usato (ma il compilatore se n'era accorto, perché non ho guadagnato nulla! >:( )
+              -- N.B.: LA MEMORIA RAM E' AL LIMITE! Credo che avanzi 1 BYTE! --    Ho già dovuto "raschiare" modificando la variabile int in byte nelle selezioni "Sì/No" modificando, di conseguenza,
+                il programma, in quanto non può più assumere momentaneamente valori negativi durante la selezione stessa.
 */
-String  ver="  v1.9a";
-String data="171217";
+String  ver="  v1.9b";
+String data="211217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
