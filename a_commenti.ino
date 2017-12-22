@@ -156,9 +156,11 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               -- N.B.: LA MEMORIA RAM E' AL LIMITE! Credo che avanzi 1 BYTE! --    Ho già dovuto "raschiare" modificando la variabile int in byte nelle selezioni "Sì/No" modificando, di conseguenza,
                 il programma, in quanto non può più assumere momentaneamente valori negativi durante la selezione stessa.
               Il superamento del limite dellaa RAM viene mostrato appena accade nel menu "VScarBat", poiché comincia a sparire la cifra intera del valore in mV e poi altro.
+1.9c 22/12/17 In "Test strumento" ho usato l'encoder per il posizionamento della lancetta.
+              Ho recuperato un altro po' di RAM usando F negli lcd.print di muoveAgo (anche in un altro posto, mi sembra...).
 */
-String  ver="  v1.9b";
-String data="211217";
+String  ver="  v1.9c";
+String data="221217";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8

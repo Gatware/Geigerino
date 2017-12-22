@@ -116,7 +116,7 @@ lcd.print(F("Test strumento?"));
 while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
 delay(300);
 byte Test=0;
-byte valore=0;
+
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
@@ -128,14 +128,29 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   if(Test) lcd.print(F("Si"));
   else lcd.print(F("No"));
   }
+  Bip();
   if(Test)
     {
+    lcd.setCursor(14,0); lcd.print(" "); // Cancella il "?".
     pinMode(A2,INPUT);
     delayMicroseconds(100);
     analogRead(A2); // Prelettura
     Vcc=int(analogRead(A2)*XVref/1000L); // Legge la tensione di alimentazione.
     pinMode(A2,OUTPUT);
-  
+    muoveAgo();
+    while(!(PIND&0x20)); delay(200);
+    while(PIND&0x20) // Continua a leggere l'encoder finché non premo
+      {
+      encoder();
+      if(E==1 && valore<=204) valore+=51; // Incrementa
+      else if(E==-1 && valore>=51) valore-=51; // Decrementa
+      else noTone(7);
+      if(E!=0) muoveAgo();
+      }
+    Bip();
+    analogWrite(6,0);
+        
+    /*
     for(valore=0; valore<=204; valore+=51)
       {
       lcd.setCursor(12,1);
@@ -150,14 +165,30 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
       analogWrite(6,anOut);  while(!(PIND&0x20)); delay(200); while(PIND&0x20); delay(200);
       }
     analogWrite(6,0);
+    */
     }
   
 lcd.clear();
 lcd.setCursor(4,0); lcd.print(ver);
 lcd.setCursor(5,1); lcd.print(data);
-while(PIND&0x20);
 while(!(PIND&0x20)){delay(1000);}
-
+while(PIND&0x20);
+Bip(); delay(500);
 Riavvia();
 }
 
+void muoveAgo()
+{
+E=0; t1=millis(); delay(20);
+lcd.setCursor(6,1);
+     if(valore==0)   lcd.print(F("0,01"));
+else if(valore==51)  lcd.print(F(" 0,1"));
+else if(valore==102) lcd.print(F("   1"));
+else if(valore==153) lcd.print(F("  10"));
+else if(valore==204) lcd.print(F(" 100"));
+else                 lcd.print(F("1000"));
+anOut=valore; // anOut=51; 102; 153; 204; 255.
+if(pwr==0)  anOut=int(anOut*635/Vcc); // Se è alimentato direttamente da Litio (605=3V) o 5V in carica.
+else anOut=int(anOut*635/1024); // Se è alimentato a 5V fissi.
+analogWrite(6,anOut);
+}
