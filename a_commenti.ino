@@ -158,9 +158,10 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               Il superamento del limite dellaa RAM viene mostrato appena accade nel menu "VScarBat", poiché comincia a sparire la cifra intera del valore in mV e poi altro.
 1.9c 22/12/17 In "Test strumento" ho usato l'encoder per il posizionamento della lancetta.
               Ho recuperato un altro po' di RAM usando F negli lcd.print di muoveAgo (anche in un altro posto, mi sembra...).
+     21/1/18  Dopo prova nella galleria della A24 presso Tornimparte, ho portato il fondo della SBT-11 a 12cpm e l'ho rinominata SBT-11A (che è la versione che ho).
 */
 String  ver="  v1.9c";
-String data="221217";
+String data="210118";
 /*
  * ----------- LCD -----------
  * LCD RS pin > I/O 8
