@@ -149,18 +149,18 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
               In BattIco() ho portato il delay a 200mS per cercare di risolvere il problema della lettura diversa tra quella ogni 10s nel loop e quella in Autonomia ma non è cambiato nulla,
                 quindi ho rimesso come prima.
               In Autonomia ho aggiunto BattIco() per far apparire il simbolo della batteria. Essendo continuo è sempre stabilissimo, contrariamente a quando leggo nel loop anche se sta su Sonda B
-                senza sonda! Per risolvere il problema nel loop, in BattIco() ho aggiunto un semplice analogRead() pleonastico prima di leggere Vb: OK!!!
-              Nel loop, nella pressione breve dell'encode (riga 23) ho ridotto il delay da 200 a 100mS (mi sembrava eccessivo e inutile).
+                senza sonda! Per risolvere il problema nel loop, in BattIco() ho aggiunto un altro analogRead() prima di quello che legge Vb: OK!!!
+              Nel loop, nella pressione breve dell'encoder (riga 23) ho ridotto il delay da 200 a 100mS (mi sembrava eccessivo e inutile).
 1.9b 21/12/17 Nel menu che appare tenendo premuto 3 secondi all'accensione ho aggiunto il menu "Test strumento", che posiziona l'indice in sequenza a 0,1, 1, 10, 100, 1000uSv/h.
               Ho eliminato la dichiarazione di unsigned long t2, che ho scoperto non essere più usato (ma il compilatore se n'era accorto, perché non ho guadagnato nulla! >:( )
               -- N.B.: LA MEMORIA RAM E' AL LIMITE! Credo che avanzi 1 BYTE! --    Ho già dovuto "raschiare" modificando la variabile int in byte nelle selezioni "Sì/No" modificando, di conseguenza,
                 il programma, in quanto non può più assumere momentaneamente valori negativi durante la selezione stessa.
-              Il superamento del limite dellaa RAM viene mostrato appena accade nel menu "VScarBat", poiché comincia a sparire la cifra intera del valore in mV e poi altro.
+              Il superamento del limite della RAM viene mostrato appena accade nel menu "VScarBat", poiché comincia a sparire la cifra intera del valore in mV e poi altro.
 1.9c 22/12/17 In "Test strumento" ho usato l'encoder per il posizionamento della lancetta.
               Ho recuperato un altro po' di RAM usando F negli lcd.print di muoveAgo (anche in un altro posto, mi sembra...).
       21/1/18 Dopo prova nella galleria della A24 presso Tornimparte, ho portato il fondo della SBT-11 a 12cpm e l'ho rinominata SBT-11A (che è la versione che ho).
       19/2/18 Mancava un ";" alla riga 31 di g_TipoDiSonda
-      10/4/18 Ho ottimizzato un po' il codice, usando print singoli anzichè print String e ' ' al posto di " " per caratteri singoli, passando da 31722 byte (98%) a 31038 byte (96%) e da
+1.9d  10/4/18 Ho ottimizzato un po' il codice, usando print singoli anzichè print String e ' ' al posto di " " per caratteri singoli, passando da 31722 byte (98%) a 31038 byte (96%) e da
               1442 byte (70%) /606  a 1308 byte (63%) /740.
       14/4/18 Ho continuato a ottimizzare e ho tolto gli String nella visualizzazione del tempo, introducendo printOre(), printMinuti() e printSecondi(), scendendo a
               29756 byte (92%) e 1242 byte (60%).
