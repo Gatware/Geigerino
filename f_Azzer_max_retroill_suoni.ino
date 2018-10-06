@@ -8,9 +8,9 @@ t1=millis();
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0)   Azz+=E;
-  if(Azz>1) {noTone(7); Azz=1;}
-  if(Azz<0) {noTone(7); Azz=0;}
+  if(Azz==0 && E==1) Azz=1;
+  else if(Azz==1 && E==-1) Azz=0;
+  else noTone(7);
   if(E!=0)  {E=0; t1=millis(); delay(20);}
     
   lcd.setCursor(7,1);
@@ -29,14 +29,20 @@ void Azzera()
 
 void massimi()
 {
-lcd.print(F("    Massimi     ")); 
+lcd.print(F(" Massimi e tot.")); 
 while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
 t1=millis();
-Mask(); lcd.setCursor(11,0); lcd.print("max"); lcd.setCursor(11,1); lcd.print("max"); 
+Mask(); lcd.setCursor(11,1); lcd.print("max  "); lcd.setCursor(11,0); lcd.print("max"); // Sulla riga 1 (in basso) cancella
+                      // con 2 spazi la lettera della sonda attiva e l'icona della batteria, appena visualizzati da mask(). 
 lcd.setCursor(0,0); Imp=cpmMAX; printImp();
 lcd.setCursor(0,1); Rad=float(Imp)/sens; printRad(); // uSv/h in virgola mobile. 
+while(PIND&0x20); // Attende che venga premuto il pulsante.
+lcd.clear(); lcd.print(F("Impulsi contati"));
+lcd.setCursor(0,1); lcd.print(cp);
+while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
 delay(300);
-while(PIND&0x20){if(millis()-t1>9999) return;} // Attende che venga premuto il pulsante, ma dopo 10 secondi comunque esce.
+while(PIND&0x20); // Attende che venga premuto il pulsante.
+delay(300);
 } // END massimi()
 
 void suoni()
@@ -123,7 +129,10 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   if(prec>15){noTone(7); prec=15;}
   if(prec<1) {noTone(7); prec=1;}
   if(E!=0) {E=0; t1=millis(); delay(20);}
-  lcd.setCursor(6,1); if(prec<10) lcd.print(" "+String(prec)+"%"); else lcd.print(String(prec)+"%");
+  lcd.setCursor(6,1);
+  if(prec<10) lcd.print(' ');
+  lcd.print(prec); lcd.print('%');
+  
   if(millis()-t1>4999) return; // Dopo 5 secondi di inattività esce.
   }
 if(prec!=EEPROM.read(16)) {valPrec=10000/sq(prec); EEPROM.update(16,prec); Biip(); lcd.setCursor(12,1); lcd.print(F("SET!")); delay(500);}
@@ -135,7 +144,10 @@ void autonomia()
 unsigned long t=millis()+500;
 lcd.print(F("V batt.:    V"));
 lcd.setCursor(0,1); lcd.print("Autonomia:");
+scriveTensione(); // Inizialmente usa il valore corrente di Vb.
 pinMode(A1,INPUT);
+analogRead(A1); // Prima lettura per averne, poi, una precisa e stabile.
+BattIco();
 while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
 {delay(300);}
 
@@ -144,13 +156,18 @@ while(PIND&0x20) // Finché non viene premuto il pulsante:
   if(millis()-t>1000) // 1 volta al secondo
     {
     t=millis();
-    Vb=int(analogRead(A1)*XVref/1000L);
-    lcd.setCursor(8,0);
-    if(((500*Vb/1023)%100)>9) lcd.print(String(int(500*Vb/102300)) +"." +String((500*Vb/1023)%100));
-    else{lcd.print(String(int(500*Vb/102300)) +".0" +String((500*Vb/1023)%100));}
-    lcd.setCursor(10,1); lcd.print(String(int(Vb*10000/205 - 32000) /VSB*Vb/859) + "h ");
+    BattIco();
+    scriveTensione();
     }
   }
 pinMode(A1,OUTPUT);
 Bip();
+}
+
+void scriveTensione()
+{
+lcd.setCursor(8,0);
+if(((500*Vb/1023)%100)>9) {lcd.print(int(500*Vb/102300)); lcd.print('.'); lcd.print((500*Vb/1023)%100);}
+else{lcd.print(int(500*Vb/102300)); lcd.print(".0"); lcd.print((500*Vb/1023)%100);}
+lcd.setCursor(10,1); lcd.print(String(int(Vb*10000/205 - 32000) /VSB*Vb/859) + "h ");
 }

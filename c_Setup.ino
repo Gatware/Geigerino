@@ -37,8 +37,8 @@ lcd.createChar(6,all_ora);
 if(EEPROM.read(1)==255) // 
   {
   Bip(); delay(100); Bip(); delay(100); Bip(); delay(100); Biip();
-  lcd.setCursor(0,0); lcd.print(" EEPROM VERGINE!");
-  lcd.setCursor(0,1); lcd.print("Carico i default");
+  lcd.setCursor(0,0); lcd.print(F(" EEPROM VERGINE!"));
+  lcd.setCursor(0,1); lcd.print(F("Carico i default"));
   delay(3000);
   EEPROM.update(0,40); // Lo-byte di Ti (Tempo di integrazione): 40 secondi
   EEPROM.update(15,0); // Hi-byte di Ti
@@ -61,7 +61,7 @@ if(EEPROM.read(1)==255) //
   EEPROM.update(17,60); // Velocità di scarica della batteria in 10*mV/h.
   EEPROM.update(18,100); // VrefDec: Parte decimale di Vref (100=1,100V) per la taratura
 
-  lcd.setCursor(0,1); lcd.print("     Fatto.     ");
+  lcd.setCursor(0,1); lcd.print(F("     Fatto.     "));
   lcd.clear();
   }  
 Ti=EEPROM.read(0)+EEPROM.read(15)*256; Tio=Ti; // Carica il tempo di integrazione in Ti e in Tio (valore precedente).
@@ -90,17 +90,23 @@ prec=EEPROM.read(16); // Legge la precisione impostata.
 valPrec=10000/sq(prec);
 VSB=EEPROM.read(17); // Legge la velocità di scarica della batteria.
 VrefDec=EEPROM.read(18); // Legge la parte decimale di Vref che è stata impostata in fase di taratura.
-XVref=0.94*(1000+VrefDec);
-
+XVref=0.935*(1000+VrefDec); // Se si desidera maggiore precisione,
+                            // aggiustare lo 0.935 in base alla tolleranza delle resistenze del partitore di Vb.
 if(!(PIND&0x20)) {Bip(); lcd.clear(); dotBar(); lcd.clear(); TICSwSiNo(); lcd.clear(); TipoDiSonda();} // Se il pulsante
                                                                   // è già premuto, salta alle impostazioni, poi ritorna.
 if(sonda==ntipi) {sens=var;} else{sens=cost[sonda]; ownbcpm=ownb[sonda];} // var è l'ultima opzione della lista dei tipi di sonde.
-
 lcd.clear();
-lcd.setCursor(0,0); lcd.print("GEIGERINO"+ver);
-lcd.setCursor(0,1); lcd.print("G.Giangreco 2016");
+lcd.setCursor(0,0); lcd.print(F("GEIGERINO")); lcd.print(ver);
+lcd.setCursor(0,1); lcd.print(F("G.Giangreco 2016"));
+delay(500);
+lcd.setCursor(0,1); lcd.print(F(".Giangreco 2016-"));
+delay(500);
+lcd.setCursor(0,1); lcd.print(F("Giangreco 2016-1"));
+delay(500);
+lcd.setCursor(0,1); lcd.print(F("Giangreco2016-18"));
 delay(1500); lcd.clear();
-if(Ti<TMAX) lcd.print("Ti="+String(Ti)+" sec."); else if(Ti==TMAX) lcd.print("Ti=Continuo"); else {Disp=1; lcd.print("Precisione fissa"); lcd.setCursor(7,1); lcd.print(String(prec)+"%");} Bip();
+
+if(Ti<TMAX) {lcd.print(F("Ti=")); lcd.print(Ti); lcd.print(F(" sec."));} else if(Ti==TMAX) lcd.print(F("Ti=Continuo")); else {Disp=1; lcd.print(F("Precisione fissa")); lcd.setCursor(7,1); lcd.print(prec); lcd.print('%');} Bip();
 delay(1200);
 attachInterrupt(0, ContaAB, FALLING); Bip(); delay(50);
 Mask(); Azzera(); lcd.setCursor(14,0); lcd.print(temposecondi);
@@ -111,11 +117,11 @@ Mask(); Azzera(); lcd.setCursor(14,0); lcd.print(temposecondi);
 
 void dotBar()
 {
-lcd.print("       LED      "); 
+lcd.print(F("       LED      ")); 
 t1=millis();
-lcd.setCursor(0,1); lcd.print(" Off   Dot   Bar");
+lcd.setCursor(0,1); lcd.print(F(" Off   Dot   Bar"));
 while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
-{if(millis()-t1>3000) {lcd.clear(); powerSetup();}}
+{if(millis()-t1>3000) {lcd.clear(); powerSetup();}} // Se il pulsante continua a essere premuto, a 3 secondi salta a powerSetup().
 delay(300);
 t1=millis();
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
@@ -126,9 +132,9 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   if(LED<1) {noTone(7); LED=1;}
   if(E!=0) {E=0; t1=millis(); delay(20);}
   
-  if(LED==1)      {lcd.setCursor(0,1); lcd.print("x"); lcd.setCursor(6,1); lcd.print(" "); lcd.setCursor(12,1); lcd.print(" ");}
-  else if(LED==2) {lcd.setCursor(0,1); lcd.print(" "); lcd.setCursor(6,1); lcd.print("x"); lcd.setCursor(12,1); lcd.print(" ");}
-  else if(LED==3) {lcd.setCursor(0,1); lcd.print(" "); lcd.setCursor(6,1); lcd.print(" "); lcd.setCursor(12,1); lcd.print("x");}
+  if(LED==1)      {lcd.setCursor(0,1); lcd.print('x'); lcd.setCursor(6,1); lcd.print(' '); lcd.setCursor(12,1); lcd.print(' ');}
+  else if(LED==2) {lcd.setCursor(0,1); lcd.print(' '); lcd.setCursor(6,1); lcd.print('x'); lcd.setCursor(12,1); lcd.print(' ');}
+  else if(LED==3) {lcd.setCursor(0,1); lcd.print(' '); lcd.setCursor(6,1); lcd.print(' '); lcd.setCursor(12,1); lcd.print('x');}
   
   if(millis()-t1>4999) Riavvia(); // Dopo 5 secondi di inattività esce.
   }
@@ -154,7 +160,7 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   if(millis()-t1>4999) {lcd.clear(); Riavvia();} // Dopo 5 secondi di inattività esce.
   }
 if(TS!=EEPROM.read(5)) // Se lo stato di TS è cambiato rispetto a quello memorizzato...
-  {EEPROM.update(5,TS); Biip(); lcd.setCursor(10,1); lcd.print("  SET!  "); delay(500);}
+  {EEPROM.update(5,TS); Biip(); lcd.setCursor(10,1); lcd.print(F("  SET!  ")); delay(500);}
 else Bip();
 } // END TicSwSiNo
 
