@@ -82,7 +82,7 @@ while(!(PIND&0x20))
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   {
   encoder();
-  if(E!=0){VSB+=E;E=0;delay(10);}
+  if(E!=0){VSB+=E;E=0;delay(5);}
   if(VSB<20)VSB=20; // 20=2,0mV/h
   if(VSB>99)VSB=99; // 99=9,9mV/h
   lcd.setCursor(8,0); lcd.print(String(VSB/10)+"."+String(VSB%10)+"mV/h");
@@ -93,8 +93,8 @@ if (VSB!=EEPROM.read(17)) {EEPROM.update(17,VSB); lcd.setCursor(11,1); lcd.print
 delay(300);                    // Se è cambiata, memorizza l'impostazione in EEPROM 17.
 
 // ------------------------------------------- Impostazione di Vref -------------------------------------------
-lcd.clear(); lcd.print("Taratura di Vref");
-lcd.setCursor(1,1); lcd.print("Vpin21:     mV");
+lcd.clear(); lcd.print(F("Taratura di Vref"));
+lcd.setCursor(1,1); lcd.print(F("Vpin21:     mV"));
 while(!(PIND&0x20))
 {delay(300);} // Attende che venga lasciato il pulsante.
 while(PIND&0x20) // Continua a leggere l'encoder finché non premo
@@ -107,15 +107,88 @@ while(PIND&0x20) // Continua a leggere l'encoder finché non premo
   lcd.setCursor(9,1); lcd.print(1000+VrefDec);  
   };
 Bip(); // Ho premuto il pulsante, perciò prosegue
-if (VrefDec!=EEPROM.read(18)) {EEPROM.update(18,VrefDec); lcd.setCursor(1,1); lcd.print("   SET!"); Biip(); delay(1200);}
+if (VrefDec!=EEPROM.read(18)) {EEPROM.update(18,VrefDec); lcd.setCursor(1,1); lcd.print(F("   SET!")); Biip(); delay(1200);}
 delay(300);                    // Se è cambiata, memorizza l'impostazione in EEPROM 18.
+lcd.clear();
 
+// ------------------------------------------- Test dello strumento -------------------------------------------
+lcd.print(F("Test strumento?"));
+while(!(PIND&0x20)) // Attende che venga lasciato il pulsante.
+delay(300);
+byte Test=0;
+
+while(PIND&0x20) // Continua a leggere l'encoder finché non premo
+  {
+  encoder();
+  if(Test==0 && E==1) Test=1; // Sì
+  else if(Test==1 && E==-1) Test=0; // No
+  else noTone(7);
+  if(E!=0)  {E=0; t1=millis(); delay(20);}
+  lcd.setCursor(7,1);
+  if(Test) lcd.print(F("Si"));
+  else lcd.print(F("No"));
+  }
+  Bip();
+  if(Test)
+    {
+    lcd.setCursor(14,0); lcd.print(' '); // Cancella il "?".
+    pinMode(A2,INPUT);
+    delayMicroseconds(100);
+    analogRead(A2); // Prelettura
+    Vcc=int(analogRead(A2)*XVref/1000L); // Legge la tensione di alimentazione.
+    pinMode(A2,OUTPUT);
+    muoveAgo();
+    while(!(PIND&0x20)); delay(200);
+    while(PIND&0x20) // Continua a leggere l'encoder finché non premo
+      {
+      encoder();
+      if(E==1 && valore<=204) valore+=51; // Incrementa
+      else if(E==-1 && valore>=51) valore-=51; // Decrementa
+      else noTone(7);
+      if(E!=0) muoveAgo();
+      }
+    Bip();
+    analogWrite(6,0);
+        
+    /*
+    for(valore=0; valore<=204; valore+=51)
+      {
+      lcd.setCursor(12,1);
+      if     (valore==0)   lcd.print(" 0,1");
+      else if(valore==51)  lcd.print("   1");
+      else if(valore==102) lcd.print("  10");
+      else if(valore==153) lcd.print(" 100");
+      else                 lcd.print("1000");
+      anOut=valore+51; // anOut=51; 102; 153; 204; 255.
+      if(pwr==0)  anOut=int(anOut*635/Vcc); // Se è alimentato direttamente da Litio (605=3V) o 5V in carica.
+      else anOut=int(anOut*635/1024); // Se è alimentato a 5V fissi.
+      analogWrite(6,anOut);  while(!(PIND&0x20)); delay(200); while(PIND&0x20); delay(200);
+      }
+    analogWrite(6,0);
+    */
+    }
+  
 lcd.clear();
 lcd.setCursor(4,0); lcd.print(ver);
 lcd.setCursor(5,1); lcd.print(data);
+while(!(PIND&0x20)){delay(1000);}
 while(PIND&0x20);
-while(!(PIND&0x20)){delay(300);}
-
+Bip(); delay(500);
 Riavvia();
 }
 
+void muoveAgo()
+{
+E=0; t1=millis(); delay(20);
+lcd.setCursor(6,1);                       //      LED 54321-        LED 54321-
+     if(valore==0)   {lcd.print(F("0,01")); PORTC&=B11000001; PORTC|=B00000000;}
+else if(valore==51)  {lcd.print(F(" 0,1")); PORTC&=B11000011; PORTC|=B00000010;}
+else if(valore==102) {lcd.print(F("   1")); PORTC&=B11000101; PORTC|=B00000100;}
+else if(valore==153) {lcd.print(F("  10")); PORTC&=B11001001; PORTC|=B00001000;}
+else if(valore==204) {lcd.print(F(" 100")); PORTC&=B11010001; PORTC|=B00010000;}
+else                 {lcd.print(F("1000")); PORTC&=B11100001; PORTC|=B00100000;}
+anOut=valore; // anOut=51; 102; 153; 204; 255.
+if(pwr==0)  anOut=int(anOut*635/Vcc); // Se è alimentato direttamente da Litio (605=3V) o 5V in carica.
+else anOut=int(anOut*635/1024); // Se è alimentato a 5V fissi.
+analogWrite(6,anOut);
+}

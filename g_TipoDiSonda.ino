@@ -26,9 +26,9 @@ else Bip();
 
 if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   {                           // variabile
-  lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?  "));
+  lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?        "));
   lcd.setCursor(5,1); lcd.print(F("         ")); printVar();
-  while(!(PIND&0x20))
+  while(!(PIND&0x20));
   lcd.setCursor(0,1); lcd.print(F("Centin."));
   delay(300);
   t1=millis();
@@ -57,7 +57,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     } // Fine dell'inserimento delle decine.
     
   while(!(PIND&0x20));
-  lcd.setCursor(0,1); lcd.print(" Unit"); lcd.write(1); lcd.print(" ");
+  lcd.setCursor(0,1); lcd.print(F(" Unit")); lcd.write(1); lcd.print(' ');
   Bip(); delay(300);
   t1=millis();
   while(PIND&0x20)
@@ -89,9 +89,9 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     if(E<0 && ownbcpm>0)  {ownbcpm-=1; E=0; t1=millis(); delay(10);}
     
     lcd.setCursor(6,1);
-    if(ownbcpm<10) lcd.print("  "+String(ownbcpm));
-    else if(ownbcpm<100) lcd.print(" "+String(ownbcpm));
-    else lcd.print(ownbcpm);
+    if(ownbcpm<100) lcd.print(' ');
+    if(ownbcpm<10)  lcd.print(' ');
+    lcd.print(ownbcpm);
     
     if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento del Background proprio del tubo.
@@ -106,13 +106,16 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   
   else // IF Sonda==1...ntipi-1
     {
-    lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/"); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));
-    lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
+    lcd.clear(); lcd.print("S:"); lcd.print(cost[sonda]); lcd.print("cpm/"); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));
+    lcd.setCursor(0,1); lcd.print("Bkg:"); lcd.print(ownb[sonda]); lcd.print("cpm");
     while(!(PIND&0x20));
     delay(500);
     while(PIND&0x20);
     Bip();
     } // END Sonda==1...ntipi-1
+
+
+
   
 lcd.clear();
 
@@ -141,8 +144,8 @@ else Bip();
 
 if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   {                           // variabile
-  lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?  "));
-  lcd.setCursor(5,1); lcd.print(F("         ")); printVar();
+  lcd.setCursor(0,0); lcd.print(F("  Sensibilit")); lcd.write(1); lcd.print(F("?        "));
+  lcd.setCursor(5,1); lcd.print("         "); printVar();
   while(!(PIND&0x20));
   lcd.setCursor(0,1); lcd.print(F("Centin."));
   delay(300);
@@ -172,7 +175,7 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     } // Fine dell'inserimento delle decine.
     
   while(!(PIND&0x20));
-  lcd.setCursor(0,1); lcd.print(F(" Unit")); lcd.write(1); lcd.print(F(" ")); // lcd.write(1): à
+  lcd.setCursor(0,1); lcd.print(F(" Unit")); lcd.write(1); lcd.print(' '); // lcd.write(1): à
   Bip(); delay(300);
   t1=millis();
   while(PIND&0x20)
@@ -204,9 +207,9 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
     if(E<0 && ownbcpm>0)  {ownbcpm-=1; E=0; t1=millis(); delay(10);}
     
     lcd.setCursor(6,1);
-    if(ownbcpm<10) lcd.print("  "+String(ownbcpm));
-    else if(ownbcpm<100) lcd.print(" "+String(ownbcpm));
-    else lcd.print(ownbcpm);
+    if(ownbcpm<100) lcd.print(' ');
+    if(ownbcpm<10)  lcd.print(' ');
+    lcd.print(ownbcpm);
     
     if(millis()-t1>9999) Riavvia(); // Dopo 10 secondi di inattività esce.
     } // Fine dell'inserimento del Background proprio del tubo.
@@ -221,8 +224,8 @@ if(tipo[sonda]=="variabile" || tipo[sonda]=="Variabile")
   
 else // IF Sonda==1...ntipi-1
   {
-  lcd.clear(); lcd.print("S:"+String(cost[sonda])+"cpm/"); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));
-  lcd.setCursor(0,1); lcd.print("Bkg:"+String(ownb[sonda])+"cpm");
+  lcd.clear(); lcd.print("S:"); lcd.print(cost[sonda]); lcd.print("cpm/"); lcd.write(byte(2)); lcd.write(byte(5)); lcd.write(byte(6));
+  lcd.setCursor(0,1); lcd.print("Bkg:"); lcd.print(ownb[sonda]); lcd.print("cpm");
   while(!(PIND&0x20));
   delay(500);
   while(PIND&0x20);
@@ -235,8 +238,7 @@ lcd.clear();
 void printVar()
 {
 lcd.setCursor(7,1);
-if(var<10) lcd.print("  "+String(var));
-else if(var<100) lcd.print(" "+String(var));
-else lcd.print(var);
+if(var<100) lcd.print(' ');
+if(var<10)  lcd.print(' ');
+lcd.print(var);
 }
-
