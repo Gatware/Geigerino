@@ -2,6 +2,7 @@ GEIGERINO 1.9iUX 260219
 				   La mia versione personale di Contatore Geiger
 
 IMPOSTAZIONI DI BASE (SETUP)
+
 Le impostazioni di base si effettuano accendendo Geigerino tenendo premuto l'encoder.
 Prima impostazione: LED Off, Dot, Bar. Permette di scegliere se i 5 LED segnalatori del livello di peri-colosità devono rimanere sempre spenti (per ridurre il consumo) oppure si devono accendere uno per volta oppure a barra.
 Seconda impostazione: Tic-tic software. Se l'hardware non ha un avvisatore acustico per ogni particella rilevata, è possibile far emettere un breve "Bip" al cicalino ogni volta che viene rilevata una particella.
@@ -9,6 +10,7 @@ La terza impostazione riguarda il modello di sonda interna e il modello di sonda
 Dove non specificato diversamente, le impostazioni modificate vengono immediatamente memorizzate nella EEPROM. Ciò viene evidenziato mediante la scritta “SET!”. Se un’impostazione non viene modifica-ta o, comunque, viene selezionato il valore o l’opzione apparsi nel momento in cui si è entrati nell’impostazione, la memorizzazione non viene effettuata.	
 
 IMPOSTAZIONI DELL’HARDWARE E TEST DELLO STRUMENTO
+
 Si accede a queste impostazioni tenendo premuto l’encoder all’accensione per 3 secondi.
 Prima impostazione: “Alimentazione?”. Serve per correggere il duty cycle del PWM dell’uscita per lo strumento analogico secondo la tensione di alimentazione: se Geigerino è alimentato direttamente da un e-lemento al Litio, il PWM deve essere costantemente corretto in base alla tensione assunta dall’elemento; se, invece, viene alimentato a 5V tramite un convertitore o regolatore di tensione, il valore di Vb seguirà comunque la tensione della batteria, ma il duty cycle dovrà rimanere immutato, proporzionato alla tensione di alimentazione fissa a 5V. Lo strumento analogico, da 100uA, viene pilotato con scala logaritmica da 0,01 (in posizione di riposo) a 1000uSv/h. Avendo aggiunto il Mosfet per la commutazione dell’alimentazione quando è collegato il cavo USB, dalla versione 1.9UX è stata introdotta la lettura della tensione di alimentazione indipendente dalla tensione della batteria per permettere comunque il corretto funzionamento del PWM. L’aggiunta del Mosfet si è resa necessaria per permettere l’interruzione della carica, quando è completa, anche se Geigerino è in funzione: precedentemente, infatti, l’assorbimento di Geigerino impediva il riconoscimento della fine della carica alla schedina carica batteria, che poteva interrompere la carica solo se Geigerino era spento. Lasciando a lungo Geigerino acceso con il connettore USB collegato per impedire la scarica della batteria, il carica batteria avrebbe continuato sempre a fornire la tensione danneggiando pericolosamente, a lungo andare, l’elemento al Litio. Con il Mosfet, quando viene fornita alimentazione tramite USB, Geigerino viene scollegato dalla batteria e collegato ai +5V USB.
 Seconda impostazione: velocità di scarica della batteria. Può essere impostata fra 2,0 e 9,9mV/h. In base a questa, Geigerino calcola l'autonomia residua. Ruotando l'encoder varia la velocità di scarica e la corri-spondente autonomia a piena carica stimata. La velocità di scarica si determina misurando con precisione la tensione dell'elemento una prima volta; poi, di nuovo, dopo averlo tenuto in funzione per circa un'ora e di-videndo l'abbassamento di tensione per il tempo trascorso in ore e decimali: ad es. 45 minuti=0,75h; 1h30=1,5h.
@@ -17,6 +19,7 @@ TEST dello strumento: se viene selezionato “Sì”, lo strumento si porterà a
 Alla pressione successiva dell’encoder, verranno visualizzate versione e data del software.
 
 FUNZIONAMENTO
+
 All’accensione normale, appaiono di seguito:	
 - Il nome “GEIGERINO”, la versione e il nome dell’autore	
 - Le sigle delle due sonde (A e B, interna ed esterna) attualmente selezionate (o “Variabile” se una o en-trambe sono impostate manualmente)	
