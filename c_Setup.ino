@@ -118,8 +118,10 @@ lcd.clear();
 if(Ti<TMAX) {lcd.print(F("Ti=")); lcd.print(Ti); lcd.print(F(" sec."));} else if(Ti==TMAX) lcd.print(F("Ti=Continuo")); else {Disp=1; lcd.print(F("Precisione fissa")); lcd.setCursor(7,1); lcd.print(prec); lcd.print('%');} Bip();
 delay(1200);
 
-attachInterrupt(0, ContaAB, FALLING); Bip(); delay(50);
+attachInterrupt(0, ContaAB, FALLING);
+Bip(); delay(50);
 Mask(); Azzera(); lcd.setCursor(14,0); lcd.print(temposecondi);
+
 // millisZero=millis(); DUE PUNTI INTERMITTENTI NON USATI.
 } // END setup
 

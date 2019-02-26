@@ -172,6 +172,8 @@ ridotto       Ho tolto quello che non uso per ridurre l'occupazione di memoria.
                 essere passati dalla funzione dell'impostazione venivano usati i dati della sonda B anche se la levetta stava su Sonda A.
               Ho risolto nella visualizzazione degli impulsi totali contati il problema che se gli impulsi contati erano meno di quelli totali di bkg della sonda appariva il 
                 complemento a 4.294.967.296, in quanto il risultato era negativo e la variabile unsigned faceva il complemento a 2^32. Adesso in tali casi appare zero.
+              Ho messo la variabile TicSi inizialmente =0 per non avere nel primo secondo comunque i Tic in funzione, anche se disattivati. Infatti la verifica dello stato
+                dei Tic attivi o no viene fatta ogni secondo a partire da un secondo dopo l'avviamento del loop().
               Ho aggiunto la visualizzazione iniziale delle sonde A e B impostate.
               Nel loop() ho messo prima il blocco "Due volte al secondo", poi "Una volta al secondo".
               Ho tolto i pinMode(x,INPUT) dove erano seguiti da pinMode(x,INPUT_PULLUP).
