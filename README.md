@@ -1,4 +1,5 @@
 GEIGERINO 1.9iUX 260219
+
 				   La mia versione personale di Contatore Geiger
 
 IMPOSTAZIONI DI BASE (SETUP)
