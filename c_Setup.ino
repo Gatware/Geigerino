@@ -105,7 +105,7 @@ lcd.setCursor(0,1); lcd.print(F(".Giangreco 2016-"));
 delay(500);
 lcd.setCursor(0,1); lcd.print(F("Giangreco 2016-1"));
 delay(500);
-lcd.setCursor(0,1); lcd.print(F("Giangreco2016-18"));
+lcd.setCursor(0,1); lcd.print(F("Giangreco2016-19"));
 delay(1300); lcd.clear();
 
 // -------- VISUALIZZAZIONE DELLE SONDE E DEL TEMPO IMPOSTATI ----------
